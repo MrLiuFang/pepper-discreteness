@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.qicloud</groupId>
+		<artifactId>pepper-discreteness</artifactId>
+		<version>0.1.1-SNAPSHOT</version>
+	</parent>
+	<groupId>com.qicloud</groupId>
+	<artifactId>pepper-common</artifactId>
+	
+	<packaging>pom</packaging>
+
+	<description>公共模块启动器</description>
+	<modules>
+		<module>pepper-common-api</module>
+		<module>pepper-common-business</module>
+		<module>pepper-common-web</module>
+		<module>pepper-common-model</module>
+	</modules>
+
+</project>
