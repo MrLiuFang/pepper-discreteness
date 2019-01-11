@@ -22,6 +22,20 @@
 			<artifactId>discreteness-cache-service</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+		
+		<!-- 仅供编译和测试用第三方库 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>${javax.servlet.jsp.version}</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 </project>
