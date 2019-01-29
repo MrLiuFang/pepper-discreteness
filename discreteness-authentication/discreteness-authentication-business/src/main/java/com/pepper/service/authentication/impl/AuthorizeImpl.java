@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.lang.NonNull;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.pepper.core.constant.GlobalConstant;
@@ -16,6 +20,7 @@ import com.pepper.service.redis.string.serializer.ListOperationsService;
 import com.pepper.service.redis.string.serializer.SetOperationsService;
 import com.pepper.service.redis.string.serializer.StringRedisTemplateService;
 import com.pepper.service.redis.string.serializer.ValueOperationsService;
+import com.pepper.util.LoginTokenUtil;
 /**
  * 
  * @author mrliu
@@ -140,8 +145,8 @@ public abstract class AuthorizeImpl implements IAuthorize {
 	
 	@Override
 	public Object getCurrentUser() {
-		
-		return null;
+		String token = LoginTokenUtil.getLoginToken(GlobalConstant.AUTHORIZE_TOKEN);
+		return getCurrentUser(token);
 	}
 
 }

@@ -2,7 +2,6 @@ package com.pepper.service.authentication.aop;
 
 import java.lang.reflect.Method;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.lang.JoinPoint;
@@ -23,6 +22,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.pepper.common.emuns.Scope;
 import com.pepper.core.constant.GlobalConstant;
@@ -36,6 +36,7 @@ import com.pepper.service.authentication.WeixinAuthorize;
 import com.pepper.service.redis.string.serializer.SetOperationsService;
 import com.pepper.service.redis.string.serializer.StringRedisTemplateService;
 import com.pepper.service.redis.string.serializer.ValueOperationsService;
+import com.pepper.util.LoginTokenUtil;
 
 /**
  * pc后台管理登录鉴权
@@ -113,7 +114,10 @@ public class AuthorizeAspect {
 		/**
 		 * 根据scope指定的端类型使用不同的token名从http请求头以及cookie中获取会话码
 		 */
-		String token = getLoginToken(GlobalConstant.AUTHORIZE_TOKEN);
+		String token = LoginTokenUtil.getLoginToken(GlobalConstant.AUTHORIZE_TOKEN);
+		if(!StringUtils.hasText(token)){
+			throw new AuthorizeException("登录超时!请重新登录!");
+		}
 		// 获取登录登录用户的ID
 		IAuthorize authorize = getAuthorize(token);
 		String userId = authorize.getUserId(token);
@@ -175,32 +179,4 @@ public class AuthorizeAspect {
 		
 	}
 	
-	/**
-	 * 
-	 * @param name
-	 * @return
-	 */
-	private String getLoginToken(String tokenName) {
-		String token =null;
-		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals(tokenName)) {
-					return cookie.getValue();
-				}
-			}
-		}
-		if (!StringUtils.hasText(token) && request.getHeader(tokenName) != null) {
-			token = request.getHeader(tokenName).toString();
-		}
-		// 获取参数
-		if(!StringUtils.hasText(token) && request.getParameter(tokenName) != null){
-			token = request.getParameter(tokenName);
-		}
-		if(!StringUtils.hasText(token)){
-			throw new AuthorizeException("登录超时!请重新登录!");
-		}
-		return token;
-	}
 }
