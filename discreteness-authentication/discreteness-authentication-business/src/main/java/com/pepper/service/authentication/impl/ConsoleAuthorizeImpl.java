@@ -1,6 +1,7 @@
 package com.pepper.service.authentication.impl;
 
-import com.alibaba.dubbo.config.annotation.Service;
+import org.springframework.stereotype.Component;
+
 import com.pepper.common.emuns.Scope;
 import com.pepper.core.constant.GlobalConstant;
 import com.pepper.service.authentication.ConsoleAuthorize;
@@ -11,7 +12,7 @@ import com.pepper.service.authentication.ConsoleAuthorize;
  * @author mrliu
  *
  */
-@Service(interfaceClass = ConsoleAuthorize.class)
+@Component
 public class ConsoleAuthorizeImpl extends AuthorizeImpl implements ConsoleAuthorize {
 
 	@Override

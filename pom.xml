@@ -21,6 +21,7 @@
 		<module>discreteness-pay</module>
 		<module>discreteness-weixin</module>
 		<module>discreteness-config-server</module>
+		<module>discreteness-configuration</module>
 	</modules>
 
 </project>

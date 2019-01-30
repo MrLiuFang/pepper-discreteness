@@ -2,6 +2,7 @@ package com.pepper.service.authentication.aop;
 
 import java.lang.reflect.Method;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.lang.JoinPoint;
@@ -49,16 +50,16 @@ import com.pepper.util.LoginTokenUtil;
 @Order(2)
 public class AuthorizeAspect {
 
-	@Reference
+	@Resource
 	private ConsoleAuthorize consoleAuthorize;
 
-	@Reference
+	@Resource
 	private PcAuthorize pcAuthorize;
 
-	@Reference
+	@Resource
 	private AppAuthorize appAuthorize;
 
-	@Reference
+	@Resource
 	private WeixinAuthorize weixinAuthorize;
 
 	@Reference
