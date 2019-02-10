@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+
 import org.csource.common.MyException;
 import org.csource.fastdfs.ClientGlobal;
 import org.csource.fastdfs.StorageClient;
@@ -13,9 +14,12 @@ import org.csource.fastdfs.TrackerServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
 import com.pepper.model.file.FileInformation;
 /**
  * 
@@ -29,12 +33,18 @@ public class Fastdfs implements IFile, ApplicationListener<ContextRefreshedEvent
 	private Environment env;
 
 	private String domain = "";
+	
+	private TrackerClient trackerClient;
+	
+	private TrackerServer trackerServer;
+
+	private StorageServer storageServer;
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		Properties properties = new Properties();
 		try {
-			if (StringUtils.hasLength(env.getProperty("fastdfs.http_secret_key"))) {
+			if (StringUtils.hasLength(env.getProperty("fastdfs.tracker_servers"))) {
 				properties.setProperty("fastdfs.http_secret_key", env.getProperty("fastdfs.http_secret_key"));
 				properties.setProperty("fastdfs.tracker_servers", env.getProperty("fastdfs.tracker_servers"));
 				properties.setProperty("fastdfs.connect_timeout_in_seconds",
@@ -47,6 +57,11 @@ public class Fastdfs implements IFile, ApplicationListener<ContextRefreshedEvent
 				properties.setProperty("fastdfs.http_tracker_http_port",
 						env.getProperty("fastdfs.http_tracker_http_port"));
 				ClientGlobal.initByProperties(properties);
+				if (env.getProperty("file.action","").equals("fastdfs")) {
+					trackerClient = new TrackerClient();
+					trackerServer = trackerClient.getConnection();
+				}
+				
 			}
 		} catch (IOException | MyException e) {
 			e.printStackTrace();
@@ -65,8 +80,10 @@ public class Fastdfs implements IFile, ApplicationListener<ContextRefreshedEvent
 	 */
 	@Override
 	public String add(File file) {
+		StorageClient storageClient;
 		try {
-			String[] str = getStorageClient().upload_file(file.getAbsolutePath(),
+			storageClient = getStorageClient();
+			String[] str = storageClient.upload_file(file.getAbsolutePath(),
 					file.getName().substring(file.getName().lastIndexOf(".") + 1), null);
 			if (str !=null && str.length>0) {
 				return null;
@@ -74,7 +91,16 @@ public class Fastdfs implements IFile, ApplicationListener<ContextRefreshedEvent
 			return new String(str[0] + "/" + str[1]);
 		} catch (IOException | MyException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				//暂时关闭storageServer，后续提供storageServer连接池
+				storageServer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+			
+		
 		return null;
 	}
 
@@ -94,10 +120,6 @@ public class Fastdfs implements IFile, ApplicationListener<ContextRefreshedEvent
 	}
 
 	private StorageClient getStorageClient() throws IOException {
-		TrackerClient trackerClient = new TrackerClient();
-		;
-		TrackerServer trackerServer = trackerClient.getConnection();
-		StorageServer storageServer = null;
 		StorageClient storageClient = new StorageClient(trackerServer, storageServer);
 		return storageClient;
 	}
