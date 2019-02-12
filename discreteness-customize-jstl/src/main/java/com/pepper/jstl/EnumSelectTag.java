@@ -149,7 +149,7 @@ public class EnumSelectTag extends TagSupport {
 			String _disabled[] = disabled.split(",");
 			for (IEnum ienum : list) {
 				String key = ienum.toString();
-				String value = ienum.getName();
+				String value = ienum.getDesc();
 				String selected = "";
 				if (selectedValue.equals(key)) {
 					selected = "selected='selected'";

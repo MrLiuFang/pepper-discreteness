@@ -4,16 +4,16 @@ import org.springframework.stereotype.Component;
 
 import com.pepper.common.emuns.Scope;
 import com.pepper.core.constant.GlobalConstant;
-import com.pepper.service.authentication.PcAuthorize;
+import com.pepper.service.authentication.FrontAuthorize;
 
 /**
- * pc后台管理鉴权类
+ * pc前端管理鉴权类
  * 
  * @author mrliu
  *
  */
 @Component
-public class PcAuthorizeImpl extends AuthorizeImpl implements PcAuthorize {
+public class FrontAuthorizeImpl extends AuthorizeImpl implements FrontAuthorize {
 
 	@Override
 	public String getTokenKey() {
@@ -27,6 +27,6 @@ public class PcAuthorizeImpl extends AuthorizeImpl implements PcAuthorize {
 
 	@Override
 	public Scope getScope() {
-		return Scope.PC;
+		return Scope.FRONT;
 	}
 }

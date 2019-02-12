@@ -32,7 +32,7 @@ import com.pepper.core.exception.NoPermissionException;
 import com.pepper.service.authentication.AppAuthorize;
 import com.pepper.service.authentication.ConsoleAuthorize;
 import com.pepper.service.authentication.IAuthorize;
-import com.pepper.service.authentication.PcAuthorize;
+import com.pepper.service.authentication.FrontAuthorize;
 import com.pepper.service.authentication.WeixinAuthorize;
 import com.pepper.service.redis.string.serializer.SetOperationsService;
 import com.pepper.service.redis.string.serializer.StringRedisTemplateService;
@@ -54,7 +54,7 @@ public class AuthorizeAspect {
 	private ConsoleAuthorize consoleAuthorize;
 
 	@Resource
-	private PcAuthorize pcAuthorize;
+	private FrontAuthorize pcAuthorize;
 
 	@Resource
 	private AppAuthorize appAuthorize;
@@ -168,7 +168,7 @@ public class AuthorizeAspect {
 		}
 		if(scope.equals(Scope.CONSOLE)){
 			return consoleAuthorize;
-		}else if(scope.equals(Scope.PC)){
+		}else if(scope.equals(Scope.FRONT)){
 			return pcAuthorize;
 		}else if(scope.equals(Scope.APP)){
 			return appAuthorize;

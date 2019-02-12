@@ -6,6 +6,6 @@ package com.pepper.service.authentication;
  * @author mrliu
  *
  */
-public interface PcAuthorize extends IAuthorize {
+public interface FrontAuthorize extends IAuthorize {
 
 }
