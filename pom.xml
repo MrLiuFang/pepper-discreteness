@@ -22,6 +22,7 @@
 		<module>discreteness-weixin</module>
 		<module>discreteness-config-server</module>
 		<module>discreteness-configuration</module>
+		<module>discreteness-common-emun</module>
 	</modules>
 
 </project>

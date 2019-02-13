@@ -18,6 +18,11 @@
 		</dependency>
 		<dependency>
 			<groupId>com.pepper</groupId>
+			<artifactId>discreteness-common-emun</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.pepper</groupId>
 			<artifactId>discreteness-cache-service</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
