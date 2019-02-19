@@ -2,10 +2,10 @@ package com.pepper.service.redis.jdk.serializer.impl;
 
 import javax.annotation.Resource;
 
+import org.apache.dubbo.config.annotation.Service;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import com.alibaba.dubbo.config.annotation.Service;
 import com.pepper.service.redis.impl.HashOperationsImpl;
 import com.pepper.service.redis.jdk.serializer.HashOperationsService;
 

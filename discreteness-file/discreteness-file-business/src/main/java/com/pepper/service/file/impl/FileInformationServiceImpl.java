@@ -2,7 +2,7 @@ package com.pepper.service.file.impl;
 
 import javax.annotation.Resource;
 
-import com.alibaba.dubbo.config.annotation.Service;
+import org.apache.dubbo.config.annotation.Service;
 import com.pepper.core.base.impl.BaseServiceImpl;
 import com.pepper.dao.file.FileInformationDao;
 import com.pepper.model.file.FileInformation;

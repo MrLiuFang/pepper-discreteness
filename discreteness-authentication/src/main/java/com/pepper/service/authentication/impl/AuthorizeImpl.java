@@ -9,7 +9,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.lang.NonNull;
 import org.springframework.util.StringUtils;
 
-import com.alibaba.dubbo.config.annotation.Reference;
+import org.apache.dubbo.config.annotation.Reference;
 import com.pepper.core.constant.GlobalConstant;
 import com.pepper.service.authentication.IAuthorize;
 import com.pepper.service.redis.string.serializer.ListOperationsService;

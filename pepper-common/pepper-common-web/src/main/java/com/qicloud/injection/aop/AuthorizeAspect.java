@@ -25,7 +25,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.alibaba.dubbo.config.annotation.Reference;
+import org.apache.dubbo.config.annotation.Reference;
 import com.pepper.api.redis.RedisOperationsService;
 import com.pepper.api.redis.SetOperationsService;
 import com.pepper.api.redis.ValueOperationsService;

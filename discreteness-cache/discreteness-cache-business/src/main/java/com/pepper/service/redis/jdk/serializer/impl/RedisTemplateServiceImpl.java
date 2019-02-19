@@ -33,7 +33,7 @@ import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.data.redis.core.types.RedisClientInfo;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
-import com.alibaba.dubbo.config.annotation.Service;
+import org.apache.dubbo.config.annotation.Service;
 import com.pepper.service.redis.jdk.serializer.RedisTemplateService;
 
 /**

@@ -5,7 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
-import com.alibaba.dubbo.config.annotation.Service;
+import org.apache.dubbo.config.annotation.Service;
 import com.pepper.service.redis.impl.HashOperationsImpl;
 import com.pepper.service.redis.string.serializer.HashOperationsService;
 

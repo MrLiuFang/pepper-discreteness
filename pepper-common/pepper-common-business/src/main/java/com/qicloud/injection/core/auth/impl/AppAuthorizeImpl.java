@@ -1,7 +1,7 @@
 package com.pepper.business.core.auth.impl;
 
 
-import com.alibaba.dubbo.config.annotation.Service;
+import org.apache.dubbo.config.annotation.Service;
 import com.pepper.common.emuns.model.Scope;
 import com.pepper.core.GlobalParameter;
 import com.pepper.business.api.core.auth.AppAuthorize;

@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 
-import com.alibaba.dubbo.config.annotation.Reference;
+import org.apache.dubbo.config.annotation.Reference;
 import com.pepper.api.redis.ValueOperationsService;
 import com.pepper.utils.EncodeUtil;
 

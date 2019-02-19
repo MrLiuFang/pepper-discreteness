@@ -2,7 +2,7 @@ package com.pepper.service.redis.util;
 
 import org.springframework.stereotype.Component;
 
-import com.alibaba.dubbo.config.annotation.Reference;
+import org.apache.dubbo.config.annotation.Reference;
 import com.pepper.service.redis.string.serializer.HashOperationsService;
 import com.pepper.service.redis.string.serializer.ListOperationsService;
 import com.pepper.service.redis.string.serializer.SetOperationsService;

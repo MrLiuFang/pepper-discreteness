@@ -9,8 +9,8 @@ import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.dubbo.config.annotation.Service;
+import org.apache.dubbo.config.annotation.Reference;
+import org.apache.dubbo.config.annotation.Service;
 import com.pepper.api.redis.ListOperationsService;
 import com.pepper.api.redis.RedisOperationsService;
 import com.pepper.api.redis.SetOperationsService;

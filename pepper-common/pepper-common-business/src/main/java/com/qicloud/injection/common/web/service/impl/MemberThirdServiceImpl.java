@@ -5,7 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import com.alibaba.dubbo.config.annotation.Service;
+import org.apache.dubbo.config.annotation.Service;
 import com.pepper.api.common.MemberThirdService;
 import com.pepper.business.common.web.dao.MemberThirdDao;
 import com.pepper.business.core.impl.BaseServiceImpl;

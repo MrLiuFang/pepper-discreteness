@@ -24,7 +24,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.alibaba.dubbo.config.annotation.Reference;
+import org.apache.dubbo.config.annotation.Reference;
 import com.pepper.common.emuns.Scope;
 import com.pepper.core.constant.GlobalConstant;
 import com.pepper.core.exception.AuthorizeException;

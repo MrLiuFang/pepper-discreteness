@@ -3,7 +3,7 @@ package com.pepper.service.redis.string.serializer.impl;
 import javax.annotation.Resource;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import com.alibaba.dubbo.config.annotation.Service;
+import org.apache.dubbo.config.annotation.Service;
 import com.pepper.service.redis.impl.ListOperationsImpl;
 import com.pepper.service.redis.string.serializer.ListOperationsService;
 
