@@ -3,6 +3,7 @@ package com.pepper.service.redis.jdk.serializer.impl;
 import javax.annotation.Resource;
 
 import org.apache.dubbo.config.annotation.Service;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -18,6 +19,7 @@ import com.pepper.service.redis.jdk.serializer.HashOperationsService;
  * @param <HV>
  */
 @Service(interfaceClass = HashOperationsService.class)
+@ConditionalOnBean(value={RedisTemplate.class})
 public class JdkHashOperationsServiceImpl extends HashOperationsImpl<String, String, Object>  implements HashOperationsService{
 
 	@Resource

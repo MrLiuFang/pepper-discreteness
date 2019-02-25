@@ -2,6 +2,7 @@ package com.pepper.service.redis.jdk.serializer.impl;
 
 import javax.annotation.Resource;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -17,6 +18,7 @@ import com.pepper.service.redis.jdk.serializer.SetOperationsService;
  * @param <V>
  */
 @Service(interfaceClass = SetOperationsService.class)
+@ConditionalOnBean(value={RedisTemplate.class})
 public class JdkSetOperationsServiceImpl extends SetOperationsImpl<String, Object> implements SetOperationsService {
 
 	@Resource

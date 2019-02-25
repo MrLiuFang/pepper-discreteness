@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.BoundGeoOperations;
 import org.springframework.data.redis.core.BoundHashOperations;
@@ -42,6 +43,7 @@ import com.pepper.service.redis.jdk.serializer.RedisTemplateService;
  *
  */
 @Service(interfaceClass = RedisTemplateService.class)
+@ConditionalOnBean(value={RedisTemplate.class})
 public class RedisTemplateServiceImpl implements RedisTemplateService {
 	
 	@Resource

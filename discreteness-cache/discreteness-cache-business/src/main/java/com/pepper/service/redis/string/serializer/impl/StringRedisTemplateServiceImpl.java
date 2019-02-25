@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.BoundGeoOperations;
 import org.springframework.data.redis.core.BoundHashOperations;
@@ -41,6 +42,7 @@ import com.pepper.service.redis.string.serializer.StringRedisTemplateService;
  *
  */
 @Service(interfaceClass = StringRedisTemplateService.class)
+@ConditionalOnBean(value={StringRedisTemplate.class})
 public class StringRedisTemplateServiceImpl implements StringRedisTemplateService {
 
 	@Autowired

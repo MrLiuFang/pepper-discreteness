@@ -2,6 +2,7 @@ package com.pepper.service.redis.string.serializer.impl;
 
 import javax.annotation.Resource;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -18,6 +19,7 @@ import com.pepper.service.redis.string.serializer.HashOperationsService;
  * @param <HV>
  */
 @Service(interfaceClass = HashOperationsService.class)
+@ConditionalOnBean(value={StringRedisTemplate.class})
 public class HashOperationsServiceImpl extends HashOperationsImpl<String, String, String>  implements HashOperationsService{
 
 	@Resource
