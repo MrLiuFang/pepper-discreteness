@@ -23,6 +23,7 @@
 		<module>discreteness-config-server</module>
 		<module>discreteness-configuration</module>
 		<module>discreteness-common-emun</module>
+		<module>discreteness-register-uri</module>
 	</modules>
 
 </project>
