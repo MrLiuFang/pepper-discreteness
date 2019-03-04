@@ -1,0 +1,13 @@
+# Package Information for pkg-config
+
+prefix=/development/project/hamster/pepper-discreteness/discreteness-gateway/ngx_zookeeper_lua/build/deps/pcre
+exec_prefix=${prefix}
+libdir=/development/project/hamster/pepper-discreteness/discreteness-gateway/ngx_zookeeper_lua/build/deps/pcre/lib
+includedir=${prefix}/include
+
+Name: libpcreposix
+Description: PCREPosix - Posix compatible interface to libpcre
+Version: 8.40
+Libs: -L${libdir} -lpcreposix
+Cflags: -I${includedir} 
+Requires.private: libpcre

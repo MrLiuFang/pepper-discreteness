@@ -9,7 +9,7 @@ make uninstall
 make 
 make install
 
-cd ../LuaJIT-2.1.0-beta3
+cd ../LuaJIT-2.1.0-beta2
 make clean
 make uninstall
 make && make install
@@ -22,7 +22,14 @@ make clean
 make uninstall
 make && make install
 
-cd ../nginx-1.14.2
+cd ../zookeeper-3.5.4-beta/src/c
+gmake confclean
+make clean
+make uninstall
+./configure --enable-shared --disable-static
+make && make install
+
+cd ../../../nginx-1.14.2
 gmake confclean
 make clean
 ./configure --prefix=/usr/local/nginx \
@@ -39,3 +46,4 @@ make clean
 		--add-module=../echo-nginx-module-master \
 		--add-module=../ngx_zookeeper_lua \
 		--with-debug
+make && make install
