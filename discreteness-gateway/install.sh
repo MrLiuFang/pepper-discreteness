@@ -9,6 +9,18 @@ make uninstall
 make 
 make install
 
+#cd ../lua-5.3.5
+#make clean
+#make uninstall
+#make linux test
+#make install
+
+cd ../lua-cjson
+make clean
+make uninstall
+make all
+make install
+
 cd ../LuaJIT-2.1.0-beta2
 make clean
 make uninstall
@@ -47,3 +59,5 @@ make clean
 		--add-module=../ngx_zookeeper_lua \
 		--with-debug
 make && make install
+
+\cp -r -f ../ngx_zookeeper_lua/lua/* /usr/local/share/lua/5.1/
