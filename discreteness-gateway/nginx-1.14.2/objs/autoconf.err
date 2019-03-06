@@ -208,7 +208,7 @@ cc -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -o objs/autotest objs/autotest.c -Wl,-rp
 ----------------------------------------
 checking for crypt()
 
-/tmp/ccLG2aRx.o: In function `main':
+/tmp/ccKaBEEv.o: In function `main':
 autotest.c:(.text+0xf): undefined reference to `crypt'
 collect2: error: ld returned 1 exit status
 ----------
@@ -319,7 +319,7 @@ checking for statvfs()
 ----------------------------------------
 checking for dlopen()
 
-/tmp/cc0CuFGE.o: In function `main':
+/tmp/ccCR52hO.o: In function `main':
 autotest.c:(.text+0xf): undefined reference to `dlopen'
 autotest.c:(.text+0x1e): undefined reference to `dlsym'
 collect2: error: ld returned 1 exit status
@@ -630,7 +630,7 @@ checking for AF_INET6
 ----------------------------------------
 checking for setproctitle()
 
-/tmp/ccdi1Q7Y.o: In function `main':
+/tmp/ccRXyGy4.o: In function `main':
 autotest.c:(.text+0xf): undefined reference to `setproctitle'
 collect2: error: ld returned 1 exit status
 ----------
@@ -663,7 +663,7 @@ checking for pwritev()
 ----------------------------------------
 checking for sys_nerr
 
-/tmp/cc4usCa6.o: In function `main':
+/tmp/ccQDLi2d.o: In function `main':
 autotest.c:(.text+0x6): warning: `sys_nerr' is deprecated; use `strerror' or `strerror_r' instead
 135
 ----------------------------------------
@@ -697,7 +697,7 @@ checking for System V shared memory
 ----------------------------------------
 checking for POSIX semaphores
 
-/tmp/ccCLskBq.o: In function `main':
+/tmp/ccoOwOyy.o: In function `main':
 autotest.c:(.text+0x1a): undefined reference to `sem_init'
 autotest.c:(.text+0x32): undefined reference to `sem_destroy'
 collect2: error: ld returned 1 exit status
@@ -849,7 +849,7 @@ objs/autotest.c: In function 'main':
 objs/autotest.c:7:22: warning: initialization makes pointer from integer without a cast [enabled by default]
      gdImagePtr img = gdImageCreateFromWebpPtr(1, NULL);;
                       ^
-/tmp/ccEanLSn.o: In function `main':
+/tmp/ccKoXBEu.o: In function `main':
 autotest.c:(.text+0x18): undefined reference to `gdImageCreateFromWebpPtr'
 collect2: error: ld returned 1 exit status
 ----------

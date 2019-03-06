@@ -1,13 +1,13 @@
 
-yum -y install zlib zlib-devel gcc-c++ libtool openssl openssl-devel gd-devel libgd2-xpm libgd2-xpm-dev gd-devel libevent-devel pcre-devel
+yum -y install zlib zlib-devel gcc-c++ libtool openssl openssl-devel readline-devel gd-devel libgd2-xpm libgd2-xpm-dev gd-devel libevent libevent-devel pcre-devel
 
-cd ./libevent-2.1.8-stable
-gmake confclean
-make clean
-make uninstall
-./configure
-make 
-make install
+#cd ./libevent-2.1.8-stable
+#gmake confclean
+#make clean
+#make uninstall
+#./configure
+#make 
+#make install
 
 #cd ../lua-5.3.5
 #make clean
@@ -15,16 +15,17 @@ make install
 #make linux test
 #make install
 
+cd ./LuaJIT-2.1.0-beta2
+make clean
+make uninstall
+make && make install
+
 cd ../lua-cjson
 make clean
 make uninstall
 make all
 make install
 
-cd ../LuaJIT-2.1.0-beta2
-make clean
-make uninstall
-make && make install
 
 export LUAJIT_LIB=/usr/local/lib
 export LUAJIT_INC=/usr/local/include/luajit-2.1

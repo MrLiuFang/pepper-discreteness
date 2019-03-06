@@ -18,10 +18,10 @@ PREFIX =            /usr/local
 CFLAGS =            -O3 -Wall -pedantic -DNDEBUG
 CJSON_CFLAGS =      -fpic
 CJSON_LDFLAGS =     -shared
-LUA_INCLUDE_DIR ?=   $(PREFIX)/include
-LUA_CMODULE_DIR ?=   $(PREFIX)/lib/lua/$(LUA_VERSION)
-LUA_MODULE_DIR ?=    $(PREFIX)/share/lua/$(LUA_VERSION)
-LUA_BIN_DIR ?=       $(PREFIX)/bin
+LUA_INCLUDE_DIR ?=   $(PREFIX)/include/luajit-2.1/
+LUA_CMODULE_DIR ?=   $(PREFIX)/lib
+LUA_MODULE_DIR ?=    $(PREFIX)/share/luajit-2.1.0-beta2
+LUA_BIN_DIR ?=      $(PREFIX)/bin
 
 ##### Platform overrides #####
 ##
