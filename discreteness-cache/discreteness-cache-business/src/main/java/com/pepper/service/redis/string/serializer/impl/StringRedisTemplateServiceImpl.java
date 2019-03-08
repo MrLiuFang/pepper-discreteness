@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.BoundGeoOperations;
 import org.springframework.data.redis.core.BoundHashOperations;
@@ -33,7 +34,6 @@ import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.data.redis.core.types.RedisClientInfo;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
-import org.apache.dubbo.config.annotation.Service;
 import com.pepper.service.redis.string.serializer.StringRedisTemplateService;
 
 /**
@@ -42,7 +42,7 @@ import com.pepper.service.redis.string.serializer.StringRedisTemplateService;
  *
  */
 @Service(interfaceClass = StringRedisTemplateService.class)
-@ConditionalOnBean(value={StringRedisTemplate.class})
+@DependsOn(value={"redisTemplate"})
 public class StringRedisTemplateServiceImpl implements StringRedisTemplateService {
 
 	@Autowired
