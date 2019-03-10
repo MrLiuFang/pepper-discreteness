@@ -6,6 +6,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.pepper.common.emuns.PayType;
+import com.pepper.common.emuns.YesOrNo;
 import com.pepper.core.base.BaseModel;
 
 /**
@@ -51,13 +53,13 @@ public class Pay extends BaseModel {
 	 * 是否支付
 	 */
 	@Column(name = "is_pay")
-	private Integer isPay;
+	private YesOrNo isPay;
 
 	/**
 	 * 支付方式
 	 */
 	@Column(name = "pay_type")
-	private Integer payType;
+	private PayType payType;
 
 
 
@@ -93,19 +95,20 @@ public class Pay extends BaseModel {
 		this.payAmount = payAmount;
 	}
 
-	public Integer getIsPay() {
+	public YesOrNo getIsPay() {
 		return isPay;
 	}
 
-	public void setIsPay(Integer isPay) {
+	public void setIsPay(YesOrNo isPay) {
 		this.isPay = isPay;
 	}
 
-	public Integer getPayType() {
+	public PayType getPayType() {
 		return payType;
 	}
 
-	public void setPayType(Integer payType) {
+	public void setPayType(PayType payType) {
 		this.payType = payType;
 	}
+	
 }

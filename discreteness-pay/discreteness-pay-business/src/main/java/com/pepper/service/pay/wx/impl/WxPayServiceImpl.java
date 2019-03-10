@@ -10,12 +10,13 @@ import java.util.TreeMap;
 
 import javax.annotation.Resource;
 
-import org.springframework.util.StringUtils;
-
 import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.annotation.Service;
+import org.springframework.util.StringUtils;
+
 import com.github.wxpay.sdk.WXPay;
 import com.github.wxpay.sdk.WXPayUtil;
+import com.pepper.common.emuns.PayType;
 import com.pepper.common.emuns.YesOrNo;
 import com.pepper.core.base.impl.BaseServiceImpl;
 import com.pepper.dao.pay.PayDao;
@@ -112,8 +113,8 @@ public class WxPayServiceImpl extends BaseServiceImpl<Pay> implements WxPayServi
 		Pay pay = new Pay();
 		pay.setAmountPayable(amountPayable);
 		pay.setOrderId(orderId);
-		pay.setPayType(1);
-		pay.setIsPay(YesOrNo.NO.getKey());
+		pay.setPayType(PayType.WX);
+		pay.setIsPay(YesOrNo.YES);
 		pay = payDao.save(pay);
 		if (StringUtils.hasText(pay.getId())) {
 			return true;
@@ -133,7 +134,7 @@ public class WxPayServiceImpl extends BaseServiceImpl<Pay> implements WxPayServi
 				String out_trade_no	 = notifyMap.get("out_trade_no");
 				String cash_fee = notifyMap.get("cash_fee");
 				Pay pay = payDao.getPayBuyOrderId(out_trade_no);
-				pay.setIsPay(YesOrNo.YES.getKey());
+				pay.setIsPay(YesOrNo.YES);
 				pay.setPayId(transaction_id);
 				payDao.save(pay);
 				return payCallback.payCallback(cash_fee, out_trade_no);

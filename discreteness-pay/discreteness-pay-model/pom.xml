@@ -21,6 +21,12 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>com.pepper</groupId>
+			<artifactId>discreteness-common-emun</artifactId>
+			<version>${project.parent.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<scope>provided</scope>
