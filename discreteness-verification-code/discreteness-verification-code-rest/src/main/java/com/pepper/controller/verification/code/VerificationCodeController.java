@@ -27,7 +27,6 @@ import com.pepper.core.base.impl.BaseControllerImpl;
 import com.pepper.core.constant.GlobalConstant;
 import com.pepper.service.redis.string.serializer.ValueOperationsService;
 import com.pepper.service.verification.code.VerificationCodeService;
-import com.sun.istack.NotNull;
 
 /**
  * 
