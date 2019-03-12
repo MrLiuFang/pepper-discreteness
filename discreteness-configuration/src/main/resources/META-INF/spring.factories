@@ -1,3 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.pepper.configuration.validator.ValidatorConfiguration,\
-com.pepper.configuration.zookeeper.ZookeeperConfiguration
+com.pepper.configuration.zookeeper.ZookeeperConfiguration,\
+com.pepper.configuration.verification.code.KaptchaConfiguration

@@ -24,6 +24,12 @@
 			<artifactId>hibernate-validator</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		
+		<dependency>
+		    <groupId>com.github.penggle</groupId>
+		    <artifactId>kaptcha</artifactId>
+		    <scope>provided</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.curator</groupId>
