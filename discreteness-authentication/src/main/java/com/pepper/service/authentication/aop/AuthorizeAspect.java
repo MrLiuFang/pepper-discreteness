@@ -2,9 +2,9 @@ package com.pepper.service.authentication.aop;
 
 import java.lang.reflect.Method;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.dubbo.config.annotation.Reference;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -18,24 +18,18 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import org.apache.dubbo.config.annotation.Reference;
-import com.pepper.common.emuns.Scope;
 import com.pepper.core.constant.GlobalConstant;
 import com.pepper.core.exception.AuthorizeException;
 import com.pepper.core.exception.NoPermissionException;
-import com.pepper.service.authentication.AppAuthorize;
-import com.pepper.service.authentication.ConsoleAuthorize;
-import com.pepper.service.authentication.FrontAuthorize;
 import com.pepper.service.authentication.IAuthorize;
-import com.pepper.service.authentication.WeixinAuthorize;
 import com.pepper.service.redis.string.serializer.SetOperationsService;
-import com.pepper.service.redis.string.serializer.StringRedisTemplateService;
 import com.pepper.service.redis.string.serializer.ValueOperationsService;
 import com.pepper.util.LoginTokenUtil;
 
@@ -50,17 +44,8 @@ import com.pepper.util.LoginTokenUtil;
 @Order(2)
 public class AuthorizeAspect {
 
-	@Resource
-	private ConsoleAuthorize consoleAuthorize;
-
-	@Resource
-	private FrontAuthorize pcAuthorize;
-
-	@Resource
-	private AppAuthorize appAuthorize;
-
-	@Resource
-	private WeixinAuthorize weixinAuthorize;
+	@Autowired
+	private com.pepper.service.authentication.AuthorizeFactory authorizeFactory;
 
 	@Reference
 	private ValueOperationsService valueOperationsService;
@@ -68,8 +53,6 @@ public class AuthorizeAspect {
 	@Reference
 	private SetOperationsService setOperationsService;
 
-	@Reference
-	private StringRedisTemplateService stringRedisTemplateService;
 
 
 	@SuppressWarnings("unused")
@@ -159,25 +142,11 @@ public class AuthorizeAspect {
 	 * @return
 	 */
 	private IAuthorize getAuthorize(String token){
-		String value = valueOperationsService.get(token+GlobalConstant.AUTHORIZE_TOKEN_SCOPE);
-		Scope scope =  Scope.CONSOLE;
-		if(StringUtils.hasText(value)){
-			scope = Scope.valueOf(value);
-		}else{
+		String scope = valueOperationsService.get(token+GlobalConstant.AUTHORIZE_TOKEN_SCOPE);
+		if(!StringUtils.hasText(scope)){
 			throw new AuthorizeException("登录超时!请重新登录!");
 		}
-		if(scope.equals(Scope.CONSOLE)){
-			return consoleAuthorize;
-		}else if(scope.equals(Scope.FRONT)){
-			return pcAuthorize;
-		}else if(scope.equals(Scope.APP)){
-			return appAuthorize;
-		}else if(scope.equals(Scope.WEIXIN)){
-			return weixinAuthorize;
-		}else{
-			return consoleAuthorize;
-		}
-		
+		return this.authorizeFactory.getAuthorize(scope);
 	}
 	
 }

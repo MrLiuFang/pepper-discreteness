@@ -3,12 +3,10 @@ package com.pepper.service.authentication.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.lang.NonNull;
 import org.springframework.util.StringUtils;
-
 import org.apache.dubbo.config.annotation.Reference;
 import com.pepper.core.constant.GlobalConstant;
 import com.pepper.service.authentication.IAuthorize;
