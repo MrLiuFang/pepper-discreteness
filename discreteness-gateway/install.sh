@@ -45,6 +45,7 @@ make && make install
 cd ../../../nginx-1.14.2
 gmake confclean
 make clean
+make uninstall
 ./configure --prefix=/usr/local/nginx \
 		--with-ld-opt="-Wl,-rpath,/usr/local/lib" \
 		--with-http_image_filter_module \
@@ -62,3 +63,7 @@ make clean
 make && make install
 
 \cp -r -f ../ngx_zookeeper_lua/lua/* /usr/local/share/lua/5.1/
+\cp -r -f ../conf/* /usr/local/nginx/conf
+
+\cp -r -f ../conf/nginx.service /lib/systemd/system/
+systemctl enable nginx.service
