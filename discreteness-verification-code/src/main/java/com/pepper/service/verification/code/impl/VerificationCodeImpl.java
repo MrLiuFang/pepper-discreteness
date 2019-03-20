@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -18,6 +19,7 @@ import com.pepper.service.verification.code.VerificationCodeService;
  *
  */
 @Service
+@DependsOn(value={"defaultKaptcha"})
 public class VerificationCodeImpl implements VerificationCodeService {
 	
 	@Autowired
