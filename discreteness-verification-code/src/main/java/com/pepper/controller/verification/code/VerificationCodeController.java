@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.pepper.core.ResultData;
-import com.pepper.core.ResultEnum.Code;
+import com.pepper.core.ResultEnum.Status;
 import com.pepper.core.base.BaseController;
 import com.pepper.core.base.impl.BaseControllerImpl;
 import com.pepper.core.constant.GlobalConstant;
@@ -89,7 +89,7 @@ public class VerificationCodeController extends BaseControllerImpl implements Ba
 		ResultData resultData = new ResultData();
 		if(!verificationCodeService.validateVerificationCode(code)){
 			resultData.setMessage("验证码错误");
-			resultData.setStatus(Code.FAIL.getKey());
+			resultData.setStatus(Status.FAIL.getKey());
 		}else{
 			resultData.setMessage("验证码校验正确");
 		}
