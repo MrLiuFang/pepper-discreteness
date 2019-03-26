@@ -14,8 +14,6 @@ import org.csource.fastdfs.TrackerServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -38,7 +36,7 @@ public class Fastdfs implements IFile, ApplicationListener<ContextRefreshedEvent
 	
 	private TrackerServer trackerServer;
 
-	private StorageServer storageServer;
+	private StorageServer storageServer;	
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {

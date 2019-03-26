@@ -14,6 +14,7 @@
 		<module>discreteness-file-service</module>
 		<module>discreteness-file-business</module>
 		<module>discreteness-file-model</module>
+		<module>discreteness-file-rest</module>
 	</modules>
 
 	<dependencyManagement>

@@ -25,6 +25,7 @@
 		<module>discreteness-configuration</module>
 		<module>discreteness-common-emun</module>
 		<module>discreteness-verification-code</module>
+		<module>discreteness-web-control</module>
 	</modules>
 
 </project>

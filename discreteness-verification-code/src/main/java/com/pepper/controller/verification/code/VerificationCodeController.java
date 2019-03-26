@@ -16,6 +16,7 @@ import javax.validation.constraints.NotBlank;
 
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -35,6 +36,7 @@ import com.pepper.service.verification.code.VerificationCodeService;
  */
 @Controller
 @RequestMapping(value = "/verification")
+@DependsOn(value={"defaultKaptcha"})
 public class VerificationCodeController extends BaseControllerImpl implements BaseController {
 	
 	

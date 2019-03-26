@@ -1,12 +1,18 @@
 package com.pepper.service.file.impl;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Resource;
-import org.springframework.util.StringUtils;
+
 import org.apache.dubbo.config.annotation.Service;
+import org.springframework.util.StringUtils;
+
 import com.pepper.service.file.FileService;
 
 /**
@@ -46,6 +52,32 @@ public class FileServiceImpl implements FileService {
 	@Override
 	public String addUrl(String url) {
 		return fileHelper.addUrl(url);
+	}
+
+	@Override
+	public String addFile(byte[] fileByte, String fileName) {
+		String returnFileName = null;
+		String folder=System.getProperty("java.io.tmpdir");
+		String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+		if(fileName.lastIndexOf(".")<=0||!StringUtils.hasText(suffix)){
+			fileName = fileName +".file";
+		}
+		File file = new File(folder+"/"+fileName);
+		try {
+			// 建立输出字节流
+			FileOutputStream fos = new FileOutputStream(file);
+			// 用FileOutputStream 的write方法写入字节数组
+			fos.write(fileByte);
+			fos.close();
+			returnFileName = fileHelper.add(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		return returnFileName;
 	}
 
 }

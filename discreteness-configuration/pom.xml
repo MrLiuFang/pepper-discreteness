@@ -54,6 +54,12 @@
 			<artifactId>dubbo-spring-boot-starter</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.alibaba.fescar</groupId>
+			<artifactId>fescar-spring</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 </project>
