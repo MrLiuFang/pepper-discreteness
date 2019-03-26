@@ -10,6 +10,14 @@ import java.util.Map;
  *
  */
 public interface FileService {
+	
+	/**
+	 * 
+	 * @param file
+	 * @param fileName
+	 * @return
+	 */
+	public String addFile(byte[] fileByte, String fileName);
 
 	/**
 	 * 外部连接，转到我们库，统一维护
