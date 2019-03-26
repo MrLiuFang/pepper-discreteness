@@ -22,7 +22,7 @@ public class FrontAuthorizeImpl extends AuthorizeImpl implements FrontAuthorize 
 
 	@Override
 	public Long getSessionTimeOut() {
-		return Long.valueOf(environment.getProperty(GlobalConstant.PC_SESSION_TIME_OUT.toLowerCase(), String.valueOf((60L * 30L))));
+		return Long.valueOf(environment.getProperty(GlobalConstant.FRONT_SESSION_TIME_OUT.toLowerCase(), String.valueOf((60L * 30L))));
 	}
 
 	@Override
