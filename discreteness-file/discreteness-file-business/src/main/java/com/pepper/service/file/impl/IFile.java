@@ -3,7 +3,6 @@ package com.pepper.service.file.impl;
 import java.io.File;
 import java.io.InputStream;
 
-import com.pepper.model.file.FileInformation;
 
 public interface IFile {
 
@@ -44,7 +43,7 @@ public interface IFile {
 	 * @param id
 	 * @return
 	 */
-	public String getUrl(FileInformation fileInformation);
+	public String getUrl(com.pepper.model.file.File file);
 
 	/**
 	 * 取图片指定大小的连接 TODO 需要优化
@@ -53,6 +52,6 @@ public interface IFile {
 	 * @param pix
 	 * @return
 	 */
-	public String getUrl(FileInformation fileInformation, String pix);
+	public String getUrl(com.pepper.model.file.File file, String pix);
 
 }

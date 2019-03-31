@@ -4,16 +4,18 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+
 import com.aliyun.oss.ClientConfiguration;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.common.auth.CredentialsProviderFactory;
 import com.aliyun.oss.common.auth.DefaultCredentialProvider;
 import com.aliyun.oss.model.OSSObject;
 import com.pepper.core.exception.BusinessException;
-import com.pepper.model.file.FileInformation;
+
 
 
 @Component
@@ -51,14 +53,14 @@ public class AliyunOSS implements IFile {
 	}
 
 	@Override
-	public String getUrl(FileInformation fileInformation) {
+	public String getUrl(com.pepper.model.file.File file) {
 
-		return env.getProperty("aliyunoss.domain") + "/" + fileInformation.getUrl();
+		return env.getProperty("aliyunoss.domain") + "/" + file.getUrl();
 	}
 
 	@Override
-	public String getUrl(FileInformation fileInformation, String pix) {
-		return env.getProperty("aliyunoss.domain") + "/" + fileInformation.getUrl() + "?x-oss-process=image/resize,h_"
+	public String getUrl(com.pepper.model.file.File file, String pix) {
+		return env.getProperty("aliyunoss.domain") + "/" + file.getUrl() + "?x-oss-process=image/resize,h_"
 				+ pix;
 	}
 

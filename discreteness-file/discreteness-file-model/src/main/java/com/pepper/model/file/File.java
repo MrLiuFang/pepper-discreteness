@@ -14,9 +14,9 @@ import com.pepper.core.base.BaseModel;
  *
  */
 @Entity()
-@Table(name = "t_file_infomation")
+@Table(name = "t_file")
 @DynamicUpdate(true)
-public class FileInformation extends BaseModel {
+public class File extends BaseModel {
 
 	/**
 	 *

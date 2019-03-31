@@ -18,7 +18,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import com.pepper.model.file.FileInformation;
 /**
  * 
  * @author mrliu
@@ -108,13 +107,13 @@ public class Fastdfs implements IFile, ApplicationListener<ContextRefreshedEvent
 	}
 
 	@Override
-	public String getUrl(FileInformation fileInformation) {
-		return domain + fileInformation.getUrl();
+	public String getUrl(com.pepper.model.file.File entity) {
+		return domain + entity.getUrl();
 	}
 
 	@Override
-	public String getUrl(FileInformation fileInformation, String pix) {
-		return domain + fileInformation.getUrl() + "?w=" + pix + "&h=" + pix;
+	public String getUrl(com.pepper.model.file.File entity, String pix) {
+		return domain + entity.getUrl() + "?w=" + pix + "&h=" + pix;
 	}
 
 	private StorageClient getStorageClient() throws IOException {

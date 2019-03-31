@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import com.pepper.core.exception.BusinessException;
 import com.pepper.dao.file.FileInformationDao;
-import com.pepper.model.file.FileInformation;
 import com.pepper.util.SpringContextUtil;
 
 /**
@@ -36,19 +35,19 @@ public class FileHelper {
 		if (file == null) {
 			new BusinessException("文件不能为空");
 		}
-		String key = getIFile().add(file);
+		String url = getIFile().add(file);
 		String fileId = null;
-		fileId = "fastdfs".equals(env.getProperty("file.action")) ? UUID.randomUUID().toString().replaceAll("-", "")
-				: key;
-		if (StringUtils.isNotBlank(key)) {
-			FileInformation fileInformation = new FileInformation();
-			fileInformation.setFileId(fileId);
-			fileInformation.setName(file.getName());
+		fileId = ("fastdfs".equals(env.getProperty("file.storage.type")) || "local_storage".equals(env.getProperty("file.storage.type")) ) ? UUID.randomUUID().toString().replaceAll("-", "")
+				: url;
+		if (StringUtils.isNotBlank(url)) {
+			com.pepper.model.file.File entity = new com.pepper.model.file.File();
+			entity.setFileId(fileId);
+			entity.setName(file.getName());
 			Long lengthKb = file.length() / 1024;
-			fileInformation.setSize(lengthKb.intValue());
-			fileInformation.setLocation(getIFile().getLocationName());
-			fileInformation.setUrl(key);
-			fileInformationDao.save(fileInformation);
+			entity.setSize(lengthKb.intValue());
+			entity.setLocation(getIFile().getLocationName());
+			entity.setUrl(url);
+			fileInformationDao.save(entity);
 		}
 		file.delete();
 		return fileId;
@@ -60,14 +59,14 @@ public class FileHelper {
 		}
 		IFile ifile = getIFile("urlSave");
 		String fileId = UUID.randomUUID().toString().replaceAll("-", "");
-		FileInformation fileInformation = new FileInformation();
-		fileInformation.setFileId(fileId);
-		fileInformation.setName("外部链接");
+		com.pepper.model.file.File entity = new com.pepper.model.file.File();
+		entity.setFileId(fileId);
+		entity.setName("外部链接");
 		Long lengthKb = 0L;
-		fileInformation.setSize(lengthKb.intValue());
-		fileInformation.setLocation(ifile.getLocationName());
-		fileInformation.setUrl(url);
-		fileInformationDao.save(fileInformation);
+		entity.setSize(lengthKb.intValue());
+		entity.setLocation(ifile.getLocationName());
+		entity.setUrl(url);
+		fileInformationDao.save(entity);
 		return fileId;
 	}
 
@@ -76,30 +75,32 @@ public class FileHelper {
 	}
 
 	public String getUrl(String fileId) {
-		FileInformation fileInformation = fileInformationDao.queryByFileId(fileId);
-		if (fileInformation != null) {
-			IFile ifile = getIFile(fileInformation.getLocation());
+		com.pepper.model.file.File entity = fileInformationDao.queryByFileId(fileId);
+		if (entity != null) {
+			IFile ifile = getIFile(entity.getLocation());
 			if (ifile != null) {
-				return ifile.getUrl(fileInformation);
+				return ifile.getUrl(entity);
 			}
 		}
 		return "";
 	}
 
 	private IFile getIFile() {
-		String fileAction = env.getProperty("file.action");
-		return getIFile(fileAction);
+		String storageType = env.getProperty("file.storage.type");
+		return getIFile(storageType);
 	}
 
-	private IFile getIFile(String location) {
-		synchronized (location) {
+	private IFile getIFile(String storageType) {
+		synchronized (storageType) {
 			if(ifile == null){
-				if (location.equals("fastdfs")) {
+				if (storageType.equals("fastdfs")) {
 					ifile = (IFile) SpringContextUtil.getBean("fastdfs");
-				} else if (location.equals("aliyun")) {
+				} else if (storageType.equals("aliyun")) {
 					ifile = (IFile) (IFile) SpringContextUtil.getBean("aliyunOSS");
-				} else if (location.equals("urlSave")) {
+				} else if (storageType.equals("urlSave")) {
 					ifile = (IFile) (IFile) SpringContextUtil.getBean("urlSave");
+				}else if (storageType.equals("local_storage")) {
+					ifile = (IFile) (IFile) SpringContextUtil.getBean("localStorage");
 				}
 			}
 		}

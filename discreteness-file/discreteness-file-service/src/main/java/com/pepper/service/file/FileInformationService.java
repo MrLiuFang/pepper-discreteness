@@ -1,12 +1,12 @@
 package com.pepper.service.file;
 
 import com.pepper.core.base.BaseService;
-import com.pepper.model.file.FileInformation;
+import com.pepper.model.file.File;
 
 /**
  * 文件表对象
  */
-public interface FileInformationService extends BaseService<FileInformation> {
+public interface FileInformationService extends BaseService<File> {
 
 	/**
 	 * 根据fileId获取记录
@@ -14,6 +14,6 @@ public interface FileInformationService extends BaseService<FileInformation> {
 	 * @param fileId
 	 * @return
 	 */
-	FileInformation findByFileId(String fileId);
+	File findByFileId(String fileId);
 
 }

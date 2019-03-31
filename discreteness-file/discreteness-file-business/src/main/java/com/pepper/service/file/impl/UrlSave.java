@@ -7,8 +7,6 @@ import java.util.UUID;
 import org.springframework.stereotype.Component;
 
 import com.pepper.core.exception.BusinessException;
-import com.pepper.model.file.FileInformation;
-
 @Component
 public class UrlSave implements IFile {
 
@@ -30,14 +28,14 @@ public class UrlSave implements IFile {
 	}
 
 	@Override
-	public String getUrl(FileInformation fileInformation) {
+	public String getUrl(com.pepper.model.file.File file) {
 
-		return fileInformation.getUrl();
+		return file.getUrl();
 	}
 
 	@Override
-	public String getUrl(FileInformation fileInformation, String pix) {
-		return fileInformation.getUrl();
+	public String getUrl(com.pepper.model.file.File file, String pix) {
+		return file.getUrl();
 	}
 
 	@Override
