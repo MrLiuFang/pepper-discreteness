@@ -20,6 +20,6 @@ public class TransactionConfiguration {
 
 	@Bean
 	public GlobalTransactionScanner globalTransactionScanner(Environment environment) {
-		return new GlobalTransactionScanner(environment.getProperty("spring.application.name","spring-boot-dubbo"),"receivables");
+		return new GlobalTransactionScanner(environment.getProperty("spring.application.name","spring-boot-dubbo"),"my_test_tx_group");
 	}
 }
