@@ -89,7 +89,7 @@ public class VerificationCodeController extends BaseControllerImpl implements Ba
 	@RequestMapping("/code/validate")
 	public ResultData validateVerificationCode(@NotBlank(message="请输入验证码") String code){
 		ResultData resultData = new ResultData();
-		if(!verificationCodeService.validateVerificationCode(code)){
+		if(!verificationCodeService.validateVerificationCode(code.toLowerCase())){
 			resultData.setMessage("验证码错误");
 			resultData.setStatus(Status.FAIL.getKey());
 		}else{

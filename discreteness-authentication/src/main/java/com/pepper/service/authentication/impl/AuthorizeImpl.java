@@ -67,6 +67,7 @@ public abstract class AuthorizeImpl implements IAuthorize {
 	public void deleteAuthorizeInfo(@NonNull final String token) {
 		if (StringUtils.hasText(token)) {
 			stringRedisTemplateService.delete(token + getTokenKey());
+			stringRedisTemplateService.delete(token + GlobalConstant.AUTHORIZE_TOKEN_SCOPE);
 		}
 	}
 
