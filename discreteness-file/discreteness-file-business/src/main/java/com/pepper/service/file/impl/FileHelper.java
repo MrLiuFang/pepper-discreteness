@@ -12,7 +12,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import com.pepper.core.exception.BusinessException;
-import com.pepper.dao.file.FileInformationDao;
+import com.pepper.dao.file.FileDao;
 import com.pepper.util.SpringContextUtil;
 
 /**
@@ -27,7 +27,7 @@ public class FileHelper {
 	private Environment env;
 
 	@Resource
-	private FileInformationDao fileInformationDao;
+	private FileDao fileDao;
 	
 	private static IFile ifile;
 
@@ -47,7 +47,7 @@ public class FileHelper {
 			entity.setSize(lengthKb.intValue());
 			entity.setLocation(getIFile().getLocationName());
 			entity.setUrl(url);
-			fileInformationDao.save(entity);
+			fileDao.save(entity);
 		}
 		file.delete();
 		return fileId;
@@ -66,7 +66,7 @@ public class FileHelper {
 		entity.setSize(lengthKb.intValue());
 		entity.setLocation(ifile.getLocationName());
 		entity.setUrl(url);
-		fileInformationDao.save(entity);
+		fileDao.save(entity);
 		return fileId;
 	}
 
@@ -75,7 +75,7 @@ public class FileHelper {
 	}
 
 	public String getUrl(String fileId) {
-		com.pepper.model.file.File entity = fileInformationDao.queryByFileId(fileId);
+		com.pepper.model.file.File entity = fileDao.queryByFileId(fileId);
 		if (entity != null) {
 			IFile ifile = getIFile(entity.getLocation());
 			if (ifile != null) {

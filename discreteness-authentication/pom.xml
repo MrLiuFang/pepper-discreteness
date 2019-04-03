@@ -12,6 +12,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.pepper</groupId>
 			<artifactId>pepper-core</artifactId>
 			<version>${project.parent.version}</version>
