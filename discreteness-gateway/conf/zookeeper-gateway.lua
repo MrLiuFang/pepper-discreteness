@@ -29,21 +29,23 @@ else
 	childs, err = zoo.childrens(proPath)
 end
 
-if childs ~= nil then
+if childs ~= nil and table.maxn(childs) > 0 then
 	index = math.random(1,table.maxn(childs))
 	address = childs[index]
-	while(string.match(address, '(%d+.%d+.%d+.%d+:%d+)') == nil )
+	count = 0
+	while(string.match(address, '(%d+.%d+.%d+.%d+:%d+)') == nil and count < 10 )
 	do
+		count = 1+count
 		index = math.random(1,table.maxn(childs))
 		address = childs[index]
 	end
 	if address ~= nil then
 		return ngx.exec("/proxy",{proxyhost=address})
 	else
-		return ngx.exec("@errorProxy",{proxyhost=address})
+		return ngx.exec("/error404Proxy",{errorUrl="404"})
 	end
 else
-	return ngx.exec("@frontProxy",{})
+	return ngx.exec("/error404Proxy",{errorUrl="404"})
 end
 
 
