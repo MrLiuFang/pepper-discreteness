@@ -1,6 +1,8 @@
 
 yum -y install zlib zlib-devel gcc-c++ libtool openssl openssl-devel readline-devel gd-devel libgd2-xpm libgd2-xpm-dev gd-devel libevent libevent-devel pcre-devel
 
+yum -y --exclude=kernel* update
+
 #cd ./libevent-2.1.8-stable
 #gmake confclean
 #make clean
@@ -15,10 +17,22 @@ yum -y install zlib zlib-devel gcc-c++ libtool openssl openssl-devel readline-de
 #make linux test
 #make install
 
+
+
 cd ./LuaJIT-2.1.0-beta2
 make clean
 make uninstall
 make && make install
+
+cd ../automake-1.15.1
+gmake confclean
+make clean
+make uninstall
+./configure
+make && make install
+libtoolize 
+aclocal
+autoheader
 
 cd ../lua-cjson
 make clean

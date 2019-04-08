@@ -2,6 +2,8 @@ package com.pepper.service.authentication;
 
 import java.util.List;
 
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.lang.NonNull;
 
 import com.pepper.common.emuns.Scope;
@@ -12,7 +14,7 @@ import com.pepper.common.emuns.Scope;
  * @author mrliu
  *
  */
-public interface IAuthorize {
+public interface IAuthorize extends ApplicationListener<ContextRefreshedEvent>{
 
 	/**
 	 * 判断用户是否登录

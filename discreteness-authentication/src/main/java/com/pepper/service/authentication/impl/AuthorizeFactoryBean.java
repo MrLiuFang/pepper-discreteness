@@ -23,24 +23,12 @@ import com.pepper.service.authentication.WeixinAuthorize;
  *
  */
 @Component
-public class AuthorizeFactoryBean implements AuthorizeFactory, ApplicationListener<ContextRefreshedEvent> {
-
-	@Resource
-	private ConsoleAuthorize consoleAuthorize;
-
-	@Resource
-	private FrontAuthorize frontAuthorize;
-
-	@Resource
-	private AppAuthorize appAuthorize;
-
-	@Resource
-	private WeixinAuthorize weixinAuthorize;
+public class AuthorizeFactoryBean implements AuthorizeFactory {
 	
-	private static Map<String, IAuthorize> map = new HashMap<String, IAuthorize>();
+	private static final Map<String, IAuthorize> map = new HashMap<String, IAuthorize>();
 
 	@Override
-	public IAuthorize getAuthorize(String scope) {
+	public IAuthorize getAuthorize(final String scope) {
 		if(map.containsKey(scope)){
 			return map.get(scope);
 		}
@@ -48,17 +36,17 @@ public class AuthorizeFactoryBean implements AuthorizeFactory, ApplicationListen
 	}
 
 	@Override
-	public void setAuthorize(String scope, IAuthorize authorize) {
+	public void setAuthorize(final String scope, final IAuthorize authorize) {
 		map.put(scope, authorize);
 	}
 
-	@Override
-	public void onApplicationEvent(ContextRefreshedEvent event) {
-		map.put(Scope.CONSOLE.toString(), consoleAuthorize);
-		map.put(Scope.FRONT.toString(), frontAuthorize);
-		map.put(Scope.APP.toString(), appAuthorize);
-		map.put(Scope.WEIXIN.toString(), weixinAuthorize);
-	}
+//	@Override
+//	public void onApplicationEvent(ContextRefreshedEvent event) {
+//		map.put(Scope.CONSOLE.toString(), consoleAuthorize);
+//		map.put(Scope.FRONT.toString(), frontAuthorize);
+//		map.put(Scope.APP.toString(), appAuthorize);
+//		map.put(Scope.WEIXIN.toString(), weixinAuthorize);
+//	}
 	
 	
 }

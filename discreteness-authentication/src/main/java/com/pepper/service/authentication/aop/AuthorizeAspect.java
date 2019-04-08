@@ -80,61 +80,83 @@ public class AuthorizeAspect {
 
 	@Around(value = "pointcut()")
 	public Object around(ProceedingJoinPoint jp) throws Throwable {
-		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		/**
 		 * 获取注解
 		 */
 		Signature signature = jp.getSignature();
 		MethodSignature methodSignature = (MethodSignature) signature;
 		Method method = methodSignature.getMethod();
-		Authorize authorizeAop = method.getAnnotation(Authorize.class);
+		Authorize authorize = method.getAnnotation(Authorize.class);
 
 		/**
 		 * 获取注解属性
 		 */
-		boolean authorizeLogin = authorizeAop.authorizeLogin();
-		boolean authorizeResources = authorizeAop.authorizeResources();
+		boolean authorizeLogin = authorize.authorizeLogin();
+		boolean authorizeResources = authorize.authorizeResources();
+		
+		if(authorize != null && authorizeResources){
+			authorizeResources();
+		}else if(authorize != null && authorizeLogin){
+			authorizeLogin();
+		}
+		return jp.proceed();
 
+	}
+	/**
+	 * 
+	 */
+	private void authorizeLogin(){
+		String token = getToken();
+		IAuthorize iAuthorize = getAuthorize(token);
+		String userId = iAuthorize.getUserId(token);
+		if(!StringUtils.hasText(token)){
+			throw new AuthorizeException("登录超时!请重新登录!");
+		}
+		// 获取不到用户ID则登录会话超时
+		if (!StringUtils.hasText(userId)) {
+			throw new AuthorizeException("登录超时!请重新登录!");
+		} else {
+			// 重新设置登录会话时长
+			iAuthorize.setAuthorizeInfo(userId, token);
+		}
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private String getToken(){
 		/**
 		 * 根据scope指定的端类型使用不同的token名从http请求头以及cookie中获取会话码
 		 */
 		String token = LoginTokenUtil.getLoginToken(GlobalConstant.AUTHORIZE_TOKEN);
-		if(!StringUtils.hasText(token)){
+		return token;
+	}
+	
+	/**
+	 * 
+	 */
+	private void authorizeResources(){
+		authorizeLogin();
+		String token = getToken();
+		IAuthorize iAuthorize = getAuthorize(token);
+		String userId = iAuthorize.getUserId(token);
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		String resourceKey = iAuthorize.getResourceKey(userId);
+		if (StringUtils.hasText(userId)) {
+			String url = request.getRequestURI();
+			url = url.replaceAll(request.getContextPath(), "");
+			if (StringUtils.hasText(url)) {
+				// 判断Url资源是否可调用
+				if (!setOperationsService.isMember(resourceKey, url)) {
+					throw new NoPermissionException("权限不足,请与系统管理员联系!");
+				}
+			}
+		} else {
 			throw new AuthorizeException("登录超时!请重新登录!");
 		}
-		// 获取登录登录用户的ID
-		IAuthorize authorize = getAuthorize(token);
-		String userId = authorize.getUserId(token);
-		String resourceKey = authorize.getResourceKey(userId);
-		// 鉴权用户是否登录
-		if (authorizeAop != null && authorizeLogin) {
-			// 获取不到用户ID则登录会话超时
-			if (!StringUtils.hasText(userId)) {
-				throw new AuthorizeException("登录超时!请重新登录!");
-			} else {
-				// 重新设置登录会话时长
-				authorize.setAuthorizeInfo(userId, token);
-			}
-		}
-		// 鉴权url资源是否可调用
-		if (authorizeAop != null && authorizeResources) {
-			if (StringUtils.hasText(userId)) {
-				String url = request.getRequestURI();
-				url = url.replaceAll(request.getContextPath(), "");
-				if (StringUtils.hasText(url)) {
-					// 判断Url资源是否可调用
-					if (!setOperationsService.isMember(resourceKey, url)) {
-						throw new NoPermissionException("权限不足,请与系统管理员联系!");
-					}
-				}
-			} else {
-				throw new AuthorizeException("登录超时!请重新登录!");
-			}
-		}
-		// 执行方法体
-		return jp.proceed();
-
 	}
+	
 	
 	/**
 	 * 

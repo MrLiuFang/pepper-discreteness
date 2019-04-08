@@ -1,9 +1,13 @@
 package com.pepper.service.authentication.impl;
 
+import javax.annotation.Resource;
+
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import com.pepper.common.emuns.Scope;
 import com.pepper.core.constant.GlobalConstant;
+import com.pepper.service.authentication.AuthorizeFactory;
 import com.pepper.service.authentication.FrontAuthorize;
 
 /**
@@ -15,6 +19,9 @@ import com.pepper.service.authentication.FrontAuthorize;
 @Component
 public class FrontAuthorizeImpl extends AuthorizeImpl implements FrontAuthorize {
 
+	@Resource
+	private AuthorizeFactory authorizeFactory;
+	
 	@Override
 	public String getTokenKey() {
 		return GlobalConstant.PC_TOKEN_USER_ID;
@@ -28,5 +35,10 @@ public class FrontAuthorizeImpl extends AuthorizeImpl implements FrontAuthorize 
 	@Override
 	public Scope getScope() {
 		return Scope.FRONT;
+	}
+	
+	@Override
+	public void onApplicationEvent(ContextRefreshedEvent arg0) {
+		authorizeFactory.setAuthorize(Scope.FRONT.toString(), this);
 	}
 }
