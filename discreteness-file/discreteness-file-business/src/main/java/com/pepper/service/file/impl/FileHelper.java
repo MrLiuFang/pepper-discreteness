@@ -31,7 +31,7 @@ public class FileHelper {
 	
 	private static IFile ifile;
 
-	public String add(File file) {
+	public String add(final File file) {
 		if (file == null) {
 			new BusinessException("文件不能为空");
 		}
@@ -53,7 +53,7 @@ public class FileHelper {
 		return fileId;
 	}
 
-	public String addUrl(String url) {
+	public String addUrl(final String url) {
 		if (StringUtils.isBlank(url)) {
 			new BusinessException("url不能为空");
 		}
@@ -70,11 +70,14 @@ public class FileHelper {
 		return fileId;
 	}
 
-	public InputStream get(String id) {
+	public InputStream get(final String id) {
 		return getIFile().getFileInputStream(id);
 	}
 
-	public String getUrl(String fileId) {
+	public String getUrl(final String fileId) {
+		if(!org.springframework.util.StringUtils.hasText(fileId)) {
+			return "";
+		}
 		com.pepper.model.file.File entity = fileDao.queryByFileId(fileId);
 		if (entity != null) {
 			IFile ifile = getIFile(entity.getLocation());
@@ -90,7 +93,7 @@ public class FileHelper {
 		return getIFile(storageType);
 	}
 
-	private IFile getIFile(String storageType) {
+	private IFile getIFile(final String storageType) {
 		synchronized (storageType) {
 			if(ifile == null){
 				if (storageType.equals("fastdfs")) {
