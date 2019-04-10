@@ -132,7 +132,7 @@ public class EnumSelectTag extends TagSupport {
 	public int doStartTag() throws JspException {
 		JspWriter out = this.pageContext.getOut();
 		try {
-			Class<?> class1 = Class.forName(enumClass);
+			Class<?> class1 = Class.forName(enumClass.trim());
 			List<IEnum> list = initialEnum(class1);
 
 			String requiredStr = required.toLowerCase().equals("true") ? "lay-verify='required'" : "";
