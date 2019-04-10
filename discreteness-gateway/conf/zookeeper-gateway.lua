@@ -1,14 +1,14 @@
-local zoo = require "zoo"
-local cjson = require "cjson"
-local uri = ngx.var.uri
-local devAdderss = ngx.var.remote_addr
-local isProEnv = false
-local proPath = ""
-local devPath = ""
-local childs, err
+zoo = require "zoo"
+cjson = require "cjson"
+uri = ngx.var.uri
+devAdderss = ngx.var.remote_addr
+isProEnv = false
+proPath = ""
+devPath = ""
+childs, err = nil
 
-if ngx.var.http_host == "www.test.com"  then
-	if ngx.var.uri == "" or  ngx.var.uri == "/" or ngx.var.uri == "/?#/" or ngx.var.uri == "/?#" or ngx.var.uri == "/?/" or ngx.var.uri == "/?" or address == nil then
+if ngx.var.http_host == "www.test.com" then
+	if uri == "" or uri == "/" or uri == "/?#/" or uri == "/?#" or uri == "/?/" or uri == "/?" then
 		return ngx.exec("@frontProxy",{})
 	end
 end

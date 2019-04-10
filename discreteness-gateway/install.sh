@@ -1,6 +1,9 @@
-
+yum -y install wget 
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+sudo yum clean all
+sudo yum makecache
 yum -y install zlib zlib-devel gcc-c++ libtool openssl openssl-devel readline-devel gd-devel libgd2-xpm libgd2-xpm-dev gd-devel libevent libevent-devel pcre-devel
-
 yum -y --exclude=kernel* update
 
 #cd ./libevent-2.1.8-stable
@@ -23,6 +26,9 @@ cd ./LuaJIT-2.1.0-beta2
 make clean
 make uninstall
 make && make install
+export LUAJIT_LIB=/usr/local/lib
+export LUAJIT_INC=/usr/local/include/luajit-2.1
+make clean
 
 cd ../automake-1.15.1
 gmake confclean
@@ -33,31 +39,32 @@ make && make install
 libtoolize 
 aclocal
 autoheader
+make clean
 
 cd ../lua-cjson
 make clean
 make uninstall
 make all
 make install
+\cp -r -f ./cjson.so /usr/local/lib/lua/5.1/
+make clean
 
-
-export LUAJIT_LIB=/usr/local/lib
-export LUAJIT_INC=/usr/local/include/luajit-2.1
 
 cd ../lua-redis-parser-master
 make clean
 make uninstall
 make && make install
+make clean
 
 cd ../zookeeper-3.5.4-beta/src/c
-gmake confclean
 make clean
 make uninstall
 ./configure --enable-shared --disable-static
 make && make install
+make clean
 
+rm -rf /usr/local/nginx
 cd ../../../nginx-1.14.2
-gmake confclean
 make clean
 make uninstall
 ./configure --prefix=/usr/local/nginx \
@@ -75,9 +82,12 @@ make uninstall
 		--add-module=../ngx_zookeeper_lua \
 		--with-debug
 make && make install
+make clean
 
-\cp -r -f ../ngx_zookeeper_lua/lua/* /usr/local/share/lua/5.1/
+\cp -r -f ../ngx_zookeeper_lua/lua/* /usr/share/lua/5.1/
 \cp -r -f ../conf/* /usr/local/nginx/conf
 
 \cp -r -f ../conf/nginx.service /lib/systemd/system/
 systemctl enable nginx.service
+systemctl stop nginx.service
+systemctl start nginx.service
