@@ -14,6 +14,11 @@ import com.pepper.service.authentication.impl.AuthorizeFactoryBean;
 import com.pepper.service.redis.string.serializer.ValueOperationsService;
 import com.pepper.util.LoginTokenUtil;
 
+/**
+ * 
+ * @author mrliu
+ *
+ */
 @Component
 public class CurrentUserUtil implements ICurrentUser {
 	
