@@ -68,8 +68,8 @@ public class FileUploadServiceImpl implements FileUploadService {
 	}
 	
 	private void recordFileInfo(Integer fileLength, String fileStorageId,String fileName,String storageTypeName){
-		fileStorageId = ("fastdfs".equals(env.getProperty("file.storage.type")) || "local_storage".equals(env.getProperty("file.storage.type")) ) ? UUID.randomUUID().toString().replaceAll("-", "")
-				: fileStorageId;
+		String fileStorageType = env.getProperty("file.storage.type");
+		fileStorageId = (Fastdfs.STORAGE_TYPE_NAME.equals(fileStorageType) || LocalStorage.STORAGE_TYPE_NAME.equals(fileStorageType) ) ? UUID.randomUUID().toString().replaceAll("-", ""): fileStorageId;
 		if (StringUtils.hasText(fileStorageId)) {
 			com.pepper.model.file.File entity = new com.pepper.model.file.File();
 			entity.setFileId(fileStorageId);
@@ -112,5 +112,4 @@ public class FileUploadServiceImpl implements FileUploadService {
 		}
 		return res;
 	}
-
 }
