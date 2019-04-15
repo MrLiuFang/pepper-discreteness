@@ -26,8 +26,8 @@ public class File extends BaseModel {
 	@Column(name = "file_id")
 	private String fileId;
 
-	@Column(name = "location")
-	private String location;
+	@Column(name = "storage_type_name")
+	private String storageTypeName;
 
 	@Column(name = "name")
 	private String name;
@@ -38,12 +38,12 @@ public class File extends BaseModel {
 	@Column(name = "url")
 	private String url;
 
-	public String getLocation() {
-		return location;
+	public String getStorageTypeName() {
+		return storageTypeName;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setStorageTypeName(String storageTypeName) {
+		this.storageTypeName = storageTypeName;
 	}
 
 	public String getName() {

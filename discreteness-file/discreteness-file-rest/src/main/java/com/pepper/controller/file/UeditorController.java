@@ -34,7 +34,7 @@ public class UeditorController  {
 
 	@RequestMapping(value = "/upload")
 	@ResponseBody
-	public Object add(@RequestParam("upfile") MultipartFile file, String action) throws IOException {
+	public Object add(@RequestParam("upfile") MultipartFile file) throws IOException {
 		/*
 		 * if ("config".equals(action)) { // 这里千万注意 "config.json" 文件前方的目录一定要正确
 		 * //render("/assets/admin/ueditor/jsp/config.json"); return

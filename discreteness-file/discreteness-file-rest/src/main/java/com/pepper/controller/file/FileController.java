@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.pepper.core.ResultData;
 import com.pepper.service.file.FileService;
+import com.pepper.service.file.FileUploadService;
 import com.pepper.util.FileUtil;
 
 /**
@@ -29,6 +30,9 @@ public class FileController  {
 
 	@Reference
 	private FileService fileService;
+	
+	@Reference
+	private FileUploadService fileUploadService;
 
 	@RequestMapping(value = "/add")
 	@ResponseBody
@@ -42,10 +46,10 @@ public class FileController  {
 			if (fileName.indexOf(".") <= 0) {
 				fileName = fileName + ".file";
 			}
-			String fileId = fileService.addFile(file.getBytes(),fileName);
+			String fileId = fileUploadService.addFile(file.getBytes(),fileName);
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("id", fileId);
-			map.put("url", fileService.getUrl(fileId));
+			map.put("url", fileUploadService.getUrl(fileId));
 			list.add(map);
 
 			// layedit上传图片
@@ -54,7 +58,7 @@ public class FileController  {
 				resultMap.put("code", 0);
 				resultMap.put("msg", "上传成功");
 				Map<String, Object> resultMapData = new HashMap<String, Object>();
-				resultMapData.put("src", fileService.getUrl(fileId));
+				resultMapData.put("src", fileUploadService.getUrl(fileId));
 				resultMapData.put("title", fileName);
 				resultMap.put("data", resultMapData);
 				return resultMap;
