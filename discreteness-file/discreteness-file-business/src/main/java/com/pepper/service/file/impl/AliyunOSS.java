@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ import com.pepper.core.exception.BusinessException;
 
 @Component
 @ConditionalOnBean(value={OSSClient.class,FileBeanFactory.class})
+@ConditionalOnProperty(prefix = "file", name = "storage.type", havingValue = AliyunOSS.STORAGE_TYPE_NAME, matchIfMissing = true)
 public class AliyunOSS implements IFile {
 	
 	public static final String STORAGE_TYPE_NAME = "aliyun";

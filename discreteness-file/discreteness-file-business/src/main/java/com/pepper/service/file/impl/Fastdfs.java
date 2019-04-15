@@ -13,6 +13,7 @@ import org.csource.fastdfs.TrackerClient;
 import org.csource.fastdfs.TrackerServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.env.Environment;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @ConditionalOnBean(value={TrackerClient.class,TrackerServer.class,FileBeanFactory.class})
+@ConditionalOnProperty(prefix = "file", name = "storage.type", havingValue = Fastdfs.STORAGE_TYPE_NAME, matchIfMissing = true)
 public class Fastdfs implements IFile, ApplicationListener<ContextRefreshedEvent> {
 
 	public static final String STORAGE_TYPE_NAME = "fastdfs";
