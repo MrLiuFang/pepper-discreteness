@@ -158,9 +158,9 @@ public class DistributedQueue {
             try{
                 orderedChildren = orderedChildren(null);
             }catch(KeeperException.NoNodeException e){
-                throw new NoSuchElementException();
+                new NoSuchElementException();
             }
-            if(orderedChildren.size() == 0 ) throw new NoSuchElementException();
+            if(orderedChildren.size() == 0 ) new NoSuchElementException();
 
             for(String headNode : orderedChildren.values()){
                 if(headNode != null){
@@ -190,9 +190,9 @@ public class DistributedQueue {
             try{
                 orderedChildren = orderedChildren(null);
             }catch(KeeperException.NoNodeException e){
-                throw new NoSuchElementException();
+                new NoSuchElementException();
             }
-            if(orderedChildren.size() == 0) throw new NoSuchElementException();
+            if(orderedChildren.size() == 0) new NoSuchElementException();
 
             for(String headNode : orderedChildren.values()){
                 String path = dir +"/"+headNode;

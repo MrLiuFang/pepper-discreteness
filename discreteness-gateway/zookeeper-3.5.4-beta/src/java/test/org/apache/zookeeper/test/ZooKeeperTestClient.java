@@ -225,7 +225,7 @@ public class ZooKeeperTestClient extends ZKTestCase implements Watcher {
     Thread.sleep(5000);
     WatchedEvent event = events.poll(10, TimeUnit.SECONDS);
     if (event == null) {
-      throw new IOException("No event was delivered promptly");
+      new IOException("No event was delivered promptly");
     }
     if (event.getType() != EventType.NodeChildrenChanged
         || !event.getPath().equalsIgnoreCase(parentName)) {
@@ -296,7 +296,7 @@ public class ZooKeeperTestClient extends ZKTestCase implements Watcher {
 
     event = this.getEvent(10);
     if (event == null) {
-      throw new Error("First event was not delivered promptly");
+      new Error("First event was not delivered promptly");
     }
     if (!((event.getType() == EventType.NodeChildrenChanged &&
            event.getPath().equalsIgnoreCase(parentName)) ||
@@ -310,7 +310,7 @@ public class ZooKeeperTestClient extends ZKTestCase implements Watcher {
     event = this.getEvent(10);
 
     if (event == null) {
-      throw new Error("Second event was not delivered promptly");
+      new Error("Second event was not delivered promptly");
     }
     if (!((event.getType() == EventType.NodeChildrenChanged &&
         event.getPath().equalsIgnoreCase(parentName)) ||

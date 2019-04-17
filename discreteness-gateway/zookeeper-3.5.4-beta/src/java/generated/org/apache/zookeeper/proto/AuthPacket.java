@@ -95,7 +95,7 @@ public class AuthPacket implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof AuthPacket)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     AuthPacket peer = (AuthPacket) peer_;
     int ret = 0;

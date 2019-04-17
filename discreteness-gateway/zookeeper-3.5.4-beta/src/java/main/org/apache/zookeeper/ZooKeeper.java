@@ -335,7 +335,7 @@ public class ZooKeeper implements AutoCloseable {
             }
             // Watcher function doesn't exists for the specified params
             if (!removedWatcher) {
-                throw new KeeperException.NoWatcherException(clientPath);
+                new KeeperException.NoWatcherException(clientPath);
             }
             return removedWatchers;
         }
@@ -410,7 +410,7 @@ public class ZooKeeper implements AutoCloseable {
             }
             // Watcher function doesn't exists for the specified params
             if (!containsWatcher) {
-                throw new KeeperException.NoWatcherException(path);
+                new KeeperException.NoWatcherException(path);
             }
         }
 
@@ -529,7 +529,7 @@ public class ZooKeeper implements AutoCloseable {
                 String msg = "Unhandled watch event type " + type
                     + " with state " + state + " on path " + clientPath;
                 LOG.error(msg);
-                throw new RuntimeException(msg);
+                new RuntimeException(msg);
             }
 
             return result;
@@ -1442,7 +1442,7 @@ public class ZooKeeper implements AutoCloseable {
         request.setFlags(createMode.toFlag());
         request.setPath(serverPath);
         if (acl != null && acl.size() == 0) {
-            throw new KeeperException.InvalidACLException();
+            new KeeperException.InvalidACLException();
         }
         request.setAcl(acl);
         ReplyHeader r = cnxn.submitRequest(h, request, response, null);
@@ -1541,7 +1541,7 @@ public class ZooKeeper implements AutoCloseable {
         setCreateHeader(createMode, h);
         Create2Response response = new Create2Response();
         if (acl != null && acl.size() == 0) {
-            throw new KeeperException.InvalidACLException();
+            new KeeperException.InvalidACLException();
         }
         Record record = makeCreateRecord(createMode, serverPath, data, acl, ttl);
         ReplyHeader r = cnxn.submitRequest(h, record, response, null);
@@ -2418,7 +2418,7 @@ public class ZooKeeper implements AutoCloseable {
         SetACLRequest request = new SetACLRequest();
         request.setPath(serverPath);
         if (acl != null && acl.size() == 0) {
-            throw new KeeperException.InvalidACLException(clientPath);
+            new KeeperException.InvalidACLException(clientPath);
         }
         request.setAcl(acl);
         request.setVersion(aclVersion);
@@ -2822,7 +2822,7 @@ public class ZooKeeper implements AutoCloseable {
 
     private void validateWatcher(Watcher watcher) {
         if (watcher == null) {
-            throw new IllegalArgumentException(
+            new IllegalArgumentException(
                     "Invalid Watcher, shouldn't be null!");
         }
     }

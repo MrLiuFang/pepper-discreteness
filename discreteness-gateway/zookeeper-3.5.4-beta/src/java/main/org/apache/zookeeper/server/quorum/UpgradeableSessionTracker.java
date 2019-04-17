@@ -85,6 +85,6 @@ public abstract class UpgradeableSessionTracker implements SessionTracker {
     public void checkGlobalSession(long sessionId, Object owner)
             throws KeeperException.SessionExpiredException,
             KeeperException.SessionMovedException {
-        throw new UnsupportedOperationException();
+        new UnsupportedOperationException();
     }
 }

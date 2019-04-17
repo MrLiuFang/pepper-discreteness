@@ -41,7 +41,7 @@ public class Fs extends JsonServlet
 
 	File base = new File(request.getString("path", "/"));
 	if (!base.exists() || !base.isDirectory()) {
-	    throw new FileNotFoundException("Couldn't find [" + request + "]");
+	    new FileNotFoundException("Couldn't find [" + request + "]");
 	}
 	File[] files = base.listFiles();
 	Arrays.sort(files, new Comparator<File>() { 

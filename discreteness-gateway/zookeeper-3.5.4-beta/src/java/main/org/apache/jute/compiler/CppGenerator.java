@@ -57,7 +57,7 @@ class CppGenerator {
     void genCode() throws IOException {
         if (!outputDirectory.exists()) {
             if (!outputDirectory.mkdirs()) {
-                throw new IOException("unable to create output directory "
+                new IOException("unable to create output directory "
                         + outputDirectory);
             }
         }

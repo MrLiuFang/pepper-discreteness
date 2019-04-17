@@ -42,20 +42,20 @@ public class PathUtils {
      */
     public static void validatePath(String path) throws IllegalArgumentException {
         if (path == null) {
-            throw new IllegalArgumentException("Path cannot be null");
+            new IllegalArgumentException("Path cannot be null");
         }
         if (path.length() == 0) {
-            throw new IllegalArgumentException("Path length must be > 0");
+            new IllegalArgumentException("Path length must be > 0");
         }
         if (path.charAt(0) != '/') {
-            throw new IllegalArgumentException(
+            new IllegalArgumentException(
                          "Path must start with / character");
         }
         if (path.length() == 1) { // done checking - it's the root
             return;
         }
         if (path.charAt(path.length() - 1) == '/') {
-            throw new IllegalArgumentException(
+            new IllegalArgumentException(
                          "Path must not end with / character");
         }
 
@@ -96,7 +96,7 @@ public class PathUtils {
         }
 
         if (reason != null) {
-            throw new IllegalArgumentException(
+            new IllegalArgumentException(
                     "Invalid path string \"" + path + "\" caused by " + reason);
         }
     }

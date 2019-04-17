@@ -225,10 +225,10 @@ abstract public class Shell {
       //the timeout thread handling
       //taken care in finally block
       if (exitCode != 0) {
-        throw new ExitCodeException(exitCode, errMsg.toString());
+        new ExitCodeException(exitCode, errMsg.toString());
       }
     } catch (InterruptedException ie) {
-      throw new IOException(ie.toString());
+      new IOException(ie.toString());
     } finally {
       if ((timeOutTimer!=null) && !timedOut.get()) {
         timeOutTimer.cancel();

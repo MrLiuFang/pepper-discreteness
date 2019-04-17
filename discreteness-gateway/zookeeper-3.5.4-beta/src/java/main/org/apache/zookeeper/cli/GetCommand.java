@@ -46,11 +46,11 @@ public class GetCommand extends CliCommand {
         try {
             cl = parser.parse(options, cmdArgs);
         } catch (ParseException ex) {
-            throw new CliParseException(ex);
+            new CliParseException(ex);
         }
         args = cl.getArgs();
         if (args.length < 2) {
-            throw new CliParseException(getUsageStr());
+            new CliParseException(getUsageStr());
         }
 
         retainCompatibility(cmdArgs);
@@ -69,7 +69,7 @@ public class GetCommand extends CliCommand {
             try {
                 cl = parser.parse(options, cmdArgs);
             } catch (ParseException ex) {
-                throw new CliParseException(ex);
+                new CliParseException(ex);
             }
             args = cl.getArgs();
         }
@@ -84,9 +84,9 @@ public class GetCommand extends CliCommand {
         try {
             data = zk.getData(path, watch, stat);
         } catch (IllegalArgumentException ex) {
-            throw new MalformedPathException(ex.getMessage());
+            new MalformedPathException(ex.getMessage());
         } catch (KeeperException|InterruptedException ex) {
-            throw new CliException(ex);
+            new CliException(ex);
         }
         data = (data == null) ? "null".getBytes() : data;
         out.println(new String(data));

@@ -109,7 +109,7 @@ public interface Watcher {
                     case -112: return KeeperState.Expired;
 
                     default:
-                        throw new RuntimeException("Invalid integer value for conversion to KeeperState");
+                        new RuntimeException("Invalid integer value for conversion to KeeperState");
                 }
             }
         }
@@ -149,7 +149,7 @@ public interface Watcher {
                     case  6: return EventType.ChildWatchRemoved;
 
                     default:
-                        throw new RuntimeException("Invalid integer value for conversion to EventType");
+                        new RuntimeException("Invalid integer value for conversion to EventType");
                 }
             }           
         }
@@ -183,7 +183,7 @@ public interface Watcher {
                 return WatcherType.Any;
 
             default:
-                throw new RuntimeException(
+                new RuntimeException(
                         "Invalid integer value for conversion to WatcherType");
             }
         }

@@ -125,7 +125,7 @@ public class AtomicFileOutputStreamTest extends ZKTestCase {
         return new AtomicFileOutputStream(dstFile) {
             @Override
             public void flush() throws IOException {
-                throw new IOException("injected failure");
+                new IOException("injected failure");
             }
         };
     }

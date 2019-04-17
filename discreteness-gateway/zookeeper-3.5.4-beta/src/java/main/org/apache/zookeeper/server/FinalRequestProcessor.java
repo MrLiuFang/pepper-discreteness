@@ -230,7 +230,7 @@ public class FinalRequestProcessor implements RequestProcessor {
                             subResult = new ErrorResult(subTxnResult.err) ;
                             break;
                         default:
-                            throw new IOException("Invalid type of op");
+                            new IOException("Invalid type of op");
                     }
 
                     ((MultiResponse)rsp).add(subResult);
@@ -303,7 +303,7 @@ public class FinalRequestProcessor implements RequestProcessor {
                         existsRequest);
                 String path = existsRequest.getPath();
                 if (path.indexOf('\0') != -1) {
-                    throw new KeeperException.BadArgumentsException();
+                    new KeeperException.BadArgumentsException();
                 }
                 Stat stat = zks.getZKDatabase().statNode(path, existsRequest
                         .getWatch() ? cnxn : null);
@@ -317,7 +317,7 @@ public class FinalRequestProcessor implements RequestProcessor {
                         getDataRequest);
                 DataNode n = zks.getZKDatabase().getNode(getDataRequest.getPath());
                 if (n == null) {
-                    throw new KeeperException.NoNodeException();
+                    new KeeperException.NoNodeException();
                 }
                 PrepRequestProcessor.checkACL(zks, zks.getZKDatabase().aclForNode(n),
                         ZooDefs.Perms.READ,
@@ -359,7 +359,7 @@ public class FinalRequestProcessor implements RequestProcessor {
                         getChildrenRequest);
                 DataNode n = zks.getZKDatabase().getNode(getChildrenRequest.getPath());
                 if (n == null) {
-                    throw new KeeperException.NoNodeException();
+                    new KeeperException.NoNodeException();
                 }
                 PrepRequestProcessor.checkACL(zks, zks.getZKDatabase().aclForNode(n),
                         ZooDefs.Perms.READ,
@@ -378,7 +378,7 @@ public class FinalRequestProcessor implements RequestProcessor {
                 Stat stat = new Stat();
                 DataNode n = zks.getZKDatabase().getNode(getChildren2Request.getPath());
                 if (n == null) {
-                    throw new KeeperException.NoNodeException();
+                    new KeeperException.NoNodeException();
                 }
                 PrepRequestProcessor.checkACL(zks, zks.getZKDatabase().aclForNode(n),
                         ZooDefs.Perms.READ,
@@ -400,7 +400,7 @@ public class FinalRequestProcessor implements RequestProcessor {
                 if (!containsWatcher) {
                     String msg = String.format(Locale.ENGLISH, "%s (type: %s)",
                             checkWatches.getPath(), type);
-                    throw new KeeperException.NoWatcherException(msg);
+                    new KeeperException.NoWatcherException(msg);
                 }
                 break;
             }
@@ -415,7 +415,7 @@ public class FinalRequestProcessor implements RequestProcessor {
                 if (!removed) {
                     String msg = String.format(Locale.ENGLISH, "%s (type: %s)",
                             removeWatches.getPath(), type);
-                    throw new KeeperException.NoWatcherException(msg);
+                    new KeeperException.NoWatcherException(msg);
                 }
                 break;
             }

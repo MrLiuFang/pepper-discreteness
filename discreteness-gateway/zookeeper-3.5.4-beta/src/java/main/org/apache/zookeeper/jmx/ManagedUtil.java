@@ -112,7 +112,7 @@ public class ManagedUtil {
                 }
             } catch (Exception e) {
                 LOG.error("Problems while registering log4j jmx beans!", e);
-                throw new JMException(e.toString());
+                new JMException(e.toString());
             }
         }
     }

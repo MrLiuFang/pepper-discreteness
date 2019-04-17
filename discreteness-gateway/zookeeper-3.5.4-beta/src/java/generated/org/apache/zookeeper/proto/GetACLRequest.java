@@ -71,7 +71,7 @@ public class GetACLRequest implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof GetACLRequest)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     GetACLRequest peer = (GetACLRequest) peer_;
     int ret = 0;

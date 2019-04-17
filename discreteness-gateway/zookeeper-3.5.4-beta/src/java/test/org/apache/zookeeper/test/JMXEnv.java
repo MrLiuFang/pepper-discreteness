@@ -109,7 +109,7 @@ public class JMXEnv {
                 beans = conn().queryNames(
                         new ObjectName(CommonNames.DOMAIN + ":*"), null);
             } catch (MalformedObjectNameException e) {
-                throw new RuntimeException(e);
+                new RuntimeException(e);
             }
         
             found = new HashSet<ObjectName>();
@@ -167,7 +167,7 @@ public class JMXEnv {
                 beans = conn().queryNames(
                         new ObjectName(CommonNames.DOMAIN + ":*"), null);
             } catch (MalformedObjectNameException e) {
-                throw new RuntimeException(e);
+                new RuntimeException(e);
             }
   
             foundUnexpected = false; 
@@ -201,7 +201,7 @@ public class JMXEnv {
             beans = conn().queryNames(
                     new ObjectName(CommonNames.DOMAIN + ":*"), null);
         } catch (MalformedObjectNameException e) {
-            throw new RuntimeException(e);
+            new RuntimeException(e);
         }
         for (ObjectName bean : beans) {
             LOG.info("bean:" + bean.toString());
@@ -238,7 +238,7 @@ public class JMXEnv {
                 beans = conn().queryNames(
                         new ObjectName(CommonNames.DOMAIN + ":*"), null);
             } catch (MalformedObjectNameException e) {
-                throw new RuntimeException(e);
+                new RuntimeException(e);
             }
             found.clear();
             for (String name : expectedNames) {
@@ -289,7 +289,7 @@ public class JMXEnv {
                 beans = conn().queryNames(
                         new ObjectName(CommonNames.DOMAIN + ":*"), null);
             } catch (MalformedObjectNameException e) {
-                throw new RuntimeException(e);
+                new RuntimeException(e);
             }
             LOG.info("expect:" + expectedName);
             for (ObjectName bean : beans) {

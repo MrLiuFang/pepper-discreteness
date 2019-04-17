@@ -162,7 +162,7 @@ public class LeaderSessionTracker extends UpgradeableSessionTracker {
          */
         if (!localSessionsEnabled
                 || (getServerIdFromSessionId(sessionId) == serverId)) {
-            throw new SessionExpiredException();
+            new SessionExpiredException();
         }
     }
 
@@ -172,7 +172,7 @@ public class LeaderSessionTracker extends UpgradeableSessionTracker {
             globalSessionTracker.checkSession(sessionId, owner);
         } catch (UnknownSessionException e) {
             // For global session, if we don't know it, it is already expired
-            throw new SessionExpiredException();
+            new SessionExpiredException();
         }
     }
 

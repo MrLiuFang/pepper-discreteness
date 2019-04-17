@@ -146,9 +146,9 @@ public class QuorumPeerConfig {
             
             parseProperties(cfg);
         } catch (IOException e) {
-            throw new ConfigException("Error processing " + path, e);
+            new ConfigException("Error processing " + path, e);
         } catch (IllegalArgumentException e) {
-            throw new ConfigException("Error processing " + path, e);
+            new ConfigException("Error processing " + path, e);
         }   
         
         if (dynamicConfigFileStr!=null) {
@@ -158,7 +158,7 @@ public class QuorumPeerConfig {
                try {
                    dynamicCfg.load(inConfig);
                    if (dynamicCfg.getProperty("version") != null) {
-                       throw new ConfigException("dynamic file shouldn't have version inside");
+                       new ConfigException("dynamic file shouldn't have version inside");
                    }
 
                    String version = getVersionFromFilename(dynamicConfigFileStr);
@@ -173,9 +173,9 @@ public class QuorumPeerConfig {
                setupQuorumPeerConfig(dynamicCfg, false);
 
            } catch (IOException e) {
-               throw new ConfigException("Error processing " + dynamicConfigFileStr, e);
+               new ConfigException("Error processing " + dynamicConfigFileStr, e);
            } catch (IllegalArgumentException e) {
-               throw new ConfigException("Error processing " + dynamicConfigFileStr, e);
+               new ConfigException("Error processing " + dynamicConfigFileStr, e);
            }        
            File nextDynamicConfigFile = new File(configFileStr + nextDynamicConfigFileSuffix);
            if (nextDynamicConfigFile.exists()) {
@@ -277,7 +277,7 @@ public class QuorumPeerConfig {
                     peerType = LearnerType.PARTICIPANT;
                 } else
                 {
-                    throw new ConfigException("Unrecognised peertype: " + value);
+                    new ConfigException("Unrecognised peertype: " + value);
                 }
             } else if (key.equals( "syncEnabled" )) {
                 syncEnabled = Boolean.parseBoolean(value);
@@ -293,7 +293,7 @@ public class QuorumPeerConfig {
                 } else if (value.toLowerCase().equals("false")) {
                     setStandaloneEnabled(false);
                 } else {
-                    throw new ConfigException("Invalid option " + value + " for standalone mode. Choose 'true' or 'false.'");
+                    new ConfigException("Invalid option " + value + " for standalone mode. Choose 'true' or 'false.'");
                 }
             } else if (key.equals("reconfigEnabled")) {
                 if (value.toLowerCase().equals("true")) {
@@ -301,10 +301,10 @@ public class QuorumPeerConfig {
                 } else if (value.toLowerCase().equals("false")) {
                     setReconfigEnabled(false);
                 } else {
-                    throw new ConfigException("Invalid option " + value + " for reconfigEnabled flag. Choose 'true' or 'false.'");
+                    new ConfigException("Invalid option " + value + " for reconfigEnabled flag. Choose 'true' or 'false.'");
                 }
             } else if ((key.startsWith("server.") || key.startsWith("group") || key.startsWith("weight")) && zkProp.containsKey("dynamicConfigFile")) {
-                throw new ConfigException("parameter: " + key + " must be in a separate dynamic config file");
+                new ConfigException("parameter: " + key + " must be in a separate dynamic config file");
             } else if (key.equals(QuorumAuth.QUORUM_SASL_AUTH_ENABLED)) {
                 quorumEnableSasl = Boolean.parseBoolean(value);
             } else if (key.equals(QuorumAuth.QUORUM_SERVER_SASL_AUTH_REQUIRED)) {
@@ -325,13 +325,13 @@ public class QuorumPeerConfig {
         }
 
         if (!quorumEnableSasl && quorumServerRequireSasl) {
-            throw new IllegalArgumentException(
+            new IllegalArgumentException(
                     QuorumAuth.QUORUM_SASL_AUTH_ENABLED
                             + " is disabled, so cannot enable "
                             + QuorumAuth.QUORUM_SERVER_SASL_AUTH_REQUIRED);
         }
         if (!quorumEnableSasl && quorumLearnerRequireSasl) {
-            throw new IllegalArgumentException(
+            new IllegalArgumentException(
                     QuorumAuth.QUORUM_SASL_AUTH_ENABLED
                             + " is disabled, so cannot enable "
                             + QuorumAuth.QUORUM_LEARNER_SASL_AUTH_REQUIRED);
@@ -340,7 +340,7 @@ public class QuorumPeerConfig {
         // join quorum. So this condition is ensuring that the quorumpeer learner
         // is also auth enabled while enabling quorum server require sasl.
         if (!quorumLearnerRequireSasl && quorumServerRequireSasl) {
-            throw new IllegalArgumentException(
+            new IllegalArgumentException(
                     QuorumAuth.QUORUM_LEARNER_SASL_AUTH_REQUIRED
                             + " is disabled, so cannot enable "
                             + QuorumAuth.QUORUM_SERVER_SASL_AUTH_REQUIRED);
@@ -356,7 +356,7 @@ public class QuorumPeerConfig {
         }
 
         if (dataDir == null) {
-            throw new IllegalArgumentException("dataDir is not set");
+            new IllegalArgumentException("dataDir is not set");
         }
         if (dataLogDir == null) {
             dataLogDir = dataDir;
@@ -365,7 +365,7 @@ public class QuorumPeerConfig {
         if (clientPort == 0) {
             LOG.info("clientPort is not set");
             if (clientPortAddress != null) {
-                throw new IllegalArgumentException("clientPortAddress is set but clientPort is not set");
+                new IllegalArgumentException("clientPortAddress is set but clientPort is not set");
             }
         } else if (clientPortAddress != null) {
             this.clientPortAddress = new InetSocketAddress(
@@ -379,7 +379,7 @@ public class QuorumPeerConfig {
         if (secureClientPort == 0) {
             LOG.info("secureClientPort is not set");
             if (secureClientPortAddress != null) {
-                throw new IllegalArgumentException("secureClientPortAddress is set but secureClientPort is not set");
+                new IllegalArgumentException("secureClientPortAddress is set but secureClientPort is not set");
             }
         } else if (secureClientPortAddress != null) {
             this.secureClientPortAddress = new InetSocketAddress(
@@ -394,14 +394,14 @@ public class QuorumPeerConfig {
         }
 
         if (tickTime == 0) {
-            throw new IllegalArgumentException("tickTime is not set");
+            new IllegalArgumentException("tickTime is not set");
         }
 
         minSessionTimeout = minSessionTimeout == -1 ? tickTime * 2 : minSessionTimeout;
         maxSessionTimeout = maxSessionTimeout == -1 ? tickTime * 20 : maxSessionTimeout;
 
         if (minSessionTimeout > maxSessionTimeout) {
-            throw new IllegalArgumentException(
+            new IllegalArgumentException(
                     "minSessionTimeout must not be larger than maxSessionTimeout");
         }          
 
@@ -431,7 +431,7 @@ public class QuorumPeerConfig {
                 System.setProperty("zookeeper.authProvider.x509",
                         "org.apache.zookeeper.server.auth.X509AuthenticationProvider");
             } else {
-                throw new ConfigException("No auth provider configured for the SSL authentication scheme '"
+                new ConfigException("No auth provider configured for the SSL authentication scheme '"
                         + System.getProperty(ZKConfig.SSL_AUTHPROVIDER) + "'.");
             }
         }
@@ -610,7 +610,7 @@ public class QuorumPeerConfig {
                isHierarchical = true;
             } else if (!configBackwardCompatibilityMode && !key.startsWith("server.") && !key.equals("version")){ 
                LOG.info(dynamicConfigProp.toString());
-               throw new ConfigException("Unrecognised parameter: " + key);                
+               new ConfigException("Unrecognised parameter: " + key);                
             }
         }
         
@@ -620,11 +620,11 @@ public class QuorumPeerConfig {
         int numObservers = qv.getObservingMembers().size();
         if (numParticipators == 0) {
             if (!standaloneEnabled) {
-                throw new IllegalArgumentException("standaloneEnabled = false then " +
+                new IllegalArgumentException("standaloneEnabled = false then " +
                         "number of participants should be >0");
             }
             if (numObservers > 0) {
-                throw new IllegalArgumentException("Observers w/o participants is an invalid configuration");
+                new IllegalArgumentException("Observers w/o participants is an invalid configuration");
             }
         } else if (numParticipators == 1 && standaloneEnabled) {
             // HBase currently adds a single server line to the config, for
@@ -633,7 +633,7 @@ public class QuorumPeerConfig {
             // of a quorum configuration
             LOG.error("Invalid configuration, only one server specified (ignoring)");
             if (numObservers > 0) {
-                throw new IllegalArgumentException("Observers w/o quorum is an invalid configuration");
+                new IllegalArgumentException("Observers w/o quorum is an invalid configuration");
             }
         } else {
             if (warnings) {
@@ -651,7 +651,7 @@ public class QuorumPeerConfig {
            if (eAlg != 0) {
                for (QuorumServer s : qv.getVotingMembers().values()) {
                    if (s.electionAddr == null)
-                       throw new IllegalArgumentException(
+                       new IllegalArgumentException(
                                "Missing election port for server: " + s.id);
                }
            }   
@@ -676,7 +676,7 @@ public class QuorumPeerConfig {
             serverId = Long.parseLong(myIdString);
             MDC.put("myid", myIdString);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("serverid " + myIdString
+            new IllegalArgumentException("serverid " + myIdString
                     + " is not a number");
         }
     }
@@ -691,7 +691,7 @@ public class QuorumPeerConfig {
                     && !clientPortAddress.equals(qs.clientAddr)) ||
                     (clientPortAddress.getAddress().isAnyLocalAddress()
                             && clientPortAddress.getPort() != qs.clientAddr.getPort()))
-                throw new ConfigException("client address for this server (id = " + serverId +
+                new ConfigException("client address for this server (id = " + serverId +
                         ") in static config file is " + clientPortAddress +
                         " is different from client address found in dynamic file: " + qs.clientAddr);
         }
@@ -714,13 +714,13 @@ public class QuorumPeerConfig {
     public void checkValidity() throws IOException, ConfigException{
         if (isDistributed()) {
             if (initLimit == 0) {
-                throw new IllegalArgumentException("initLimit is not set");
+                new IllegalArgumentException("initLimit is not set");
             }
             if (syncLimit == 0) {
-                throw new IllegalArgumentException("syncLimit is not set");
+                new IllegalArgumentException("syncLimit is not set");
             }
             if (serverId == UNSET_SERVERID) {
-                throw new IllegalArgumentException("myid file is missing");
+                new IllegalArgumentException("myid file is missing");
             }
        }
     }

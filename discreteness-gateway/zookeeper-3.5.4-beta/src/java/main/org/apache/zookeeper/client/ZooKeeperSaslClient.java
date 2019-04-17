@@ -150,14 +150,14 @@ public class ZooKeeperSaslClient {
                 // If the user explicitly overrides the default Login Context, they probably expected SASL to
                 // succeed. But if we got here, SASL failed.
                 if (runtimeException != null) {
-                    throw new LoginException(
+                    new LoginException(
                             "Zookeeper client cannot authenticate using the "
                                     + explicitClientSection
                                     + " section of the supplied JAAS configuration: '"
                                     + clientConfig.getJaasConfKey() + "' because of a "
                                     + "RuntimeException: " + runtimeException);
                 } else {
-                    throw new LoginException("Client cannot SASL-authenticate because the specified JAAS configuration " +
+                    new LoginException("Client cannot SASL-authenticate because the specified JAAS configuration " +
                             "section '" + explicitClientSection + "' could not be found.");
                 }
             } else {
@@ -176,7 +176,7 @@ public class ZooKeeperSaslClient {
                 // Again, the user explicitly set something SASL-related, so
                 // they probably expected SASL to succeed.
                 if (runtimeException != null) {
-                    throw new LoginException(
+                    new LoginException(
                             "Zookeeper client cannot authenticate using the '"
                                     + clientConfig.getProperty(
                                             ZKClientConfig.LOGIN_CONTEXT_NAME_KEY,
@@ -185,7 +185,7 @@ public class ZooKeeperSaslClient {
                                     + clientConfig.getJaasConfKey() + "' because of a "
                                     + "RuntimeException: " + runtimeException);
                 } else {
-                    throw new LoginException(
+                    new LoginException(
                             "No JAAS configuration section named '"
                                     + clientConfig.getProperty(
                                             ZKClientConfig.LOGIN_CONTEXT_NAME_KEY,
@@ -309,7 +309,7 @@ public class ZooKeeperSaslClient {
         if (saslToken == null) {
             // TODO: introspect about runtime environment (such as jaas.conf)
             saslState = SaslState.FAILED;
-            throw new SaslException("Error in authenticating with a Zookeeper Quorum member: the quorum member's saslToken is null.");
+            new SaslException("Error in authenticating with a Zookeeper Quorum member: the quorum member's saslToken is null.");
         }
 
         Subject subject = login.getSubject();
@@ -340,12 +340,12 @@ public class ZooKeeperSaslClient {
                     error += " Zookeeper Client will go to AUTH_FAILED state.";
                     LOG.error(error);
                     saslState = SaslState.FAILED;
-                    throw new SaslException(error);
+                    new SaslException(error);
                 }
             }
         }
         else {
-            throw new SaslException("Cannot make SASL token without subject defined. " +
+            new SaslException("Cannot make SASL token without subject defined. " +
               "For diagnosis, please look for WARNs and ERRORs in your log related to the Login class.");
         }
     }
@@ -364,7 +364,7 @@ public class ZooKeeperSaslClient {
         try {
             cnxn.sendPacket(request,response,cb, ZooDefs.OpCode.sasl);
         } catch (IOException e) {
-            throw new SaslException("Failed to send SASL packet to server.",
+            new SaslException("Failed to send SASL packet to server.",
                 e);
         }
     }
@@ -380,7 +380,7 @@ public class ZooKeeperSaslClient {
         try {
             cnxn.sendPacket(request,response,cb, ZooDefs.OpCode.sasl);
         } catch (IOException e) {
-            throw new SaslException("Failed to send SASL packet to server due " +
+            new SaslException("Failed to send SASL packet to server due " +
               "to IOException:", e);
         }
     }
@@ -408,7 +408,7 @@ public class ZooKeeperSaslClient {
     public void initialize(ClientCnxn cnxn) throws SaslException {
         if (saslClient == null) {
             saslState = SaslState.FAILED;
-            throw new SaslException("saslClient failed to initialize properly: it's null.");
+            new SaslException("saslClient failed to initialize properly: it's null.");
         }
         if (saslState == SaslState.INITIAL) {
             if (saslClient.hasInitialResponse()) {

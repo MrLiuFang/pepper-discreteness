@@ -71,7 +71,7 @@ public class CreateSessionTxn implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof CreateSessionTxn)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     CreateSessionTxn peer = (CreateSessionTxn) peer_;
     int ret = 0;

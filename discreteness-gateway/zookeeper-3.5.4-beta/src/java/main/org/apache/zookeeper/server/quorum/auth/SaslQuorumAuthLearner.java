@@ -61,7 +61,7 @@ public class SaslQuorumAuthLearner implements QuorumAuthLearner {
                 .getConfiguration()
                 .getAppConfigurationEntry(loginContext);
             if (entries == null || entries.length == 0) {
-                throw new LoginException("SASL-authentication failed because"
+                new LoginException("SASL-authentication failed because"
                                          + " the specified JAAS configuration "
                                          + "section '" + loginContext
                                          + "' could not be found.");
@@ -70,7 +70,7 @@ public class SaslQuorumAuthLearner implements QuorumAuthLearner {
                                     new SaslClientCallbackHandler(null, "QuorumLearner"), new ZKConfig());
             this.learnerLogin.startThreadIfNeeded();
         } catch (LoginException e) {
-            throw new SaslException("Failed to initialize authentication mechanism using SASL", e);
+            new SaslException("Failed to initialize authentication mechanism using SASL", e);
         }
     }
 
@@ -109,7 +109,7 @@ public class SaslQuorumAuthLearner implements QuorumAuthLearner {
                             learnerLogin);
                     // we're done; don't expect to send another BIND
                     if (responseToken != null) {
-                        throw new SaslException("Protocol error: attempting to send response after completion");
+                        new SaslException("Protocol error: attempting to send response after completion");
                     }
                     break;
                 case IN_PROGRESS:
@@ -121,12 +121,12 @@ public class SaslQuorumAuthLearner implements QuorumAuthLearner {
                             .getStatus(authPacket.getStatus());
                     break;
                 case ERROR:
-                    throw new SaslException(
+                    new SaslException(
                             "Authentication failed against server addr: "
                                     + sock.getRemoteSocketAddress());
                 default:
                     LOG.warn("Unknown status:{}!", qpStatus);
-                    throw new SaslException(
+                    new SaslException(
                             "Authentication failed against server addr: "
                                     + sock.getRemoteSocketAddress());
                 }
@@ -152,7 +152,7 @@ public class SaslQuorumAuthLearner implements QuorumAuthLearner {
             LOG.info("Successfully completed the authentication using SASL. server addr: {}, status: {}",
                     sock.getRemoteSocketAddress(), qpStatus);
         } else {
-            throw new SaslException("Authentication failed against server addr: "
+            new SaslException("Authentication failed against server addr: "
                             + sock.getRemoteSocketAddress() + ", qpStatus: "
                             + qpStatus);
         }
@@ -182,7 +182,7 @@ public class SaslQuorumAuthLearner implements QuorumAuthLearner {
             final SaslClient saslClient, final Login login)
                     throws SaslException {
         if (saslToken == null) {
-            throw new SaslException(
+            new SaslException(
                     "Error in authenticating with a Zookeeper Quorum member: the quorum member's saslToken is null.");
         }
         if (login.getSubject() != null) {
@@ -211,11 +211,11 @@ public class SaslQuorumAuthLearner implements QuorumAuthLearner {
                                 + " '-Dsun.net.spi.nameservice.provider.1=dns,sun' to your server's JVMFLAGS environment.";
                     }
                     LOG.error(error);
-                    throw new SaslException(error);
+                    new SaslException(error);
                 }
             }
         } else {
-            throw new SaslException(
+            new SaslException(
                     "Cannot make SASL token without subject defined. "
                             + "For diagnosis, please look for WARNs and ERRORs in your log related to the Login class.");
         }

@@ -55,12 +55,12 @@ public class LearnerSnapshotThrottler {
                                     long timeoutMillis) {
         if (timeoutMillis < 0) {
             String errorMsg = "timeout cannot be negative, was " + timeoutMillis;
-            throw new IllegalArgumentException(errorMsg);
+            new IllegalArgumentException(errorMsg);
         }
         if (maxConcurrentSnapshots <= 0) {
             String errorMsg = "maxConcurrentSnapshots must be positive, was " +
                     maxConcurrentSnapshots;
-            throw new IllegalArgumentException(errorMsg);
+            new IllegalArgumentException(errorMsg);
         }
 
         this.maxConcurrentSnapshots = maxConcurrentSnapshots;
@@ -107,7 +107,7 @@ public class LearnerSnapshotThrottler {
                 snapsInProgress++;
                 snapshotNumber = snapsInProgress;
             } else {
-                throw new SnapshotThrottleException(snapsInProgress + 1,
+                new SnapshotThrottleException(snapsInProgress + 1,
                                                     maxConcurrentSnapshots);
             }
         }

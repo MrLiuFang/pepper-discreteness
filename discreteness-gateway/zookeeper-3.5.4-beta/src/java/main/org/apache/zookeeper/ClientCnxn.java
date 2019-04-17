@@ -875,7 +875,7 @@ public class ClientCnxn {
             Packet packet;
             synchronized (pendingQueue) {
                 if (pendingQueue.size() == 0) {
-                    throw new IOException("Nothing in the queue, but got "
+                    new IOException("Nothing in the queue, but got "
                             + replyHdr.getXid());
                 }
                 packet = pendingQueue.remove();
@@ -888,7 +888,7 @@ public class ClientCnxn {
                 if (packet.requestHeader.getXid() != replyHdr.getXid()) {
                     packet.replyHeader.setErr(
                             KeeperException.Code.CONNECTIONLOSS.intValue());
-                    throw new IOException("Xid out of order. Got Xid "
+                    new IOException("Xid out of order. Got Xid "
                             + replyHdr.getXid() + " with err " +
                             + replyHdr.getErr() +
                             " expected Xid "
@@ -1179,7 +1179,7 @@ public class ClientCnxn {
                             + " for sessionid 0x"
                             + Long.toHexString(sessionId);
                         LOG.warn(warnInfo);
-                        throw new SessionTimeoutException(warnInfo);
+                        new SessionTimeoutException(warnInfo);
                     }
                     if (state.isConnected()) {
                     	//1000(1 second) is to prevent race condition missing to send the second ping
@@ -1316,7 +1316,7 @@ public class ClientCnxn {
                 // save the found address so that it's used during the next
                 // connection attempt
                 rwServerAddress = addr;
-                throw new RWServerFoundException("Majority server found at "
+                new RWServerFoundException("Majority server found at "
                         + addr.getHostString() + ":" + addr.getPort());
             }
         }
@@ -1365,7 +1365,7 @@ public class ClientCnxn {
                 warnInfo = "Unable to reconnect to ZooKeeper service, session 0x"
                     + Long.toHexString(sessionId) + " has expired";
                 LOG.warn(warnInfo);
-                throw new SessionExpiredException(warnInfo);
+                new SessionExpiredException(warnInfo);
             }
             if (!readOnly && isRO) {
                 LOG.error("Read/write client got connected to read-only server");

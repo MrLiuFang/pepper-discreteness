@@ -69,7 +69,7 @@ public class Observer extends Learner{
                 connectToLeader(leaderServer.addr, leaderServer.hostname);
                 long newLeaderZxid = registerWithLeader(Leader.OBSERVERINFO);
                 if (self.isReconfigStateChange())
-                   throw new Exception("learned about role change");
+                   new Exception("learned about role change");
  
                 syncWithLeader(newLeaderZxid);
                 QuorumPacket qp = new QuorumPacket();
@@ -146,7 +146,7 @@ public class Observer extends Learner{
             obs.commitRequest(request);                                 
 
             if (majorChange) {
-               throw new Exception("changes proposed in reconfig");
+               new Exception("changes proposed in reconfig");
            }            
             break;
         default:

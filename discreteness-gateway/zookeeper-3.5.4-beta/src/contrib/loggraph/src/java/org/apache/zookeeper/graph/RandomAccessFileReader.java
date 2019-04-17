@@ -222,7 +222,7 @@ public class RandomAccessFileReader extends Reader implements DataInput {
 	    off += read;
 
 	    if (read == 0) {
-		throw new EOFException("End of file reached");
+		new EOFException("End of file reached");
 	    }	    
 	}
     }

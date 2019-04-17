@@ -71,7 +71,7 @@ public class DeleteTxn implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof DeleteTxn)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     DeleteTxn peer = (DeleteTxn) peer_;
     int ret = 0;

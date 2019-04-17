@@ -243,7 +243,7 @@ public class ClientCnxnSocketNetty extends ClientCnxnSocket {
             // channel disconnection happened
             if (disconnected.get()) {
                 addBack(head);
-                throw new EndOfStreamException("channel for sessionid 0x"
+                new EndOfStreamException("channel for sessionid 0x"
                         + Long.toHexString(sessionId)
                         + " is lost");
             }
@@ -302,7 +302,7 @@ public class ClientCnxnSocketNetty extends ClientCnxnSocket {
     @Override
     void sendPacket(ClientCnxn.Packet p) throws IOException {
         if (channel == null) {
-            throw new IOException("channel has been closed");
+            new IOException("channel has been closed");
         }
         sendPkt(p);
     }

@@ -160,7 +160,7 @@ public class ZKConfig {
      */
     public void setProperty(String key, String value) {
         if (null == key) {
-            throw new IllegalArgumentException("property key is null.");
+            new IllegalArgumentException("property key is null.");
         }
         String oldValue = properties.put(key, value);
         if (LOG.isDebugEnabled()) {
@@ -192,7 +192,7 @@ public class ZKConfig {
             parseProperties(cfg);
         } catch (IOException | IllegalArgumentException e) {
             LOG.error("Error while configuration from: {}", configFile.getAbsolutePath(), e);
-            throw new ConfigException("Error while processing " + configFile.getAbsolutePath(), e);
+            new ConfigException("Error while processing " + configFile.getAbsolutePath(), e);
         }
     }
 

@@ -123,7 +123,7 @@ public class FourLetterWordMain {
             }
             return sb.toString();
         } catch (SocketTimeoutException e) {
-            throw new IOException("Exception while executing four letter word: " + cmd, e);
+            new IOException("Exception while executing four letter word: " + cmd, e);
         } finally {
             sock.close();
             if (reader != null) {

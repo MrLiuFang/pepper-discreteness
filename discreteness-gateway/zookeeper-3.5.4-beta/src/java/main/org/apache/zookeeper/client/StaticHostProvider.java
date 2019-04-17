@@ -77,7 +77,7 @@ public final class StaticHostProvider implements HostProvider {
 
         this.serverAddresses = resolveAndShuffle(serverAddresses);
         if (this.serverAddresses.isEmpty()) {
-            throw new IllegalArgumentException(
+            new IllegalArgumentException(
                     "A HostProvider may not be empty!");
         }       
         currentIndex = -1;
@@ -100,7 +100,7 @@ public final class StaticHostProvider implements HostProvider {
 
         this.serverAddresses = resolveAndShuffle(serverAddresses);
         if (this.serverAddresses.isEmpty()) {
-            throw new IllegalArgumentException(
+            new IllegalArgumentException(
                     "A HostProvider may not be empty!");
         }       
         currentIndex = -1;
@@ -158,7 +158,7 @@ public final class StaticHostProvider implements HostProvider {
         // Resolve server addresses and shuffle them
         List<InetSocketAddress> resolvedList = resolveAndShuffle(serverAddresses);
         if (resolvedList.isEmpty()) {
-            throw new IllegalArgumentException(
+            new IllegalArgumentException(
                     "A HostProvider may not be empty!");
         }
         // Check if client's current server is in the new list of servers

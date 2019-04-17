@@ -56,7 +56,7 @@ public class SaslServerCallbackHandler implements CallbackHandler {
         if (configurationEntries == null) {
             String errorMessage = "Could not find a '" + serverSection + "' entry in this configuration: Server cannot start.";
             LOG.error(errorMessage);
-            throw new IOException(errorMessage);
+            new IOException(errorMessage);
         }
         credentials.clear();
         for(AppConfigurationEntry entry: configurationEntries) {

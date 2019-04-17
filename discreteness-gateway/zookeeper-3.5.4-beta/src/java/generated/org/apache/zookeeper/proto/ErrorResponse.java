@@ -71,7 +71,7 @@ public class ErrorResponse implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof ErrorResponse)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     ErrorResponse peer = (ErrorResponse) peer_;
     int ret = 0;

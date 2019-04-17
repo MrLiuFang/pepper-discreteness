@@ -165,7 +165,7 @@ public class Utils {
      */
     static String fromCSVString(String s) throws IOException {
         if (s.charAt(0) != '\'') {
-            throw new IOException("Error deserializing string.");
+            new IOException("Error deserializing string.");
         }
         int len = s.length();
         StringBuilder sb = new StringBuilder(len-1);
@@ -181,7 +181,7 @@ public class Utils {
                 else if (ch1 == '2' && ch2 == 'C') { sb.append(','); }
                 else if (ch1 == '7' && ch2 == 'D') { sb.append('}'); }
                 else if (ch1 == '2' && ch2 == '5') { sb.append('%'); }
-                else {throw new IOException("Error deserializing string.");}
+                else {new IOException("Error deserializing string.");}
             } else {
                 sb.append(c);
             }
@@ -253,7 +253,7 @@ public class Utils {
     static byte[] fromCSVBuffer(String s)
     throws IOException {
         if (s.charAt(0) != '#') {
-            throw new IOException("Error deserializing buffer.");
+            new IOException("Error deserializing buffer.");
         }
         ByteArrayOutputStream stream =  new ByteArrayOutputStream();
         if (s.length() == 1) { return stream.toByteArray(); }

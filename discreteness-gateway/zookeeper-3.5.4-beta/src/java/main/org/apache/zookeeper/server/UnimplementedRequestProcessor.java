@@ -37,7 +37,7 @@ public class UnimplementedRequestProcessor implements RequestProcessor {
         try {
             request.cnxn.sendResponse(rh, null, "response");
         } catch (IOException e) {
-            throw new RequestProcessorException("Can't send the response", e);
+            new RequestProcessorException("Can't send the response", e);
         }
 
         request.cnxn.sendCloseSession();

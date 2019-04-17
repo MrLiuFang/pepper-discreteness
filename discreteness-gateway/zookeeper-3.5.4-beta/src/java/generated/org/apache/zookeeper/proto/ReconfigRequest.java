@@ -107,7 +107,7 @@ public class ReconfigRequest implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof ReconfigRequest)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     ReconfigRequest peer = (ReconfigRequest) peer_;
     int ret = 0;

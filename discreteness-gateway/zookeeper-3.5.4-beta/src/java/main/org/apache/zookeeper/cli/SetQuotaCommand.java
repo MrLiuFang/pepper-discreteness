@@ -51,11 +51,11 @@ public class SetQuotaCommand extends CliCommand {
         try {
             cl = parser.parse(options, cmdArgs);
         } catch (ParseException ex) {
-            throw new CliParseException(ex);
+            new CliParseException(ex);
         }
         args = cl.getArgs();
         if (args.length < 2) {
-            throw new CliParseException(getUsageStr());
+            new CliParseException(getUsageStr());
         }
 
         return this;
@@ -72,7 +72,7 @@ public class SetQuotaCommand extends CliCommand {
             try {
                 createQuota(zk, path, bytes, -1);
             } catch (KeeperException|IOException|InterruptedException ex) {
-                throw new CliWrapperException(ex);
+                new CliWrapperException(ex);
             }
         } else if (cl.hasOption("n")) {
             // we are setting the num quota
@@ -80,10 +80,10 @@ public class SetQuotaCommand extends CliCommand {
             try {
                 createQuota(zk, path, -1L, numNodes);
             } catch (KeeperException|IOException|InterruptedException ex) {
-                throw new CliWrapperException(ex);
+                new CliWrapperException(ex);
             }
         } else {
-            throw new MalformedCommandException(getUsageStr());
+            new MalformedCommandException(getUsageStr());
         }
 
         return false;
@@ -99,10 +99,10 @@ public class SetQuotaCommand extends CliCommand {
         try {
             initStat = zk.exists(path, false);
         } catch (IllegalArgumentException ex) {
-            throw new MalformedPathException(ex.getMessage());
+            new MalformedPathException(ex.getMessage());
         }
         if (initStat == null) {
-            throw new IllegalArgumentException(path + " does not exist.");
+            new IllegalArgumentException(path + " does not exist.");
         }
         // now check if their is already existing
         // parent or child that has quota
@@ -118,7 +118,7 @@ public class SetQuotaCommand extends CliCommand {
             List<String> children = zk.getChildren(realPath, false);
             for (String child : children) {
                 if (!child.startsWith("zookeeper_")) {
-                    throw new IllegalArgumentException(path + " has child "
+                    new IllegalArgumentException(path + " has child "
                             + child + " which has a quota");
                 }
             }
@@ -207,7 +207,7 @@ public class SetQuotaCommand extends CliCommand {
             }
             for (String child : children) {
                 if (Quotas.limitNode.equals(child)) {
-                    throw new IllegalArgumentException(path + " has a parent "
+                    new IllegalArgumentException(path + " has a parent "
                             + quotaPath + " which has a quota");
                 }
             }

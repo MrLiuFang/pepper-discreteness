@@ -40,7 +40,7 @@ public class CsvOutputArchive implements OutputArchive {
     
     private void throwExceptionOnError(String tag) throws IOException {
         if (stream.checkError()) {
-            throw new IOException("Error serializing "+tag);
+            new IOException("Error serializing "+tag);
         }
     }
  

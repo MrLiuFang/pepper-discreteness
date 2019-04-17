@@ -352,7 +352,7 @@ public class WatcherTest extends ClientBase {
             }
         } catch (Exception e1) {
             LOG.error("bad", e1);
-            throw new RuntimeException(e1);
+            new RuntimeException(e1);
         }
         startServer();
         globalWatcher.waitForConnected(TIMEOUT);

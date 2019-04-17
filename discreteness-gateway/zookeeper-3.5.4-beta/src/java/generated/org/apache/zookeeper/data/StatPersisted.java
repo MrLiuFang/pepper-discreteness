@@ -167,7 +167,7 @@ public class StatPersisted implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof StatPersisted)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     StatPersisted peer = (StatPersisted) peer_;
     int ret = 0;

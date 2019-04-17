@@ -85,10 +85,10 @@ public class ZooKeeperServerMainTest extends ZKTestCase implements Watcher {
             logDir = new File(dataDir.toString() + "_txnlog");
             if (preCreateDirs) {
                 if (!dataDir.mkdir()) {
-                    throw new IOException("unable to mkdir " + dataDir);
+                    new IOException("unable to mkdir " + dataDir);
                 }
                 if (!logDir.mkdir()) {
-                    throw new IOException("unable to mkdir " + logDir);
+                    new IOException("unable to mkdir " + logDir);
                 }
             }
             
@@ -130,7 +130,7 @@ public class ZooKeeperServerMainTest extends ZKTestCase implements Watcher {
             if (!f.delete())
                 // double check for the file existence
                 if (f.exists()) {
-                    throw new IOException("Failed to delete file: " + f);
+                    new IOException("Failed to delete file: " + f);
                 }
         }
 
@@ -179,7 +179,7 @@ public class ZooKeeperServerMainTest extends ZKTestCase implements Watcher {
                 snapLog.getDataDir(), snapLog.getSnapDir()) {
             @Override
             public void commit() throws IOException {
-                throw new IOException("Input/output error");
+                new IOException("Input/output error");
             }
         };
         ZKDatabase newDB = new ZKDatabase(fileTxnSnapLogWithError);
@@ -542,7 +542,7 @@ public class ZooKeeperServerMainTest extends ZKTestCase implements Watcher {
         if (!f.delete())
             // double check for the file existence
             if (f.exists()) {
-                throw new IOException("Failed to delete file: " + f);
+                new IOException("Failed to delete file: " + f);
             }
     }
 

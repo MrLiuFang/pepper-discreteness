@@ -83,7 +83,7 @@ public class CheckWatchesRequest implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof CheckWatchesRequest)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     CheckWatchesRequest peer = (CheckWatchesRequest) peer_;
     int ret = 0;

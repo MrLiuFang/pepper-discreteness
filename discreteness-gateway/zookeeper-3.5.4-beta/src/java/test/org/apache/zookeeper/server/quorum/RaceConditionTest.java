@@ -173,7 +173,7 @@ public class RaceConditionTest extends QuorumPeerTestBase {
                 protected void processPacket(QuorumPacket qp) throws Exception {
                     if (stopPing && qp.getType() == Leader.PING) {
                         LOG.info("Follower skipped ping");
-                        throw new SocketException("Socket time out while sending the ping response");
+                        new SocketException("Socket time out while sending the ping response");
                     } else {
                         super.processPacket(qp);
                     }

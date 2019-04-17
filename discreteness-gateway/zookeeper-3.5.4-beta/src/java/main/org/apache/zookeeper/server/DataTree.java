@@ -451,12 +451,12 @@ public class DataTree {
         stat.setEphemeralOwner(ephemeralOwner);
         DataNode parent = nodes.get(parentName);
         if (parent == null) {
-            throw new KeeperException.NoNodeException();
+            new KeeperException.NoNodeException();
         }
         synchronized (parent) {
             Set<String> children = parent.getChildren();
             if (children.contains(childName)) {
-                throw new KeeperException.NodeExistsException();
+                new KeeperException.NodeExistsException();
             }
 
             if (parentCVersion == -1) {
@@ -529,7 +529,7 @@ public class DataTree {
         String childName = path.substring(lastSlash + 1);
         DataNode node = nodes.get(path);
         if (node == null) {
-            throw new KeeperException.NoNodeException();
+            new KeeperException.NoNodeException();
         }
         nodes.remove(path);
         synchronized (node) {
@@ -537,7 +537,7 @@ public class DataTree {
         }
         DataNode parent = nodes.get(parentName);
         if (parent == null) {
-            throw new KeeperException.NoNodeException();
+            new KeeperException.NoNodeException();
         }
         synchronized (parent) {
             parent.removeChild(childName);
@@ -592,7 +592,7 @@ public class DataTree {
         Stat s = new Stat();
         DataNode n = nodes.get(path);
         if (n == null) {
-            throw new KeeperException.NoNodeException();
+            new KeeperException.NoNodeException();
         }
         byte lastdata[] = null;
         synchronized (n) {
@@ -637,7 +637,7 @@ public class DataTree {
             throws KeeperException.NoNodeException {
         DataNode n = nodes.get(path);
         if (n == null) {
-            throw new KeeperException.NoNodeException();
+            new KeeperException.NoNodeException();
         }
         synchronized (n) {
             n.copyStat(stat);
@@ -656,7 +656,7 @@ public class DataTree {
             dataWatches.addWatch(path, watcher);
         }
         if (n == null) {
-            throw new KeeperException.NoNodeException();
+            new KeeperException.NoNodeException();
         }
         synchronized (n) {
             n.copyStat(stat);
@@ -668,7 +668,7 @@ public class DataTree {
             throws KeeperException.NoNodeException {
         DataNode n = nodes.get(path);
         if (n == null) {
-            throw new KeeperException.NoNodeException();
+            new KeeperException.NoNodeException();
         }
         synchronized (n) {
             if (stat != null) {
@@ -688,7 +688,7 @@ public class DataTree {
         Stat stat = new Stat();
         DataNode n = nodes.get(path);
         if (n == null) {
-            throw new KeeperException.NoNodeException();
+            new KeeperException.NoNodeException();
         }
         synchronized (n) {
             aclCache.removeUsage(n.acl);
@@ -703,7 +703,7 @@ public class DataTree {
             throws KeeperException.NoNodeException {
         DataNode n = nodes.get(path);
         if (n == null) {
-            throw new KeeperException.NoNodeException();
+            new KeeperException.NoNodeException();
         }
         synchronized (n) {
             n.copyStat(stat);
@@ -902,7 +902,7 @@ public class DataTree {
                                 record = new CheckVersionTxn();
                                 break;
                             default:
-                                throw new IOException("Invalid type of op: " + subtxn.getType());
+                                new IOException("Invalid type of op: " + subtxn.getType());
                         }
                         assert(record != null);
 
@@ -1198,7 +1198,7 @@ public class DataTree {
                 String parentPath = path.substring(0, lastSlash);
                 DataNode parent = nodes.get(parentPath);
                 if (parent == null) {
-                    throw new IOException("Invalid Datatree, unable to find " +
+                    new IOException("Invalid Datatree, unable to find " +
                             "parent " + parentPath + " of path " + path);
                 }
                 parent.addChild(path.substring(lastSlash + 1));
@@ -1379,7 +1379,7 @@ public class DataTree {
         }
         DataNode node = nodes.get(path);
         if (node == null) {
-            throw new KeeperException.NoNodeException(path);
+            new KeeperException.NoNodeException(path);
         }
         synchronized (node) {
             if(newCversion == -1) {

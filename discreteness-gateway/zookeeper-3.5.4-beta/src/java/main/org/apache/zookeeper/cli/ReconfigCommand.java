@@ -86,16 +86,16 @@ public class ReconfigCommand extends CliCommand {
         try {
             cl = parser.parse(options, cmdArgs);
         } catch (ParseException ex) {
-            throw new CliParseException(ex);
+            new CliParseException(ex);
         }
         if (!(cl.hasOption("file") || cl.hasOption("members")) && !cl.hasOption("add") && !cl.hasOption("remove")) {
-            throw new CliParseException(getUsageStr());
+            new CliParseException(getUsageStr());
         }
         if (cl.hasOption("v")) {
             try{ 
                 version = Long.parseLong(cl.getOptionValue("v"), 16);
             } catch (NumberFormatException e){
-                throw new CliParseException("-v must be followed by a long (configuration version)");
+                new CliParseException("-v must be followed by a long (configuration version)");
             }
         } else {
             version = -1;
@@ -103,12 +103,12 @@ public class ReconfigCommand extends CliCommand {
 
         // Simple error checking for conflicting modes
         if ((cl.hasOption("file") || cl.hasOption("members")) && (cl.hasOption("add") || cl.hasOption("remove"))) {
-            throw new CliParseException("Can't use -file or -members together with -add or -remove (mixing incremental" +
+            new CliParseException("Can't use -file or -members together with -add or -remove (mixing incremental" +
             		" and non-incremental modes is not allowed)");
         }
         if (cl.hasOption("file") && cl.hasOption("members"))
         {
-            throw new CliParseException("Can't use -file and -members together (conflicting non-incremental modes)");
+            new CliParseException("Can't use -file and -members together (conflicting non-incremental modes)");
         }
 
         // Set the joining/leaving/members values based on the mode we're in
@@ -135,7 +135,7 @@ public class ReconfigCommand extends CliCommand {
                 //client doesn't know what leader election alg is used
                 members = QuorumPeerConfig.parseDynamicConfig(dynamicCfg, 0, true, false).toString();
             } catch (Exception e) {
-                throw new CliParseException("Error processing " + cl.getOptionValue("file") + e.getMessage());
+                new CliParseException("Error processing " + cl.getOptionValue("file") + e.getMessage());
             } 
         }
         return this;
@@ -162,7 +162,7 @@ public class ReconfigCommand extends CliCommand {
                 new StatPrinter(out).print(stat);
             }
         } catch (KeeperException|InterruptedException ex) {
-            throw new CliWrapperException(ex);
+            new CliWrapperException(ex);
         }
         return false;
     }

@@ -73,7 +73,7 @@ public class PurgeTxnLog {
      */
     public static void purge(File dataDir, File snapDir, int num) throws IOException {
         if (num < 3) {
-            throw new IllegalArgumentException(COUNT_ERR_MSG);
+            new IllegalArgumentException(COUNT_ERR_MSG);
         }
 
         FileTxnSnapLog txnLog = new FileTxnSnapLog(dataDir, snapDir);

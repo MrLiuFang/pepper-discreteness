@@ -98,7 +98,7 @@ public class NonRecoverableErrorTest extends QuorumPeerTestBase {
                 snapLog.getDataDir(), snapLog.getSnapDir()) {
             @Override
             public void commit() throws IOException {
-                throw new IOException("Input/output error");
+                new IOException("Input/output error");
             }
         };
         ZKDatabase originalZKDatabase = leader.getActiveServer()

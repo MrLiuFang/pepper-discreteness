@@ -83,7 +83,7 @@ public class RequestHeader implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof RequestHeader)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     RequestHeader peer = (RequestHeader) peer_;
     int ret = 0;

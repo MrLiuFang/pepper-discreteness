@@ -76,7 +76,7 @@ public class ZNodeResource {
         if (session.equals("")) {
             session = null;
         } else if (!ZooKeeperService.isConnected(contextPath, session)) {
-            throw new WebApplicationException(Response.status(
+            new WebApplicationException(Response.status(
                     Response.Status.UNAUTHORIZED).build());
         }
         zk = ZooKeeperService.getClient(contextPath, session);
@@ -84,7 +84,7 @@ public class ZNodeResource {
 
     private void ensurePathNotNull(String path) {
         if (path == null) {
-            throw new IllegalArgumentException("Invalid path \"" + path + "\"");
+            new IllegalArgumentException("Invalid path \"" + path + "\"");
         }
     }
 
@@ -230,7 +230,7 @@ public class ZNodeResource {
         try {
             version = Integer.parseInt(versionParam);
         } catch (NumberFormatException e) {
-            throw new WebApplicationException(Response.status(
+            new WebApplicationException(Response.status(
                     Response.Status.BAD_REQUEST).entity(
                     new ZError(ui.getRequestUri().toString(), path
                             + " bad version " + versionParam)).build());
@@ -267,7 +267,7 @@ public class ZNodeResource {
         try {
             version = Integer.parseInt(versionParam);
         } catch (NumberFormatException e) {
-            throw new WebApplicationException(Response.status(
+            new WebApplicationException(Response.status(
                     Response.Status.BAD_REQUEST).entity(
                     new ZError(ui.getRequestUri().toString(), path
                             + " bad version " + versionParam)).build());
@@ -304,7 +304,7 @@ public class ZNodeResource {
         }
 
         if (!op.equals("create")) {
-            throw new WebApplicationException(Response.status(
+            new WebApplicationException(Response.status(
                     Response.Status.BAD_REQUEST).entity(
                     new ZError(ui.getRequestUri().toString(), path
                             + " bad operaton " + op)).build());
@@ -355,7 +355,7 @@ public class ZNodeResource {
         }
 
         if (!op.equals("create")) {
-            throw new WebApplicationException(Response.status(
+            new WebApplicationException(Response.status(
                     Response.Status.BAD_REQUEST).entity(
                     new ZError(ui.getRequestUri().toString(), path
                             + " bad operaton " + op)).build());
@@ -392,7 +392,7 @@ public class ZNodeResource {
         try {
             version = Integer.parseInt(versionParam);
         } catch (NumberFormatException e) {
-            throw new WebApplicationException(Response.status(
+            new WebApplicationException(Response.status(
                     Response.Status.BAD_REQUEST).entity(
                     new ZError(ui.getRequestUri().toString(), path
                             + " bad version " + versionParam)).build());
@@ -403,7 +403,7 @@ public class ZNodeResource {
 
     private static void throwNotFound(String path, UriInfo ui)
             throws WebApplicationException {
-        throw new WebApplicationException(Response.status(
+        new WebApplicationException(Response.status(
                 Response.Status.NOT_FOUND).entity(
                 new ZError(ui.getRequestUri().toString(), path + " not found"))
                 .build());

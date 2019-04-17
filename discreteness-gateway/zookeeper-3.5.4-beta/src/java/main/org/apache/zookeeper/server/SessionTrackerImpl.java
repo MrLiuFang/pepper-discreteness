@@ -297,24 +297,24 @@ public class SessionTrackerImpl extends ZooKeeperCriticalThread implements
         SessionImpl session = sessionsById.get(sessionId);
 
         if (session == null) {
-            throw new KeeperException.UnknownSessionException();
+            new KeeperException.UnknownSessionException();
         }
 
         if (session.isClosing()) {
-            throw new KeeperException.SessionExpiredException();
+            new KeeperException.SessionExpiredException();
         }
 
         if (session.owner == null) {
             session.owner = owner;
         } else if (session.owner != owner) {
-            throw new KeeperException.SessionMovedException();
+            new KeeperException.SessionMovedException();
         }
     }
 
     synchronized public void setOwner(long id, Object owner) throws SessionExpiredException {
         SessionImpl session = sessionsById.get(id);
         if (session == null || session.isClosing()) {
-            throw new KeeperException.SessionExpiredException();
+            new KeeperException.SessionExpiredException();
         }
         session.owner = owner;
     }
@@ -325,7 +325,7 @@ public class SessionTrackerImpl extends ZooKeeperCriticalThread implements
         try {
             checkSession(sessionId, owner);
         } catch (KeeperException.UnknownSessionException e) {
-            throw new KeeperException.SessionExpiredException();
+            new KeeperException.SessionExpiredException();
         }
     }
 }

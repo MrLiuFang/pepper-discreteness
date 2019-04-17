@@ -57,7 +57,7 @@ public class ServerConfig {
      */
     public void parse(String[] args) {
         if (args.length < 2 || args.length > 4) {
-            throw new IllegalArgumentException("Invalid number of arguments:" + Arrays.toString(args));
+            new IllegalArgumentException("Invalid number of arguments:" + Arrays.toString(args));
         }
 
         clientPortAddress = new InetSocketAddress(Integer.parseInt(args[0]));

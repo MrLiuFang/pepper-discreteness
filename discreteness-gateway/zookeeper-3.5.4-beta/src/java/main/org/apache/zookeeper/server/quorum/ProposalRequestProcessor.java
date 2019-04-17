@@ -77,7 +77,7 @@ public class ProposalRequestProcessor implements RequestProcessor {
                 try {
                     zks.getLeader().propose(request);
                 } catch (XidRolloverException e) {
-                    throw new RequestProcessorException(e.getMessage(), e);
+                    new RequestProcessorException(e.getMessage(), e);
                 }
                 syncProcessor.processRequest(request);
             }

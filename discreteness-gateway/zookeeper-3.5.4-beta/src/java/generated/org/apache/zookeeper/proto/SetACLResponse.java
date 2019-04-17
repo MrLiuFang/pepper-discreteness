@@ -72,7 +72,7 @@ public class SetACLResponse implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof SetACLResponse)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     SetACLResponse peer = (SetACLResponse) peer_;
     int ret = 0;

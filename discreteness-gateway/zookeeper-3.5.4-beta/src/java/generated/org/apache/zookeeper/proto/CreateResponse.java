@@ -71,7 +71,7 @@ public class CreateResponse implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof CreateResponse)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     CreateResponse peer = (CreateResponse) peer_;
     int ret = 0;

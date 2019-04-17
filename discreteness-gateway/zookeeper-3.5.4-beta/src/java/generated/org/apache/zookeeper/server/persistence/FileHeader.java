@@ -95,7 +95,7 @@ public class FileHeader implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof FileHeader)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     FileHeader peer = (FileHeader) peer_;
     int ret = 0;

@@ -91,7 +91,7 @@ public class Log4JSource implements LogSource {
 	    try {
 		in = new RandomAccessFileReader(f);
 	    } catch (FileNotFoundException e) {
-		throw new IllegalArgumentException("Bad file passed in (" + src.file +") cannot open:" + e);
+		new IllegalArgumentException("Bad file passed in (" + src.file +") cannot open:" + e);
 	    }
 
 	    // skip to the offset of latest skip point before starttime
@@ -206,7 +206,7 @@ public class Log4JSource implements LogSource {
 			e = readNextEntry();
 		    }
 		} catch (FilterException fe) {
-		    throw new NoSuchElementException(e.toString());
+		    new NoSuchElementException(e.toString());
 		}
 	    }
 
@@ -219,7 +219,7 @@ public class Log4JSource implements LogSource {
 	}
 
 	public void remove() throws UnsupportedOperationException {
-	    throw new UnsupportedOperationException("remove not supported for L4J logs");
+	    new UnsupportedOperationException("remove not supported for L4J logs");
 	}
 	
 	public void close() throws IOException {
@@ -249,7 +249,7 @@ public class Log4JSource implements LogSource {
     public LogIterator iterator(long starttime, long endtime, FilterOp filter) throws IllegalArgumentException, FilterException{
 	// sanitise start and end times
 	if (endtime < starttime) {
-	    throw new IllegalArgumentException("End time (" +  endtime + ") must be greater or equal to starttime (" + starttime + ")");
+	    new IllegalArgumentException("End time (" +  endtime + ") must be greater or equal to starttime (" + starttime + ")");
 	}
 
 	return new Log4JSourceIterator(this, starttime, endtime, filter);
@@ -293,7 +293,7 @@ public class Log4JSource implements LogSource {
 	if ((line != null) && (m = timep.matcher(line)).lookingAt()) {
 	    starttime = timestampFromText(dateformat, m.group(1));
 	} else {
-	    throw new IOException("Invalid log4j format. First line doesn't start with time");
+	    new IOException("Invalid log4j format. First line doesn't start with time");
 	}
 
 	/*
@@ -328,7 +328,7 @@ public class Log4JSource implements LogSource {
 	if (m.lookingAt()) {
 	    endtime = timestampFromText(dateformat, m.group(1));
 	} else {
-	    throw new IOException("Invalid log4j format. Last line doesn't start with time");
+	    new IOException("Invalid log4j format. Last line doesn't start with time");
 	}
     }
     

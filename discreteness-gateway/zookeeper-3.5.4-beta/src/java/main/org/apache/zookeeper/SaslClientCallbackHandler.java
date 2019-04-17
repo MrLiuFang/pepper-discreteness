@@ -94,7 +94,7 @@ public class SaslClientCallbackHandler implements CallbackHandler {
                             }
                         }
                         else {
-                            throw new UnsupportedCallbackException(callback, "Unrecognized SASL " + entity + "Callback");
+                            new UnsupportedCallbackException(callback, "Unrecognized SASL " + entity + "Callback");
                         }
                     }
                 }

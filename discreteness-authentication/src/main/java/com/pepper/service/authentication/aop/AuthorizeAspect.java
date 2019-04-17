@@ -110,11 +110,11 @@ public class AuthorizeAspect {
 		IAuthorize iAuthorize = getAuthorize(token);
 		String userId = iAuthorize.getUserId(token);
 		if(!StringUtils.hasText(token)){
-			throw new AuthorizeException("登录超时!请重新登录!");
+			new AuthorizeException("登录超时!请重新登录!");
 		}
 		// 获取不到用户ID则登录会话超时
 		if (!StringUtils.hasText(userId)) {
-			throw new AuthorizeException("登录超时!请重新登录!");
+			new AuthorizeException("登录超时!请重新登录!");
 		} else {
 			// 重新设置登录会话时长
 			iAuthorize.setAuthorizeInfo(userId, token);
@@ -149,11 +149,11 @@ public class AuthorizeAspect {
 			if (StringUtils.hasText(url)) {
 				// 判断Url资源是否可调用
 				if (!setOperationsService.isMember(resourceKey, url)) {
-					throw new NoPermissionException("权限不足,请与系统管理员联系!");
+					new NoPermissionException("权限不足,请与系统管理员联系!");
 				}
 			}
 		} else {
-			throw new AuthorizeException("登录超时!请重新登录!");
+			new AuthorizeException("登录超时!请重新登录!");
 		}
 	}
 	
@@ -166,7 +166,7 @@ public class AuthorizeAspect {
 	private IAuthorize getAuthorize(String token){
 		String scope = valueOperationsService.get(token+GlobalConstant.AUTHORIZE_TOKEN_SCOPE);
 		if(!StringUtils.hasText(scope)){
-			throw new AuthorizeException("登录超时!请重新登录!");
+			new AuthorizeException("登录超时!请重新登录!");
 		}
 		return this.authorizeFactory.getAuthorize(scope);
 	}

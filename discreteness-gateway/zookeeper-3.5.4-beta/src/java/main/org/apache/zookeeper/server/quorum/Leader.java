@@ -491,7 +491,7 @@ public class Leader {
                    newQV.setVersion(zk.getZxid());
                    self.setLastSeenQuorumVerifier(newQV, true);    
                } catch (Exception e) {
-                   throw new IOException(e);
+                   new IOException(e);
                }
             }
             
@@ -897,7 +897,7 @@ public class Leader {
          */
         ToBeAppliedRequestProcessor(RequestProcessor next, Leader leader) {
             if (!(next instanceof FinalRequestProcessor)) {
-                throw new RuntimeException(ToBeAppliedRequestProcessor.class
+                new RuntimeException(ToBeAppliedRequestProcessor.class
                         .getName()
                         + " must be connected to "
                         + FinalRequestProcessor.class.getName()
@@ -1056,7 +1056,7 @@ public class Leader {
             String msg =
                     "zxid lower 32 bits have rolled over, forcing re-election, and therefore new epoch start";
             shutdown(msg);
-            throw new XidRolloverException(msg);
+            new XidRolloverException(msg);
         }
 
         byte[] data = SerializeUtils.serializeRequest(request);
@@ -1192,7 +1192,7 @@ public class Leader {
                     cur = Time.currentElapsedTime();
                 }
                 if (waitingForNewEpoch) {
-                    throw new InterruptedException("Timeout while waiting for epoch from quorum");
+                    new InterruptedException("Timeout while waiting for epoch from quorum");
                 }
             }
             return epoch;
@@ -1210,7 +1210,7 @@ public class Leader {
             }
             if (ss.getCurrentEpoch() != -1) {
                 if (ss.isMoreRecentThan(leaderStateSummary)) {
-                    throw new IOException("Follower is ahead of the leader, leader summary: " 
+                    new IOException("Follower is ahead of the leader, leader summary: " 
                                                     + leaderStateSummary.getCurrentEpoch()
                                                     + " (current epoch), "
                                                     + leaderStateSummary.getLastZxid()
@@ -1233,7 +1233,7 @@ public class Leader {
                     cur = Time.currentElapsedTime();
                 }
                 if (!electionFinished) {
-                    throw new InterruptedException("Timeout while waiting for epoch to be acked by quorum");
+                    new InterruptedException("Timeout while waiting for epoch to be acked by quorum");
                 }
             }
         }
@@ -1338,7 +1338,7 @@ public class Leader {
                     cur = Time.currentElapsedTime();
                 }
                 if (!quorumFormed) {
-                    throw new InterruptedException(
+                    new InterruptedException(
                             "Timeout while waiting for NEWLEADER to be acked by quorum");
                 }
             }

@@ -83,7 +83,7 @@ public class SetMaxChildrenRequest implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof SetMaxChildrenRequest)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     SetMaxChildrenRequest peer = (SetMaxChildrenRequest) peer_;
     int ret = 0;

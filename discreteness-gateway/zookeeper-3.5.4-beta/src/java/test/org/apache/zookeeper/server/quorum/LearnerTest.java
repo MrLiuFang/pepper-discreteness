@@ -93,7 +93,7 @@ public class LearnerTest extends ZKTestCase {
         protected void sockConnect(Socket sock, InetSocketAddress addr, int timeout) 
         throws IOException {
             if (++socketConnectAttempt < passSocketConnectOnAttempt)    {
-                throw new IOException("Test injected Socket.connect() error.");
+                new IOException("Test injected Socket.connect() error.");
             }
         }
     }

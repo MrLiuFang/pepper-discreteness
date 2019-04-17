@@ -224,7 +224,7 @@ public class DataTreeTest extends ZKTestCase {
                             //the DataNode we're currently writing
                             Assert.assertTrue("Couldn't acquire a lock on the DataNode while we were calling tree.serialize", acquired);
                         } catch (InterruptedException e1) {
-                            throw new RuntimeException(e1);
+                            new RuntimeException(e1);
                         }
                         ranTestCase.set(true);
                     }

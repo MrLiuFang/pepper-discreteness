@@ -41,6 +41,6 @@ public class LocalSessionTracker extends SessionTrackerImpl {
     }
 
     public boolean addGlobalSession(long sessionId, int sessionTimeout) {
-        throw new UnsupportedOperationException();
+        new UnsupportedOperationException();
     }
 }

@@ -92,7 +92,7 @@ public class TxnLogProposalIterator implements Iterator<Proposal> {
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException();
+        new UnsupportedOperationException();
     }
 
     /**

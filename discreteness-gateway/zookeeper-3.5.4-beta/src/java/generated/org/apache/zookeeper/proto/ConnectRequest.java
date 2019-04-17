@@ -119,7 +119,7 @@ public class ConnectRequest implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof ConnectRequest)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     ConnectRequest peer = (ConnectRequest) peer_;
     int ret = 0;

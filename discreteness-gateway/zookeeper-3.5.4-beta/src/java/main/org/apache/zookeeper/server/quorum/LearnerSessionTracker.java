@@ -167,7 +167,7 @@ public class LearnerSessionTracker extends UpgradeableSessionTracker {
                 // We check local session status first to avoid race condition
                 // with session upgrading.
                 if (!isGlobalSession(sessionId)) {
-                    throw new SessionExpiredException();
+                    new SessionExpiredException();
                 }
             }
         }

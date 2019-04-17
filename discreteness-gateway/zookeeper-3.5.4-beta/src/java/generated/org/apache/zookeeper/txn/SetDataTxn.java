@@ -95,7 +95,7 @@ public class SetDataTxn implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof SetDataTxn)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     SetDataTxn peer = (SetDataTxn) peer_;
     int ret = 0;

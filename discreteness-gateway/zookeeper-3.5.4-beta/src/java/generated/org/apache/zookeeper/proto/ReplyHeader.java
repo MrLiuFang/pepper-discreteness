@@ -95,7 +95,7 @@ public class ReplyHeader implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof ReplyHeader)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     ReplyHeader peer = (ReplyHeader) peer_;
     int ret = 0;

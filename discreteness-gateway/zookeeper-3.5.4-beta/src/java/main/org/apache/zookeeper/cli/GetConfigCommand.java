@@ -48,11 +48,11 @@ public class GetConfigCommand extends CliCommand {
         try {
             cl = parser.parse(options, cmdArgs);
         } catch (ParseException ex) {
-            throw new CliParseException(ex);
+            new CliParseException(ex);
         }
         args = cl.getArgs();
         if (args.length < 1) {
-            throw new CliParseException(getUsageStr());
+            new CliParseException(getUsageStr());
         }
 
         return this;
@@ -66,7 +66,7 @@ public class GetConfigCommand extends CliCommand {
         try {
             data = zk.getConfig(watch, stat);
         } catch (KeeperException|InterruptedException ex) {
-            throw new CliWrapperException(ex);
+            new CliWrapperException(ex);
         }
         data = (data == null) ? "null".getBytes() : data;
         if (cl.hasOption("c")) {

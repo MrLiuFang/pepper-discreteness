@@ -135,7 +135,7 @@ public class CreateContainerTxn implements Record {
     deserialize(archive, "");
   }
   public int compareTo (Object peer_) throws ClassCastException {
-    throw new UnsupportedOperationException("comparing CreateContainerTxn is unimplemented");
+    new UnsupportedOperationException("comparing CreateContainerTxn is unimplemented");
   }
   public boolean equals(Object peer_) {
     if (!(peer_ instanceof CreateContainerTxn)) {

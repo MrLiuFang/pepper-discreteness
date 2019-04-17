@@ -119,7 +119,7 @@ public class TxnHeader implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof TxnHeader)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     TxnHeader peer = (TxnHeader) peer_;
     int ret = 0;

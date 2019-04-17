@@ -128,7 +128,7 @@ class XmlInputArchive implements InputArchive {
             vIdx++;
             return v;
         } else {
-            throw new IOException("Error in deserialization.");
+            new IOException("Error in deserialization.");
         }
     }
     
@@ -152,7 +152,7 @@ class XmlInputArchive implements InputArchive {
     public byte readByte(String tag) throws IOException {
         Value v = next();
         if (!"ex:i1".equals(v.getType())) {
-            throw new IOException("Error deserializing "+tag+".");
+            new IOException("Error deserializing "+tag+".");
         }
         return Byte.parseByte(v.getValue());
     }
@@ -160,7 +160,7 @@ class XmlInputArchive implements InputArchive {
     public boolean readBool(String tag) throws IOException {
         Value v = next();
         if (!"boolean".equals(v.getType())) {
-            throw new IOException("Error deserializing "+tag+".");
+            new IOException("Error deserializing "+tag+".");
         }
         return "1".equals(v.getValue());
     }
@@ -169,7 +169,7 @@ class XmlInputArchive implements InputArchive {
         Value v = next();
         if (!"i4".equals(v.getType()) &&
                 !"int".equals(v.getType())) {
-            throw new IOException("Error deserializing "+tag+".");
+            new IOException("Error deserializing "+tag+".");
         }
         return Integer.parseInt(v.getValue());
     }
@@ -177,7 +177,7 @@ class XmlInputArchive implements InputArchive {
     public long readLong(String tag) throws IOException {
         Value v = next();
         if (!"ex:i8".equals(v.getType())) {
-            throw new IOException("Error deserializing "+tag+".");
+            new IOException("Error deserializing "+tag+".");
         }
         return Long.parseLong(v.getValue());
     }
@@ -185,7 +185,7 @@ class XmlInputArchive implements InputArchive {
     public float readFloat(String tag) throws IOException {
         Value v = next();
         if (!"ex:float".equals(v.getType())) {
-            throw new IOException("Error deserializing "+tag+".");
+            new IOException("Error deserializing "+tag+".");
         }
         return Float.parseFloat(v.getValue());
     }
@@ -193,7 +193,7 @@ class XmlInputArchive implements InputArchive {
     public double readDouble(String tag) throws IOException {
         Value v = next();
         if (!"double".equals(v.getType())) {
-            throw new IOException("Error deserializing "+tag+".");
+            new IOException("Error deserializing "+tag+".");
         }
         return Double.parseDouble(v.getValue());
     }
@@ -201,7 +201,7 @@ class XmlInputArchive implements InputArchive {
     public String readString(String tag) throws IOException {
         Value v = next();
         if (!"string".equals(v.getType())) {
-            throw new IOException("Error deserializing "+tag+".");
+            new IOException("Error deserializing "+tag+".");
         }
         return Utils.fromXMLString(v.getValue());
     }
@@ -209,7 +209,7 @@ class XmlInputArchive implements InputArchive {
     public byte[] readBuffer(String tag) throws IOException {
         Value v = next();
         if (!"string".equals(v.getType())) {
-            throw new IOException("Error deserializing "+tag+".");
+            new IOException("Error deserializing "+tag+".");
         }
         return Utils.fromXMLBuffer(v.getValue());
     }
@@ -221,21 +221,21 @@ class XmlInputArchive implements InputArchive {
     public void startRecord(String tag) throws IOException {
         Value v = next();
         if (!"struct".equals(v.getType())) {
-            throw new IOException("Error deserializing "+tag+".");
+            new IOException("Error deserializing "+tag+".");
         }
     }
     
     public void endRecord(String tag) throws IOException {
         Value v = next();
         if (!"/struct".equals(v.getType())) {
-            throw new IOException("Error deserializing "+tag+".");
+            new IOException("Error deserializing "+tag+".");
         }
     }
     
     public Index startVector(String tag) throws IOException {
         Value v = next();
         if (!"array".equals(v.getType())) {
-            throw new IOException("Error deserializing "+tag+".");
+            new IOException("Error deserializing "+tag+".");
         }
         return new XmlIndex();
     }

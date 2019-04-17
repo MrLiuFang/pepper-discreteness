@@ -486,7 +486,7 @@ public class AuthFastLeaderElection implements Election {
                         // Sun doesn't include the address that causes this
                         // exception to be thrown, so we wrap the exception
                         // in order to capture this critical detail.
-                        throw new IllegalArgumentException(
+                        new IllegalArgumentException(
                                 "Unable to set socket address on packet, msg:"
                                 + e.getMessage() + " with addr:" + m.addr,
                                 e);
@@ -533,7 +533,7 @@ public class AuthFastLeaderElection implements Election {
                             // Sun doesn't include the address that causes this
                             // exception to be thrown, so we wrap the exception
                             // in order to capture this critical detail.
-                            throw new IllegalArgumentException(
+                            new IllegalArgumentException(
                                     "Unable to set socket address on packet, msg:"
                                     + e.getMessage() + " with addr:" + m.addr,
                                     e);
@@ -573,7 +573,7 @@ public class AuthFastLeaderElection implements Election {
                         // Sun doesn't include the address that causes this
                         // exception to be thrown, so we wrap the exception
                         // in order to capture this critical detail.
-                        throw new IllegalArgumentException(
+                        new IllegalArgumentException(
                                 "Unable to set socket address on packet, msg:"
                                 + e.getMessage() + " with addr:" + m.addr,
                                 e);
@@ -689,7 +689,7 @@ public class AuthFastLeaderElection implements Election {
                         // Sun doesn't include the address that causes this
                         // exception to be thrown, so we wrap the exception
                         // in order to capture this critical detail.
-                        throw new IllegalArgumentException(
+                        new IllegalArgumentException(
                                 "Unable to set socket address on packet, msg:"
                                 + e.getMessage() + " with addr:" + m.addr,
                                 e);
@@ -768,7 +768,7 @@ public class AuthFastLeaderElection implements Election {
             // mySocket.setSoTimeout(20000);
         } catch (SocketException e1) {
             e1.printStackTrace();
-            throw new RuntimeException();
+            new RuntimeException();
         }
         sendqueue = new LinkedBlockingQueue<ToSend>(2 * self.getVotingView().size());
         recvqueue = new LinkedBlockingQueue<Notification>(2 * self.getVotingView()

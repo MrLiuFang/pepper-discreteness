@@ -48,7 +48,7 @@ public final class VerifyingFileFactory {
 
     private void doFailForNonExistingPath(File file) {
         if (!file.exists()) {
-            throw new IllegalArgumentException(file.toString()
+            new IllegalArgumentException(file.toString()
                     + " file is missing");
         }
     }

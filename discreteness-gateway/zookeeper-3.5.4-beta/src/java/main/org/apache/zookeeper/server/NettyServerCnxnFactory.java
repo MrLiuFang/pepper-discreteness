@@ -366,7 +366,7 @@ public class NettyServerCnxnFactory extends ServerCnxnFactory {
             if (authProvider == null)
             {
                 LOG.error("Auth provider not found: {}", authProviderProp);
-                throw new SSLContextException(
+                new SSLContextException(
                         "Could not create SSLContext with specified auth provider: " +
                         authProviderProp);
             }

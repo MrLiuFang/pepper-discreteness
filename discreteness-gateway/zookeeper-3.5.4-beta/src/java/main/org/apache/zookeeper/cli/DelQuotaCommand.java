@@ -50,11 +50,11 @@ public class DelQuotaCommand extends CliCommand {
         try {
             cl = parser.parse(options, cmdArgs);
         } catch (ParseException ex) {
-            throw new CliParseException(ex);
+            new CliParseException(ex);
         }
         args = cl.getArgs();
         if (args.length < 2) {
-            throw new CliParseException(getUsageStr());
+            new CliParseException(getUsageStr());
         }
 
         return this;
@@ -76,7 +76,7 @@ public class DelQuotaCommand extends CliCommand {
                 delQuota(zk, path, true, true);
             }
         } catch (KeeperException|InterruptedException|IOException ex) {
-            throw new CliWrapperException(ex);
+            new CliWrapperException(ex);
         }
         return false;
     }
@@ -107,7 +107,7 @@ public class DelQuotaCommand extends CliCommand {
         try {
             data = zk.getData(quotaPath, false, new Stat());
         } catch (IllegalArgumentException ex) {
-            throw new MalformedPathException(ex.getMessage());
+            new MalformedPathException(ex.getMessage());
         } catch (KeeperException.NoNodeException ne) {
             System.err.println("quota does not exist for " + path);
             return true;

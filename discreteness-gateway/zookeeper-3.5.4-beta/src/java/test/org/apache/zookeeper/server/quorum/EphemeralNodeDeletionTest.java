@@ -204,7 +204,7 @@ public class EphemeralNodeDeletionTest extends QuorumPeerTestBase {
                     super.readPacket(pp);
                     if (injectError && pp.getType() == Leader.PROPOSAL) {
                         String type = LearnerHandler.packetToString(pp);
-                        throw new SocketTimeoutException(
+                        new SocketTimeoutException(
                                 "Socket timeout while reading the packet for operation "
                                         + type);
                     }

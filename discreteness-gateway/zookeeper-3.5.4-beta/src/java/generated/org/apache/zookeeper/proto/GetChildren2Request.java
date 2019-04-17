@@ -83,7 +83,7 @@ public class GetChildren2Request implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof GetChildren2Request)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     GetChildren2Request peer = (GetChildren2Request) peer_;
     int ret = 0;

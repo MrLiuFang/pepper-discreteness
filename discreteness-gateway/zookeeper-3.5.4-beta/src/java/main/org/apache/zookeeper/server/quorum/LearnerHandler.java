@@ -201,7 +201,7 @@ public class LearnerHandler extends ZooKeeperThread {
             } catch (IOException ie) {
                 LOG.error("Exception while closing socket", ie);
             }
-            throw new SaslException("Authentication failure: " + e.getMessage());
+            new SaslException("Authentication failure: " + e.getMessage());
         }
     }
 
@@ -390,7 +390,7 @@ public class LearnerHandler extends ZooKeeperThread {
                 if (learnerInfoData.length >= 20) {
                     long configVersion = bbsid.getLong();
                     if (configVersion > leader.self.getQuorumVerifier().getVersion()) {
-                        throw new IOException("Follower is ahead of the leader (has a later activated configuration)");
+                        new IOException("Follower is ahead of the leader (has a later activated configuration)");
                     }
                 }
             } else {

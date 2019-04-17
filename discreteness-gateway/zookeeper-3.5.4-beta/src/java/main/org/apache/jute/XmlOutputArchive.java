@@ -99,7 +99,7 @@ class XmlOutputArchive implements OutputArchive {
     private void outsideVector(String tag) throws IOException {
         String s = compoundStack.pop();
         if (!"vector".equals(s)) {
-            throw new IOException("Error serializing vector.");
+            new IOException("Error serializing vector.");
         }
         printEndEnvelope(tag);
     }
@@ -112,7 +112,7 @@ class XmlOutputArchive implements OutputArchive {
     private void outsideMap(String tag) throws IOException {
         String s = compoundStack.pop();
         if (!"map".equals(s)) {
-            throw new IOException("Error serializing map.");
+            new IOException("Error serializing map.");
         }
         printEndEnvelope(tag);
     }
@@ -125,7 +125,7 @@ class XmlOutputArchive implements OutputArchive {
     private void outsideRecord(String tag) throws IOException {
         String s = compoundStack.pop();
         if (!"struct".equals(s)) {
-            throw new IOException("Error serializing record.");
+            new IOException("Error serializing record.");
         }
         printEndEnvelope(tag);
     }

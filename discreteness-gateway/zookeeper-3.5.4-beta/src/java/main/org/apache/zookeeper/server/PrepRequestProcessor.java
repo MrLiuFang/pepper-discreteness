@@ -172,7 +172,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
             }
         }
         if (lastChange == null || lastChange.stat == null) {
-            throw new KeeperException.NoNodeException(path);
+            new KeeperException.NoNodeException(path);
         }
         return lastChange;
     }
@@ -326,7 +326,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                 }
             }
         }
-        throw new KeeperException.NoAuthException();
+        new KeeperException.NoAuthException();
     }
 
     /**
@@ -340,7 +340,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
         if (lastSlash == -1 || path.indexOf('\0') != -1 || failCreate) {
             LOG.info("Invalid path %s with session 0x%s",
                     path, Long.toHexString(sessionId));
-            throw new KeeperException.BadArgumentsException(path);
+            new KeeperException.BadArgumentsException(path);
         }
         return path.substring(0, lastSlash);
     }
@@ -375,10 +375,10 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                 ChangeRecord parentRecord = getRecordForPath(parentPath);
                 ChangeRecord nodeRecord = getRecordForPath(path);
                 if (nodeRecord.childCount > 0) {
-                    throw new KeeperException.NotEmptyException(path);
+                    new KeeperException.NotEmptyException(path);
                 }
                 if (EphemeralType.get(nodeRecord.stat.getEphemeralOwner()) == EphemeralType.NORMAL) {
-                    throw new KeeperException.BadVersionException(path);
+                    new KeeperException.BadVersionException(path);
                 }
                 request.setTxn(new DeleteTxn(path));
                 parentRecord = parentRecord.duplicate(request.getHdr().getZxid());
@@ -399,7 +399,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                 checkACL(zks, parentRecord.acl, ZooDefs.Perms.DELETE, request.authInfo);
                 checkAndIncVersion(nodeRecord.stat.getVersion(), deleteRequest.getVersion(), path);
                 if (nodeRecord.childCount > 0) {
-                    throw new KeeperException.NotEmptyException(path);
+                    new KeeperException.NotEmptyException(path);
                 }
                 request.setTxn(new DeleteTxn(path));
                 parentRecord = parentRecord.duplicate(request.getHdr().getZxid());
@@ -425,7 +425,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
             case OpCode.reconfig:
                 if (!QuorumPeerConfig.isReconfigEnabled()) {
                     LOG.error("Reconfig operation requested but reconfig feature is disabled.");
-                    throw new KeeperException.ReconfigDisabledException();
+                    new KeeperException.ReconfigDisabledException();
                 }
 
                 if (skipACL) {
@@ -439,19 +439,19 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                     lzks = (LeaderZooKeeperServer)zks;
                 } catch (ClassCastException e) {
                     // standalone mode - reconfiguration currently not supported
-                    throw new KeeperException.UnimplementedException();
+                    new KeeperException.UnimplementedException();
                 }
                 QuorumVerifier lastSeenQV = lzks.self.getLastSeenQuorumVerifier();                                                                                 
                 // check that there's no reconfig in progress
                 if (lastSeenQV.getVersion()!=lzks.self.getQuorumVerifier().getVersion()) {
-                       throw new KeeperException.ReconfigInProgress(); 
+                       new KeeperException.ReconfigInProgress(); 
                 }
                 long configId = reconfigRequest.getCurConfigId();
   
                 if (configId != -1 && configId!=lzks.self.getLastSeenQuorumVerifier().getVersion()){
                    String msg = "Reconfiguration from version " + configId + " failed -- last seen version is " +
                            lzks.self.getLastSeenQuorumVerifier().getVersion();
-                   throw new KeeperException.BadVersionException(msg);
+                   new KeeperException.BadVersionException(msg);
                 }
 
                 String newMembers = reconfigRequest.getNewMembers();
@@ -468,7 +468,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                        request.qv = QuorumPeerConfig.parseDynamicConfig(props, lzks.self.getElectionType(), true, false);
                        request.qv.setVersion(request.getHdr().getZxid());
                    } catch (IOException | ConfigException e) {
-                       throw new KeeperException.BadArgumentsException(e.getMessage());
+                       new KeeperException.BadArgumentsException(e.getMessage());
                    }
                 } else { //incremental change - must be a majority quorum system   
                    LOG.info("Incremental reconfig");
@@ -490,7 +490,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                    if (!(lastSeenQV instanceof QuorumMaj)) {
                            String msg = "Incremental reconfiguration requested but last configuration seen has a non-majority quorum system";
                            LOG.warn(msg);
-                           throw new KeeperException.BadArgumentsException(msg);               
+                           new KeeperException.BadArgumentsException(msg);               
                    }
                    Map<Long, QuorumServer> nextServers = new HashMap<Long, QuorumServer>(lastSeenQV.getAllMembers());
                    try {                           
@@ -505,13 +505,13 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                         	   // joiner should have the following format: server.x = server_spec;client_spec               
                         	   String[] parts = StringUtils.split(joiner, "=").toArray(new String[0]);
                                if (parts.length != 2) {
-                                   throw new KeeperException.BadArgumentsException("Wrong format of server string");
+                                   new KeeperException.BadArgumentsException("Wrong format of server string");
                                }
                                // extract server id x from first part of joiner: server.x
                                Long sid = Long.parseLong(parts[0].substring(parts[0].lastIndexOf('.') + 1));
                                QuorumServer qs = new QuorumServer(sid, parts[1]);
                                if (qs.clientAddr == null || qs.electionAddr == null || qs.addr == null) {
-                                   throw new KeeperException.BadArgumentsException("Wrong format of server string - each server should have 3 ports specified"); 	   
+                                   new KeeperException.BadArgumentsException("Wrong format of server string - each server should have 3 ports specified"); 	   
                                }
 
                                // check duplication of addresses and ports
@@ -527,7 +527,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                            }  
                        }
                    } catch (ConfigException e){
-                       throw new KeeperException.BadArgumentsException("Reconfiguration failed");
+                       new KeeperException.BadArgumentsException("Reconfiguration failed");
                    }
                    request.qv = new QuorumMaj(nextServers);
                    request.qv.setVersion(request.getHdr().getZxid());
@@ -535,17 +535,17 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                 if (QuorumPeerConfig.isStandaloneEnabled() && request.qv.getVotingMembers().size() < 2) {
                    String msg = "Reconfig failed - new configuration must include at least 2 followers";
                    LOG.warn(msg);
-                   throw new KeeperException.BadArgumentsException(msg);
+                   new KeeperException.BadArgumentsException(msg);
                 } else if (request.qv.getVotingMembers().size() < 1) {
                    String msg = "Reconfig failed - new configuration must include at least 1 follower";
                    LOG.warn(msg);
-                   throw new KeeperException.BadArgumentsException(msg);
+                   new KeeperException.BadArgumentsException(msg);
                 }                           
                    
                 if (!lzks.getLeader().isQuorumSynced(request.qv)) {
                    String msg2 = "Reconfig failed - there must be a connected and synced quorum in new configuration";
                    LOG.warn(msg2);             
-                   throw new KeeperException.NewConfigNoQuorum();
+                   new KeeperException.NewConfigNoQuorum();
                 }
                 
                 nodeRecord = getRecordForPath(ZooDefs.CONFIG_NODE);               
@@ -669,14 +669,14 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
         validatePath(path, request.sessionId);
         try {
             if (getRecordForPath(path) != null) {
-                throw new KeeperException.NodeExistsException(path);
+                new KeeperException.NodeExistsException(path);
             }
         } catch (KeeperException.NoNodeException e) {
             // ignore this one
         }
         boolean ephemeralParent = EphemeralType.get(parentRecord.stat.getEphemeralOwner()) == EphemeralType.NORMAL;
         if (ephemeralParent) {
-            throw new KeeperException.NoChildrenForEphemeralsException(path);
+            new KeeperException.NoChildrenForEphemeralsException(path);
         }
         int newCversion = parentRecord.stat.getCversion()+1;
         if (type == OpCode.createContainer) {
@@ -704,7 +704,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
         } catch(IllegalArgumentException ie) {
             LOG.info("Invalid path {} with session 0x{}, reason: {}",
                     path, Long.toHexString(sessionId), ie.getMessage());
-            throw new BadArgumentsException(path);
+            new BadArgumentsException(path);
         }
     }
 
@@ -713,7 +713,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
         int lastSlash = path.lastIndexOf('/');
         if (lastSlash == -1 || path.indexOf('\0') != -1
                 || zks.getZKDatabase().isSpecialPath(path)) {
-            throw new BadArgumentsException(path);
+            new BadArgumentsException(path);
         }
         return path.substring(0, lastSlash);
     }
@@ -721,7 +721,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
     private static int checkAndIncVersion(int currentVersion, int expectedVersion, String path)
             throws KeeperException.BadVersionException {
         if (expectedVersion != -1 && expectedVersion != currentVersion) {
-            throw new KeeperException.BadVersionException(path);
+            new KeeperException.BadVersionException(path);
         }
         return currentVersion + 1;
     }
@@ -920,12 +920,12 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
     private void validateCreateRequest(String path, CreateMode createMode, Request request, long ttl)
             throws KeeperException {
         if (createMode.isTTL() && !EphemeralType.extendedEphemeralTypesEnabled()) {
-            throw new KeeperException.UnimplementedException();
+            new KeeperException.UnimplementedException();
         }
         try {
             EphemeralType.validateTTL(createMode, ttl);
         } catch (IllegalArgumentException e) {
-            throw new BadArgumentsException(path);
+            new BadArgumentsException(path);
         }
         if (createMode.isEphemeral()) {
             // Exception is set when local session failed to upgrade
@@ -958,16 +958,16 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
         List<ACL> uniqacls = removeDuplicates(acls);
         LinkedList<ACL> rv = new LinkedList<ACL>();
         if (uniqacls == null || uniqacls.size() == 0) {
-            throw new KeeperException.InvalidACLException(path);
+            new KeeperException.InvalidACLException(path);
         }
         for (ACL a: uniqacls) {
             LOG.debug("Processing ACL: {}", a);
             if (a == null) {
-                throw new KeeperException.InvalidACLException(path);
+                new KeeperException.InvalidACLException(path);
             }
             Id id = a.getId();
             if (id == null || id.getScheme() == null) {
-                throw new KeeperException.InvalidACLException(path);
+                new KeeperException.InvalidACLException(path);
             }
             if (id.getScheme().equals("world") && id.getId().equals("anyone")) {
                 rv.add(a);
@@ -987,12 +987,12 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
                     }
                 }
                 if (!authIdValid) {
-                    throw new KeeperException.InvalidACLException(path);
+                    new KeeperException.InvalidACLException(path);
                 }
             } else {
                 AuthenticationProvider ap = ProviderRegistry.getProvider(id.getScheme());
                 if (ap == null || !ap.isValid(id.getId())) {
-                    throw new KeeperException.InvalidACLException(path);
+                    new KeeperException.InvalidACLException(path);
                 }
                 rv.add(a);
             }
