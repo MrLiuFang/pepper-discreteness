@@ -23,18 +23,22 @@ function getProxyAddress(env)
 	return tempChilds
 end
 
+
 function dynamicProxy(env)
 	proxyAddress = getProxyAddress(env)
 	if proxyAddress == nil or table.maxn(proxyAddress) <= 0 then
 		proxyAddress = getProxyAddress(true)
 	end
-	
-	if proxyAddress ~= nil or table.maxn(proxyAddress) > 0 then
-		index = math.random(1,table.maxn(proxyAddress))
-		address = proxyAddress[index]
-		return ngx.exec("/proxy",{proxyhost=address})
+
+	if proxyAddress ~= nil and table.maxn(proxyAddress) > 0 then
+		return ngx.exec("/proxy",{proxyhost=proxyAddress[math.random(1,table.maxn(proxyAddress))]})
 	else
-		return ngx.exec("/error404Proxy",{errorUrl="404"})
+		uri = "/404"
+		proxyAddress = getProxyAddress(env)
+		if proxyAddress == nil or table.maxn(proxyAddress) <= 0 then
+			proxyAddress = getProxyAddress(true)
+		end
+		return ngx.exec("/proxy404",{proxyhost=proxyAddress[math.random(1,table.maxn(proxyAddress))]})
 	end
 end
 
