@@ -62,6 +62,11 @@ public class FileController  {
 				resultMapData.put("title", fileName);
 				resultMap.put("data", resultMapData);
 				return resultMap;
+			}else if(StringUtils.hasLength(uploadType) && uploadType.equals("kindeditor")){ //kindeditor富文本编辑
+				Map<String, Object> resultMap = new HashMap<String, Object>();
+				resultMap.put("error", 0);
+				resultMap.put("url", fileUploadService.getUrl(fileId));
+				return resultMap;
 			}
 		}
 		ResultData resultData = new ResultData();
