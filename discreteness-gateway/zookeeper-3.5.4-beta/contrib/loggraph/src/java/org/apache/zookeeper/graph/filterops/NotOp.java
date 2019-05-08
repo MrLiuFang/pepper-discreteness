@@ -24,7 +24,7 @@ import org.apache.zookeeper.graph.FilterException;
 public class NotOp extends FilterOp {
     public boolean matches(LogEntry entry) throws FilterException {
 	if (subOps.size() != 1) {
-	    throw new FilterException("Not operation can only take one argument");
+	    new FilterException("Not operation can only take one argument");
 	}
 	return !subOps.get(0).matches(entry);
     }

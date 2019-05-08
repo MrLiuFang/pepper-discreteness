@@ -101,7 +101,7 @@ public abstract class QuorumZooKeeperServer extends ZooKeeperServer {
 
         // Uh oh.  We need to upgrade before we can proceed.
         if (!self.isLocalSessionsUpgradingEnabled()) {
-            throw new KeeperException.EphemeralOnLocalSessionException();
+            new KeeperException.EphemeralOnLocalSessionException();
         }
 
         return makeUpgradeRequest(request.sessionId);

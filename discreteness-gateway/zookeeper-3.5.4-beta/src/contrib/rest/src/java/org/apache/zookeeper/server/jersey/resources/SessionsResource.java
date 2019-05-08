@@ -82,7 +82,7 @@ public class SessionsResource {
             @DefaultValue("5") @QueryParam("expire") String expire,
             @Context UriInfo ui) {
         if (!op.equals("create")) {
-            throw new WebApplicationException(Response.status(
+            new WebApplicationException(Response.status(
                     Response.Status.BAD_REQUEST).entity(
                     new ZError(ui.getRequestUri().toString(), "")).build());
         }
@@ -91,7 +91,7 @@ public class SessionsResource {
         try {
             expireInSeconds = Integer.parseInt(expire);
         } catch (NumberFormatException e) {
-            throw new WebApplicationException(Response.status(
+            new WebApplicationException(Response.status(
                     Response.Status.BAD_REQUEST).build());
         }
 
@@ -106,7 +106,7 @@ public class SessionsResource {
         } catch (IOException e) {
             LOG.error("Failed while trying to create a new session", e);
 
-            throw new WebApplicationException(Response.status(
+            new WebApplicationException(Response.status(
                     Response.Status.INTERNAL_SERVER_ERROR).build());
         }
 
@@ -126,7 +126,7 @@ public class SessionsResource {
 
     private static void throwNotFound(String session, UriInfo ui)
             throws WebApplicationException {
-        throw new WebApplicationException(Response.status(
+        new WebApplicationException(Response.status(
                 Response.Status.NOT_FOUND).entity(
                 new ZError(ui.getRequestUri().toString(), session
                         + " not found")).build());

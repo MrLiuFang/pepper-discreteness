@@ -33,7 +33,7 @@ class ZNodeName implements Comparable<ZNodeName> {
     
     public ZNodeName(String name) {
         if (name == null) {
-            throw new NullPointerException("id cannot be null");
+            new NullPointerException("id cannot be null");
         }
         this.name = name;
         this.prefix = name;

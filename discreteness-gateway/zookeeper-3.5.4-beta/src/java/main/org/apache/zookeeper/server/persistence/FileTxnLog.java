@@ -215,7 +215,7 @@ public class FileTxnLog implements TxnLog {
         filePadding.padFile(fos.getChannel());
         byte[] buf = Util.marshallTxnEntry(hdr, txn);
         if (buf == null || buf.length == 0) {
-            throw new IOException("Faulty serialization for header " +
+            new IOException("Faulty serialization for header " +
                     "and txn");
         }
         Checksum crc = makeChecksumAlgorithm();
@@ -376,7 +376,7 @@ public class FileTxnLog implements TxnLog {
             itr = new FileTxnIterator(this.logDir, zxid);
             PositionInputStream input = itr.inputStream;
             if(input == null) {
-                throw new IOException("No log files found to truncate! This could " +
+                new IOException("No log files found to truncate! This could " +
                         "happen if you still have snapshots from an old setup or " +
                         "log files were deleted accidentally or dataLogDir was changed in zoo.cfg.");
             }
@@ -428,7 +428,7 @@ public class FileTxnLog implements TxnLog {
         FileHeader fh=readHeader(itr.logFile);
         itr.close();
         if(fh==null)
-            throw new IOException("Unsupported Format.");
+            new IOException("Unsupported Format.");
         return fh.getDbid();
     }
 
@@ -499,12 +499,12 @@ public class FileTxnLog implements TxnLog {
 
         @Override
         public void mark(int readLimit) {
-            throw new UnsupportedOperationException("mark");
+            new UnsupportedOperationException("mark");
         }
 
         @Override
         public void reset() {
-            throw new UnsupportedOperationException("reset");
+            new UnsupportedOperationException("reset");
         }
     }
 
@@ -619,7 +619,7 @@ public class FileTxnLog implements TxnLog {
             FileHeader header= new FileHeader();
             header.deserialize(ia, "fileheader");
             if (header.getMagic() != FileTxnLog.TXNLOG_MAGIC) {
-                throw new IOException("Transaction log: " + this.logFile + " has invalid magic number "
+                new IOException("Transaction log: " + this.logFile + " has invalid magic number "
                         + header.getMagic()
                         + " != " + FileTxnLog.TXNLOG_MAGIC);
             }
@@ -664,14 +664,14 @@ public class FileTxnLog implements TxnLog {
                 byte[] bytes = Util.readTxnBytes(ia);
                 // Since we preallocate, we define EOF to be an
                 if (bytes == null || bytes.length==0) {
-                    throw new EOFException("Failed to read " + logFile);
+                    new EOFException("Failed to read " + logFile);
                 }
                 // EOF or corrupted record
                 // validate CRC
                 Checksum crc = makeChecksumAlgorithm();
                 crc.update(bytes, 0, bytes.length);
                 if (crcValue != crc.getValue())
-                    throw new IOException(CRC_ERROR);
+                    new IOException(CRC_ERROR);
                 hdr = new TxnHeader();
                 record = SerializeUtils.deserializeTxn(bytes, hdr);
             } catch (EOFException e) {

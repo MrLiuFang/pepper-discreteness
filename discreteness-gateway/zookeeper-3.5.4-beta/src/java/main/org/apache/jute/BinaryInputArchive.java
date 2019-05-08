@@ -124,7 +124,7 @@ public class BinaryInputArchive implements InputArchive {
     // write buffers larger than we can read from disk!)
     private void checkLength(int len) throws IOException {
         if (len < 0 || len > maxBuffer + 1024) {
-            throw new IOException(UNREASONBLE_LENGTH + len);
+            new IOException(UNREASONBLE_LENGTH + len);
         }
     }
 }

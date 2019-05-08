@@ -245,11 +245,11 @@ public class PortForwarder extends Thread {
         this.workers.shutdownNow();
         try {
             if (!this.workers.awaitTermination(5, TimeUnit.SECONDS)) {
-                throw new Exception(
+                new Exception(
                         "Failed to stop forwarding within 5 seconds");
             }
         } catch (InterruptedException e) {
-            throw new Exception("Failed to stop forwarding");
+            new Exception("Failed to stop forwarding");
         }
         this.join();
     }

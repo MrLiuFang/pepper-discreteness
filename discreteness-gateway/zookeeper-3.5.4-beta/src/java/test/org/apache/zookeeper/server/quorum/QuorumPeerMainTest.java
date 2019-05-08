@@ -431,7 +431,7 @@ public class QuorumPeerMainTest extends QuorumPeerTestBase {
         int iterations = ClientBase.CONNECTION_TIMEOUT / 500;
         while (zk.getState() != state) {
             if (iterations-- == 0) {
-                throw new RuntimeException("Waiting too long " + zk.getState() + " != " + state);
+                new RuntimeException("Waiting too long " + zk.getState() + " != " + state);
             }
             Thread.sleep(500);
         }
@@ -447,7 +447,7 @@ public class QuorumPeerMainTest extends QuorumPeerTestBase {
         while (someoneNotConnected) {
             if (iterations-- == 0) {
                 ClientBase.logAllStackTraces();
-                throw new RuntimeException("Waiting too long");
+                new RuntimeException("Waiting too long");
             }
 
             someoneNotConnected = false;
@@ -1159,7 +1159,7 @@ public class QuorumPeerMainTest extends QuorumPeerTestBase {
 
             if (Time.currentElapsedTime() > start + timeout) {
                 LOG.error("Timed out while waiting for QuorumPeer");
-                throw new TimeoutException();
+                new TimeoutException();
             }
 
             try {

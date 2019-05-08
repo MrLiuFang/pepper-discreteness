@@ -60,7 +60,7 @@ public class InvalidSnapCountTest extends ZKTestCase implements Watcher {
 
             File dataDir = new File(tmpDir, "data");
             if (!dataDir.mkdir()) {
-                throw new IOException("unable to mkdir " + dataDir);
+                new IOException("unable to mkdir " + dataDir);
             }
             
             // Convert windows path to UNIX to avoid problems with "\"

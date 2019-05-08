@@ -165,7 +165,7 @@ public class NIOServerCnxn extends ServerCnxn {
         if (incomingBuffer.remaining() != 0) { // have we read length bytes?
             int rc = sock.read(incomingBuffer); // sock is non-blocking, so ok
             if (rc < 0) {
-                throw new EndOfStreamException(
+                new EndOfStreamException(
                         "Unable to read additional data from client sessionid 0x"
                         + Long.toHexString(sessionId)
                         + ", likely client has closed socket");
@@ -233,7 +233,7 @@ public class NIOServerCnxn extends ServerCnxn {
             ByteBuffer bb;
             while ((bb = outgoingBuffers.peek()) != null) {
                 if (bb == ServerCnxnFactory.closeConn) {
-                    throw new CloseRequestException("close requested");
+                    new CloseRequestException("close requested");
                 }
                 if (bb.remaining() > 0) {
                     break;
@@ -281,7 +281,7 @@ public class NIOServerCnxn extends ServerCnxn {
             // Remove the buffers that we have sent
             while ((bb = outgoingBuffers.peek()) != null) {
                 if (bb == ServerCnxnFactory.closeConn) {
-                    throw new CloseRequestException("close requested");
+                    new CloseRequestException("close requested");
                 }
                 if (sent < bb.remaining()) {
                     /*
@@ -320,7 +320,7 @@ public class NIOServerCnxn extends ServerCnxn {
             if (k.isReadable()) {
                 int rc = sock.read(incomingBuffer);
                 if (rc < 0) {
-                    throw new EndOfStreamException(
+                    new EndOfStreamException(
                             "Unable to read additional data from client sessionid 0x"
                             + Long.toHexString(sessionId)
                             + ", likely client has closed socket");
@@ -349,7 +349,7 @@ public class NIOServerCnxn extends ServerCnxn {
                 handleWrite(k);
 
                 if (!initialized && !getReadInterest() && !getWriteInterest()) {
-                    throw new CloseRequestException("responded to info probe");
+                    new CloseRequestException("responded to info probe");
                 }
             }
         } catch (CancelledKeyException e) {
@@ -428,7 +428,7 @@ public class NIOServerCnxn extends ServerCnxn {
 
     private void readConnectRequest() throws IOException, InterruptedException {
         if (!isZKServerRunning()) {
-            throw new IOException("ZooKeeperServer not running");
+            new IOException("ZooKeeperServer not running");
         }
         zkServer.processConnectRequest(this, incomingBuffer);
         initialized = true;
@@ -522,7 +522,7 @@ public class NIOServerCnxn extends ServerCnxn {
             incomingBuffer = ByteBuffer.allocate(8);
             int rc = sock.read(incomingBuffer);
             if (rc < 0) {
-                throw new IOException("Read error");
+                new IOException("Read error");
             }
             incomingBuffer.flip();
             long traceMask = incomingBuffer.getLong();
@@ -550,10 +550,10 @@ public class NIOServerCnxn extends ServerCnxn {
             return false;
         }
         if (len < 0 || len > BinaryInputArchive.maxBuffer) {
-            throw new IOException("Len error " + len);
+            new IOException("Len error " + len);
         }
         if (!isZKServerRunning()) {
-            throw new IOException("ZooKeeperServer not running");
+            new IOException("ZooKeeperServer not running");
         }
         incomingBuffer = ByteBuffer.allocate(len);
         return true;
@@ -806,13 +806,13 @@ public class NIOServerCnxn extends ServerCnxn {
 
     @Override
     public Certificate[] getClientCertificateChain() {
-        throw new UnsupportedOperationException(
+        new UnsupportedOperationException(
                 "SSL is unsupported in NIOServerCnxn");
     }
 
     @Override
     public void setClientCertificateChain(Certificate[] chain) {
-        throw new UnsupportedOperationException(
+        new UnsupportedOperationException(
                 "SSL is unsupported in NIOServerCnxn");
     }
 

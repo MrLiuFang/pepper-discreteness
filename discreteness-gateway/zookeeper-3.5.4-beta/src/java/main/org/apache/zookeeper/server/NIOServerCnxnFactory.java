@@ -289,7 +289,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
                 int cnxncount = getClientCnxnCount(ia);
 
                 if (maxClientCnxns > 0 && cnxncount >= maxClientCnxns){
-                    throw new IOException("Too many connections from " + ia
+                    new IOException("Too many connections from " + ia
                                           + " - max is " + maxClientCnxns );
                 }
 
@@ -303,7 +303,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
                 }
                 SelectorThread selectorThread = selectorIterator.next();
                 if (!selectorThread.addAcceptedConnection(sc)) {
-                    throw new IOException(
+                    new IOException(
                         "Unable to add connection to selector queue"
                         + (stopped ? " (shutdown in progress)" : ""));
                 }
@@ -641,7 +641,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
     @Override
     public void configure(InetSocketAddress addr, int maxcc, boolean secure) throws IOException {
         if (secure) {
-            throw new UnsupportedOperationException("SSL isn't supported in NIOServerCnxn");
+            new UnsupportedOperationException("SSL isn't supported in NIOServerCnxn");
         }
         configureSaslLogin();
 
@@ -662,7 +662,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
             ZOOKEEPER_NIO_NUM_SELECTOR_THREADS,
             Math.max((int) Math.sqrt((float) numCores/2), 1));
         if (numSelectorThreads < 1) {
-            throw new IOException("numSelectorThreads must be at least 1");
+            new IOException("numSelectorThreads must be at least 1");
         }
 
         numWorkerThreads = Integer.getInteger(

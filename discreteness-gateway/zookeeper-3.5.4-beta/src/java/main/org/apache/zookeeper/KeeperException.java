@@ -146,7 +146,7 @@ public abstract class KeeperException extends Exception {
                 return new ReconfigDisabledException();
             case OK:
             default:
-                throw new IllegalArgumentException("Invalid exception code");
+                new IllegalArgumentException("Invalid exception code");
         }
     }
 

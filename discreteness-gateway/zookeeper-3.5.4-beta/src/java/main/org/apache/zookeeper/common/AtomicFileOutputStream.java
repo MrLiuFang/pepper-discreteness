@@ -90,7 +90,7 @@ public class AtomicFileOutputStream extends FilterOutputStream {
                 if (!renamed) {
                     // On windows, renameTo does not replace.
                     if (!origFile.delete() || !tmpFile.renameTo(origFile)) {
-                        throw new IOException(
+                        new IOException(
                                 "Could not rename temporary file " + tmpFile
                                         + " to " + origFile);
                     }

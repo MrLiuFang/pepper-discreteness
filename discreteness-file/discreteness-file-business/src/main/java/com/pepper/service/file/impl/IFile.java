@@ -3,15 +3,18 @@ package com.pepper.service.file.impl;
 import java.io.File;
 import java.io.InputStream;
 
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 
-public interface IFile {
+
+public interface IFile extends ApplicationListener<ContextRefreshedEvent>  {
 
 	/**
 	 * 储存器名称
 	 * 
 	 * @return
 	 */
-	public String getLocationName();
+	public String getStorageTypeName();
 
 	/**
 	 * 上传文件

@@ -95,7 +95,7 @@ public class FileTxnSnapLog {
 
         if (!this.dataDir.exists()) {
             if (!enableAutocreate) {
-                throw new DatadirException("Missing data directory "
+                new DatadirException("Missing data directory "
                         + this.dataDir
                         + ", automatic data directory creation is disabled ("
                         + ZOOKEEPER_DATADIR_AUTOCREATE
@@ -103,19 +103,19 @@ public class FileTxnSnapLog {
             }
 
             if (!this.dataDir.mkdirs()) {
-                throw new DatadirException("Unable to create data directory "
+                new DatadirException("Unable to create data directory "
                         + this.dataDir);
             }
         }
         if (!this.dataDir.canWrite()) {
-            throw new DatadirException("Cannot write to data directory " + this.dataDir);
+            new DatadirException("Cannot write to data directory " + this.dataDir);
         }
 
         if (!this.snapDir.exists()) {
             // by default create this directory, but otherwise complain instead
             // See ZOOKEEPER-1161 for more details
             if (!enableAutocreate) {
-                throw new DatadirException("Missing snap directory "
+                new DatadirException("Missing snap directory "
                         + this.snapDir
                         + ", automatic data directory creation is disabled ("
                         + ZOOKEEPER_DATADIR_AUTOCREATE
@@ -123,12 +123,12 @@ public class FileTxnSnapLog {
             }
 
             if (!this.snapDir.mkdirs()) {
-                throw new DatadirException("Unable to create snap directory "
+                new DatadirException("Unable to create snap directory "
                         + this.snapDir);
             }
         }
         if (!this.snapDir.canWrite()) {
-            throw new DatadirException("Cannot write to snap directory " + this.snapDir);
+            new DatadirException("Cannot write to snap directory " + this.snapDir);
         }
 
         // check content of transaction log and snapshot dirs if they are two different directories
@@ -150,7 +150,7 @@ public class FileTxnSnapLog {
             }
         });
         if (files != null && files.length > 0) {
-            throw new LogDirContentCheckException("Log directory has snapshot files. Check if dataLogDir and dataDir configuration is correct.");
+            new LogDirContentCheckException("Log directory has snapshot files. Check if dataLogDir and dataDir configuration is correct.");
         }
     }
 
@@ -162,7 +162,7 @@ public class FileTxnSnapLog {
             }
         });
         if (files != null && files.length > 0) {
-            throw new SnapDirContentCheckException("Snapshot directory has log files. Check if dataLogDir and dataDir configuration is correct.");
+            new SnapDirContentCheckException("Snapshot directory has log files. Check if dataLogDir and dataDir configuration is correct.");
         }
     }
 
@@ -203,7 +203,7 @@ public class FileTxnSnapLog {
             /* this means that we couldn't find any snapshot, so we need to
              * initialize an empty database (reported in ZOOKEEPER-2325) */
             if (txnLog.getLastLoggedZxid() != -1) {
-                throw new IOException(
+                new IOException(
                         "No snapshot found, but there are log entries. " +
                         "Something is broken!");
             }
@@ -250,7 +250,7 @@ public class FileTxnSnapLog {
                 try {
                     processTransaction(hdr,dt,sessions, itr.getTxn());
                 } catch(KeeperException.NoNodeException e) {
-                   throw new IOException("Failed to process transaction type: " +
+                   new IOException("Failed to process transaction type: " +
                          hdr.getType() + " error: " + e.getMessage(), e);
                 }
                 listener.onTxnLoaded(hdr, itr.getTxn());

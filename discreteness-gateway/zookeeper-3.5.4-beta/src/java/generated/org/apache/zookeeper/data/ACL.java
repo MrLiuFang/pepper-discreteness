@@ -84,7 +84,7 @@ public class ACL implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof ACL)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     ACL peer = (ACL) peer_;
     int ret = 0;

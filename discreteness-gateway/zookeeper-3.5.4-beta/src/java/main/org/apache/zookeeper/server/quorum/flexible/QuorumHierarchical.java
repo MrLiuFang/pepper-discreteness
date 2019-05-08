@@ -157,7 +157,7 @@ public class QuorumHierarchical implements QuorumVerifier {
 
         try {
             if (!configFile.exists()) {
-                throw new IllegalArgumentException(configFile.toString()
+                new IllegalArgumentException(configFile.toString()
                         + " file is missing");
             }
     
@@ -171,9 +171,9 @@ public class QuorumHierarchical implements QuorumVerifier {
     
             parse(cfg);
         } catch (IOException e) {
-            throw new ConfigException("Error processing " + filename, e);
+            new ConfigException("Error processing " + filename, e);
         } catch (IllegalArgumentException e) {
-            throw new ConfigException("Error processing " + filename, e);
+            new ConfigException("Error processing " + filename, e);
         }
         
     }
@@ -209,7 +209,7 @@ public class QuorumHierarchical implements QuorumVerifier {
                 for(String s : parts){
                     long sid = Long.parseLong(s);
                     if(serverGroup.containsKey(sid))
-                        throw new ConfigException("Server " + sid + "is in multiple groups");
+                        new ConfigException("Server " + sid + "is in multiple groups");
                     else
                         serverGroup.put(sid, gid);
                 }
@@ -228,7 +228,7 @@ public class QuorumHierarchical implements QuorumVerifier {
            Long id = qs.id;
            if (qs.type == LearnerType.PARTICIPANT){
                if (!serverGroup.containsKey(id)) 
-                   throw new ConfigException("Server " + id + "is not in a group");
+                   new ConfigException("Server " + id + "is not in a group");
                if (!serverWeight.containsKey(id))
                    serverWeight.put(id, (long) 1);
             }

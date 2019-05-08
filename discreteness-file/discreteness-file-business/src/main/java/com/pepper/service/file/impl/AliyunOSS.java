@@ -5,45 +5,54 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import com.aliyun.oss.ClientConfiguration;
 import com.aliyun.oss.OSSClient;
-import com.aliyun.oss.common.auth.CredentialsProviderFactory;
-import com.aliyun.oss.common.auth.DefaultCredentialProvider;
 import com.aliyun.oss.model.OSSObject;
 import com.pepper.core.exception.BusinessException;
 
 
 
 @Component
+@ConditionalOnBean(value={OSSClient.class,FileBeanFactory.class})
+@ConditionalOnProperty(prefix = "file", name = "storage.type", havingValue = AliyunOSS.STORAGE_TYPE_NAME, matchIfMissing = true)
 public class AliyunOSS implements IFile {
+	
+	public static final String STORAGE_TYPE_NAME = "aliyun";
 
 	@Autowired
 	private Environment env;
+	
+	@Resource
+	private FileBeanFactory fileBeanFactory;
+	
+	@Resource
+	private OSSClient ossClient;
 
 	public AliyunOSS() {
 	}
 
 	@Override
 	public String add(File file) {
-		// 创建OSSClient实例
-		OSSClient ossClient = getOSSClient();
 
 		// 上传文件
 		String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 		ossClient.putObject(env.getProperty("aliyunoss.bucket"), uuid, file);
 		// 关闭client
-		ossClient.shutdown();
-		// return new String(Base64.encodeBase64(uuid.getBytes()));
+//		ossClient.shutdown();
 		return uuid;
 	}
 
 	@Override
-	public String getLocationName() {
-		return "aliyun";
+	public String getStorageTypeName() {
+		return STORAGE_TYPE_NAME;
 	}
 
 	@Override
@@ -66,7 +75,6 @@ public class AliyunOSS implements IFile {
 
 	@Override
 	public InputStream getFileInputStream(String key) {
-		OSSClient ossClient = getOSSClient();
 		OSSObject object = getOSSObject(ossClient, key);
 		if (object != null) {
 			return object.getObjectContent();
@@ -80,18 +88,14 @@ public class AliyunOSS implements IFile {
 		}
 	}
 
-	private OSSClient getOSSClient() {
-		ClientConfiguration clientConfiguration = new ClientConfiguration();
-		DefaultCredentialProvider defaultCredentialProvider = CredentialsProviderFactory.newDefaultCredentialProvider(
-				env.getProperty("aliyunoss.accessKeyId"), env.getProperty("aliyunoss.accessKeySecret"));
-		OSSClient ossClient = new OSSClient(env.getProperty("aliyunoss.endpoint"), defaultCredentialProvider,
-				clientConfiguration);
-		return ossClient;
-	}
-
 	private OSSObject getOSSObject(OSSClient ossClient, String key) {
 		OSSObject object = ossClient.getObject(env.getProperty("aliyunoss.bucket"), key);
 		return object;
+	}
+
+	@Override
+	public void onApplicationEvent(ContextRefreshedEvent event) {
+		fileBeanFactory.setBean(getStorageTypeName(), this);
 	}
 
 }

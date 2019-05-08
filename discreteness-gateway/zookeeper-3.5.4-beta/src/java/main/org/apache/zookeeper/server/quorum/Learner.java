@@ -256,7 +256,7 @@ public class Learner {
                 remainingInitLimitTime = initLimitTime - (int)((nanoTime() - startNanoTime) / 1000000);
                 if (remainingInitLimitTime <= 0) {
                     LOG.error("initLimit exceeded on retries.");
-                    throw new IOException("initLimit exceeded on retries.");
+                    new IOException("initLimit exceeded on retries.");
                 }
 
                 sockConnect(sock, addr, Math.min(self.tickTime * self.syncLimit, remainingInitLimitTime));
@@ -337,7 +337,7 @@ public class Learner {
         		// the -1 indicates that this reply should not count as an ack for the new epoch
                 wrappedEpochBytes.putInt(-1);
         	} else {
-        		throw new IOException("Leaders epoch, " + newEpoch + " is less than accepted epoch, " + self.getAcceptedEpoch());
+        		new IOException("Leaders epoch, " + newEpoch + " is less than accepted epoch, " + self.getAcceptedEpoch());
         	}
         	QuorumPacket ackNewEpoch = new QuorumPacket(Leader.ACKEPOCH, lastLoggedZxid, epochBytes, null);
         	writePacket(ackNewEpoch, true);
@@ -348,7 +348,7 @@ public class Learner {
         	}
             if (qp.getType() != Leader.NEWLEADER) {
                 LOG.error("First packet should have been NEWLEADER");
-                throw new IOException("First packet should have been NEWLEADER");
+                new IOException("First packet should have been NEWLEADER");
             }
             return qp.getZxid();
         }
@@ -393,7 +393,7 @@ public class Learner {
                 String signature = leaderIs.readString("signature");
                 if (!signature.equals("BenWasHere")) {
                     LOG.error("Missing signature. Got " + signature);
-                    throw new IOException("Missing signature");                   
+                    new IOException("Missing signature");                   
                 }
                 zk.getZKDatabase().setlastProcessedZxid(qp.getZxid());
             } else if (qp.getType() == Leader.TRUNC) {
@@ -461,7 +461,7 @@ public class Learner {
                         boolean majorChange = self.processReconfig(qv, ByteBuffer.wrap(qp.getData()).getLong(),
                                 qp.getZxid(), true);
                         if (majorChange) {
-                            throw new Exception("changes proposed in reconfig");
+                            new Exception("changes proposed in reconfig");
                         }
                     }
                     if (!writeToTxnLog) {
@@ -490,7 +490,7 @@ public class Learner {
                         boolean majorChange =
                                 self.processReconfig(qv, suggestedLeaderId, qp.getZxid(), true);
                         if (majorChange) {
-                            throw new Exception("changes proposed in reconfig");
+                            new Exception("changes proposed in reconfig");
                         }
                     } else {
                         packet.rec = SerializeUtils.deserializeTxn(qp.getData(), packet.hdr);
@@ -518,7 +518,7 @@ public class Learner {
                        boolean majorChange =
                            self.processReconfig(newLeaderQV, null, null, true);
                        if (majorChange) {
-                           throw new Exception("changes proposed in reconfig");
+                           new Exception("changes proposed in reconfig");
                        }
                     }
                     if (isPreZAB1_0) {
@@ -598,7 +598,7 @@ public class Learner {
             }
         } else {
             // New server type need to handle in-flight packets
-            throw new UnsupportedOperationException("Unknown server type");
+            new UnsupportedOperationException("Unknown server type");
         }
     }
     

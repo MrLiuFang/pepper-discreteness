@@ -46,7 +46,7 @@ public class ClientReconnectTest extends ZKTestCase {
         void registerAndConnect(SocketChannel sock, InetSocketAddress addr) throws
         IOException {
             countDownLatch.countDown();
-            throw new IOException("failed to register");
+            new IOException("failed to register");
         }
 
         @Override

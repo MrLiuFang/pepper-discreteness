@@ -95,7 +95,7 @@ public class MultiHeader implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof MultiHeader)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     MultiHeader peer = (MultiHeader) peer_;
     int ret = 0;

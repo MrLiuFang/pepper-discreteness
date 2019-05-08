@@ -97,7 +97,7 @@ public class SerializeUtils {
             txn = new MultiTxn();
             break;
         default:
-            throw new IOException("Unsupported Txn with type=%d" + hdr.getType());
+            new IOException("Unsupported Txn with type=%d" + hdr.getType());
         }
         if (txn != null) {
             try {

@@ -142,7 +142,7 @@ public class ZooInspectorManagerImpl implements ZooInspectorManager {
                         .getProperty(AUTH_DATA_KEY);
 
                 if (connectString == null || sessionTimeout == null) {
-                    throw new IllegalArgumentException(
+                    new IllegalArgumentException(
                             "Both connect string and session timeout are required.");
                 }
                 if (encryptionManager == null) {
@@ -155,7 +155,7 @@ public class ZooInspectorManagerImpl implements ZooInspectorManager {
                         this.encryptionManager = (DataEncryptionManager) Class
                                 .forName(encryptionManager).newInstance();
                     } else {
-                        throw new IllegalArgumentException(
+                        new IllegalArgumentException(
                                 "Data encryption manager must implement DataEncryptionManager interface");
                     }
                 }
@@ -276,7 +276,7 @@ public class ZooInspectorManagerImpl implements ZooInspectorManager {
             if (index == -1
                     || (!nodePath.equals("/") && nodePath.charAt(nodePath
                             .length() - 1) == '/')) {
-                throw new IllegalArgumentException("Invalid node path: "
+                new IllegalArgumentException("Invalid node path: "
                         + nodePath);
             }
             String parentPath = nodePath.substring(0, index);
@@ -774,14 +774,14 @@ public class ZooInspectorManagerImpl implements ZooInspectorManager {
         File defaultDir = defaultConnectionFile.getParentFile();
         if (!defaultDir.exists()) {
             if (!defaultDir.mkdirs()) {
-                throw new IOException(
+                new IOException(
                         "Failed to create configuration directory: "
                                 + defaultDir.getAbsolutePath());
             }
         }
         if (!defaultConnectionFile.exists()) {
             if (!defaultConnectionFile.createNewFile()) {
-                throw new IOException(
+                new IOException(
                         "Failed to create default connection file: "
                                 + defaultConnectionFile.getAbsolutePath());
             }
@@ -804,7 +804,7 @@ public class ZooInspectorManagerImpl implements ZooInspectorManager {
             List<String> nodeViewersClassNames) throws IOException {
         if (!selectedFile.exists()) {
             if (!selectedFile.createNewFile()) {
-                throw new IOException(
+                new IOException(
                         "Failed to create node viewers configuration file: "
                                 + selectedFile.getAbsolutePath());
             }
@@ -837,7 +837,7 @@ public class ZooInspectorManagerImpl implements ZooInspectorManager {
         File defaultDir = defaultNodeViewersFile.getParentFile();
         if (!defaultDir.exists()) {
             if (!defaultDir.mkdirs()) {
-                throw new IOException(
+                new IOException(
                         "Failed to create configuration directory: "
                                 + defaultDir.getAbsolutePath());
             }

@@ -41,11 +41,12 @@ public class CurrentUserUtil implements ICurrentUser {
 			IAuthorize iAuthorize = authorizeFactoryBean.getAuthorize(scope);
 			Object user = iAuthorize.getCurrentUser(token);
 			if(user == null){
-				throw new AuthorizeException("登录超时!请重新登录!");
+				new AuthorizeException("登录超时!请重新登录!");
 			}
 			return user;
 		} catch (Exception e) {
-			throw new AuthorizeException("登录超时!请重新登录!");
+			new AuthorizeException("登录超时!请重新登录!");
 		}
+		return null;
 	}
 }

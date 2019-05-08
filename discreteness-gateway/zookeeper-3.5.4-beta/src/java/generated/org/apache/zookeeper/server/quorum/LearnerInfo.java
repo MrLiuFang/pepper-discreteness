@@ -95,7 +95,7 @@ public class LearnerInfo implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof LearnerInfo)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     LearnerInfo peer = (LearnerInfo) peer_;
     int ret = 0;

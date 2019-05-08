@@ -74,7 +74,7 @@ public final class PortAssignment {
                 candidatePort = portRange.getMinimum();
             }
             if (candidatePort == nextPort) {
-                throw new IllegalStateException(String.format(
+                new IllegalStateException(String.format(
                         "Could not assign port from range %s.  The entire " +
                         "range has been exhausted.", portRange));
             }

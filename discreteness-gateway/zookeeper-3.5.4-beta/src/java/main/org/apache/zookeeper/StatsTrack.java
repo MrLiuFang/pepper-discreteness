@@ -46,7 +46,7 @@ public class StatsTrack {
         }
         String[] split = stats.split(",");
         if (split.length != 2) {
-            throw new IllegalArgumentException("invalid string " + stats);
+            new IllegalArgumentException("invalid string " + stats);
         }
         count = Integer.parseInt(split[0].split("=")[1]);
         bytes = Long.parseLong(split[1].split("=")[1]);

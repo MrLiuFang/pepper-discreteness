@@ -49,7 +49,7 @@ public abstract class FilterOp {
 	if (op.equals(">")) 
 	    return new GreaterThanOp();
 
-	throw new FilterException("Invalid operation '"+op+"'");
+	new FilterException("Invalid operation '"+op+"'");
     }
 
     public void addSubOp(FilterOp op) {

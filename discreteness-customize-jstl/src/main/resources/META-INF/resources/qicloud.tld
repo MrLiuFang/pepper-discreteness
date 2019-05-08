@@ -42,16 +42,6 @@
 		<tag-class>com.pepper.jstl.EnumSelectTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<name>keyField</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>valueField</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>enumClass</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

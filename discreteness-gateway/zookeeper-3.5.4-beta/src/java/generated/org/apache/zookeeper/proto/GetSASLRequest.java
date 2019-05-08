@@ -71,7 +71,7 @@ public class GetSASLRequest implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof GetSASLRequest)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     GetSASLRequest peer = (GetSASLRequest) peer_;
     int ret = 0;

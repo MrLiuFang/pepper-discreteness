@@ -53,11 +53,11 @@ public class CreateCommand extends CliCommand {
         try {
             cl = parser.parse(options, cmdArgs);
         } catch (ParseException ex) {
-            throw new CliParseException(ex);
+            new CliParseException(ex);
         }
         args = cl.getArgs();
         if(args.length < 2) {
-            throw new CliParseException(getUsageStr());
+            new CliParseException(getUsageStr());
         }
         return this;
     }
@@ -70,20 +70,20 @@ public class CreateCommand extends CliCommand {
         boolean hasC = cl.hasOption("c");
         boolean hasT = cl.hasOption("t");
         if (hasC && (hasE || hasS)) {
-            throw new MalformedCommandException("-c cannot be combined with -s or -e. Containers cannot be ephemeral or sequential.");
+            new MalformedCommandException("-c cannot be combined with -s or -e. Containers cannot be ephemeral or sequential.");
         }
         long ttl;
         try {
             ttl = hasT ? Long.parseLong(cl.getOptionValue("t")) : 0;
         } catch (NumberFormatException e) {
-            throw new MalformedCommandException("-t argument must be a long value");
+            new MalformedCommandException("-t argument must be a long value");
         }
 
         if ( hasT && hasE ) {
-            throw new MalformedCommandException("TTLs cannot be used with Ephemeral znodes");
+            new MalformedCommandException("TTLs cannot be used with Ephemeral znodes");
         }
         if ( hasT && hasC ) {
-            throw new MalformedCommandException("TTLs cannot be used with Container znodes");
+            new MalformedCommandException("TTLs cannot be used with Container znodes");
         }
 
         CreateMode flags;
@@ -102,7 +102,7 @@ public class CreateCommand extends CliCommand {
             try {
                 EphemeralType.TTL.toEphemeralOwner(ttl);
             } catch (IllegalArgumentException e) {
-                throw new MalformedCommandException(e.getMessage());
+                new MalformedCommandException(e.getMessage());
             }
         }
 
@@ -119,15 +119,15 @@ public class CreateCommand extends CliCommand {
             String newPath = hasT ? zk.create(path, data, acl, flags, new Stat(), ttl) : zk.create(path, data, acl, flags);
             err.println("Created " + newPath);
         } catch(IllegalArgumentException ex) {
-            throw new MalformedPathException(ex.getMessage());
+            new MalformedPathException(ex.getMessage());
         } catch(KeeperException.EphemeralOnLocalSessionException e) {
             err.println("Unable to create ephemeral node on a local session");
-            throw new CliWrapperException(e);
+            new CliWrapperException(e);
         } catch (KeeperException.InvalidACLException ex) {
             err.println(ex.getMessage());
-            throw new CliWrapperException(ex);
+            new CliWrapperException(ex);
         } catch (KeeperException|InterruptedException ex) {
-            throw new CliWrapperException(ex);
+            new CliWrapperException(ex);
         }
         return true;
     }

@@ -55,7 +55,7 @@ public class LsCommand extends CliCommand {
         try {
             cl = parser.parse(options, cmdArgs);
         } catch (ParseException ex) {
-            throw new CliParseException(ex);
+            new CliParseException(ex);
         }
 
         args = cl.getArgs();
@@ -79,7 +79,7 @@ public class LsCommand extends CliCommand {
             try {
                 cl = parser.parse(options, cmdArgs);
             } catch (ParseException ex) {
-                throw new CliParseException(ex);
+                new CliParseException(ex);
             }
             args = cl.getArgs();
         }
@@ -88,7 +88,7 @@ public class LsCommand extends CliCommand {
     @Override
     public boolean exec() throws CliException {
         if (args.length < 2) {
-            throw new MalformedCommandException(getUsageStr());
+            new MalformedCommandException(getUsageStr());
         }
 
         String path = args[1];
@@ -109,9 +109,9 @@ public class LsCommand extends CliCommand {
                 printChildren(children, stat);
             }
         } catch (IllegalArgumentException ex) {
-            throw new MalformedPathException(ex.getMessage());
+            new MalformedPathException(ex.getMessage());
         } catch (KeeperException|InterruptedException ex) {
-            throw new CliWrapperException(ex);
+            new CliWrapperException(ex);
         }
         return watch;
     }

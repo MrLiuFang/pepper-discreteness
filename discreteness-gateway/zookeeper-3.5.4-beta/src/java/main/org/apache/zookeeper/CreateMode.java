@@ -129,7 +129,7 @@ public enum CreateMode {
             String errMsg = "Received an invalid flag value: " + flag
                     + " to convert to a CreateMode";
             LOG.error(errMsg);
-            throw new KeeperException.BadArgumentsException(errMsg);
+            new KeeperException.BadArgumentsException(errMsg);
         }
     }
 

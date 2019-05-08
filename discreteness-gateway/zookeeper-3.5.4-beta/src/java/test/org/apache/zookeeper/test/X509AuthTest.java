@@ -266,14 +266,14 @@ public class X509AuthTest extends ZKTestCase {
         public void checkClientTrusted(X509Certificate[] chain, String authType)
                 throws CertificateException {
             if (!Arrays.equals(cert.getEncoded(), chain[0].getEncoded())) {
-                throw new CertificateException("Client cert not trusted");
+                new CertificateException("Client cert not trusted");
             }
         }
         @Override
         public void checkServerTrusted(X509Certificate[] chain, String authType)
                 throws CertificateException {
             if (!Arrays.equals(cert.getEncoded(), chain[0].getEncoded())) {
-                throw new CertificateException("Server cert not trusted");
+                new CertificateException("Server cert not trusted");
             }
         }
         @Override

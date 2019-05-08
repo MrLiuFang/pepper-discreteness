@@ -95,7 +95,7 @@ public class WatcherEvent implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof WatcherEvent)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     WatcherEvent peer = (WatcherEvent) peer_;
     int ret = 0;

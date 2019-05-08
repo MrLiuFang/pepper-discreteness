@@ -247,7 +247,7 @@ public class BaseSysTest {
         try {
             im.assignInstance("client" + index, clazz, index + " " + params, 1);
         } catch (Exception e) {
-            throw new IOException(e.getMessage());
+            new IOException(e.getMessage());
         }
     }
     private void fakeStartClient(int index) {
@@ -264,7 +264,7 @@ public class BaseSysTest {
         try {
             im.removeInstance("client"+index);
         } catch (Exception e) {
-            throw new IOException(e.getMessage());
+            new IOException(e.getMessage());
         }
     }
     private void fakeStopClient(int index) {

@@ -201,7 +201,7 @@ public class PathTrie {
         TrieNode parent = rootNode;
         String part = null;
         if (pathComponents.length <= 1) {
-            throw new IllegalArgumentException("Invalid path " + path);
+            new IllegalArgumentException("Invalid path " + path);
         }
         for (int i=1; i<pathComponents.length; i++) {
             part = pathComponents[i];
@@ -225,7 +225,7 @@ public class PathTrie {
         TrieNode parent = rootNode;
         String part = null;
         if (pathComponents.length <= 1) { 
-            throw new IllegalArgumentException("Invalid path " + path);
+            new IllegalArgumentException("Invalid path " + path);
         }
         for (int i=1; i<pathComponents.length; i++) {
             part = pathComponents[i];
@@ -256,7 +256,7 @@ public class PathTrie {
         TrieNode parent = rootNode;
         List<String> components = new ArrayList<String>();
         if (pathComponents.length <= 1) {
-            throw new IllegalArgumentException("Invalid path " + path);
+            new IllegalArgumentException("Invalid path " + path);
         }
         int i = 1;
         String part = null;

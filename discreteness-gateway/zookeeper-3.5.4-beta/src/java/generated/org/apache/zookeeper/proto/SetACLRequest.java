@@ -123,7 +123,7 @@ public class SetACLRequest implements Record {
     deserialize(archive, "");
   }
   public int compareTo (Object peer_) throws ClassCastException {
-    throw new UnsupportedOperationException("comparing SetACLRequest is unimplemented");
+    new UnsupportedOperationException("comparing SetACLRequest is unimplemented");
   }
   public boolean equals(Object peer_) {
     if (!(peer_ instanceof SetACLRequest)) {

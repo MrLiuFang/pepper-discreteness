@@ -42,11 +42,11 @@ public class ListQuotaCommand extends CliCommand {
         try {
             cl = parser.parse(options, cmdArgs);
         } catch (ParseException ex) {
-            throw new CliParseException(ex);
+            new CliParseException(ex);
         }
         args = cl.getArgs();
         if(args.length < 2) {
-            throw new CliParseException(getUsageStr());
+            new CliParseException(getUsageStr());
         }
         
         return this;
@@ -70,11 +70,11 @@ public class ListQuotaCommand extends CliCommand {
             out.println("Output stat for " + path + " "
                     + new StatsTrack(new String(data)).toString());
         } catch (IllegalArgumentException ex) {
-            throw new MalformedPathException(ex.getMessage());
+            new MalformedPathException(ex.getMessage());
         } catch (KeeperException.NoNodeException ne) {
             err.println("quota for " + path + " does not exist.");
         } catch (KeeperException|InterruptedException ex) {
-            throw new CliWrapperException(ex);
+            new CliWrapperException(ex);
         }
         
         return false;

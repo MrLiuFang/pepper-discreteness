@@ -202,7 +202,7 @@ public class ZooInspectorTreeViewer extends JPanel implements NodeListener {
             this.nodePath = nodePath;
             int index = nodePath.lastIndexOf("/");
             if (index == -1) {
-                throw new IllegalArgumentException("Invalid node path"
+                new IllegalArgumentException("Invalid node path"
                         + nodePath);
             }
             this.nodeName = nodePath.substring(index + 1);

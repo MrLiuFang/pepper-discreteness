@@ -51,7 +51,7 @@ public class FilterParser {
 	int c = reader.read();
 	int last = 0;
 	if (c != '"') {
-	    throw new FilterException("Check the parser, trying to read a string that doesn't begin with quotes");
+	    new FilterException("Check the parser, trying to read a string that doesn't begin with quotes");
 	}
 	StringBuffer buffer = new StringBuffer();
 	while (reader.ready()) {
@@ -67,7 +67,7 @@ public class FilterParser {
 		buffer.append((char)c);
 	    }
 	}
-	throw new FilterException("Unterminated string");
+	new FilterException("Unterminated string");
     }
 
     private NumberArg readNumberArg() throws IOException, FilterException {
@@ -80,7 +80,7 @@ public class FilterParser {
 		return new NumberArg(Long.valueOf(strval));
 	    }
 	} catch (NumberFormatException e) {
-	    throw new FilterException("Not a number [" + strval + "]\n" + e);
+	    new FilterException("Not a number [" + strval + "]\n" + e);
 	}
     }
 
@@ -91,7 +91,7 @@ public class FilterParser {
     public FilterOp parse() throws IOException, FilterException {
 	int c = reader.read();
 	if (c != '(') {
-	    throw new FilterException("Invalid format");
+	    new FilterException("Invalid format");
 	}
 
 	String opstr = readUntilSpace();
@@ -118,7 +118,7 @@ public class FilterParser {
 		op.addArg(readSymbolArg());
 	    }
 	}
-	throw new FilterException("Incomplete filter");
+	new FilterException("Incomplete filter");
     }
 
     public static void main(String[] args) throws IOException, FilterException {

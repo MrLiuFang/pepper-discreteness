@@ -77,10 +77,10 @@ public class X509AuthenticationProvider implements AuthenticationProvider {
             LOG.warn("keystore not specified for client connection");
         } else {
             if (keyStoreLocationProp == null) {
-                throw new X509Exception("keystore location not specified for client connection");
+                new X509Exception("keystore location not specified for client connection");
             }
             if (keyStorePasswordProp == null) {
-                throw new X509Exception("keystore password not specified for client connection");
+                new X509Exception("keystore password not specified for client connection");
             }
             try {
                 km = X509Util.createKeyManager(
@@ -99,10 +99,10 @@ public class X509AuthenticationProvider implements AuthenticationProvider {
             LOG.warn("Truststore not specified for client connection");
         } else {
             if (trustStoreLocationProp == null) {
-                throw new X509Exception("Truststore location not specified for client connection");
+                new X509Exception("Truststore location not specified for client connection");
             }
             if (trustStorePasswordProp == null) {
-                throw new X509Exception("Truststore password not specified for client connection");
+                new X509Exception("Truststore password not specified for client connection");
             }
             try {
                 tm = X509Util.createTrustManager(
@@ -227,7 +227,7 @@ public class X509AuthenticationProvider implements AuthenticationProvider {
      */
     public X509TrustManager getTrustManager() throws TrustManagerException {
         if (trustManager == null) {
-            throw new TrustManagerException("No trust manager available");
+            new TrustManagerException("No trust manager available");
         }
         return trustManager;
     }
@@ -240,7 +240,7 @@ public class X509AuthenticationProvider implements AuthenticationProvider {
      */
     public X509KeyManager getKeyManager() throws KeyManagerException {
         if (keyManager == null) {
-            throw new KeyManagerException("No key manager available");
+            new KeyManagerException("No key manager available");
         }
         return keyManager;
     }

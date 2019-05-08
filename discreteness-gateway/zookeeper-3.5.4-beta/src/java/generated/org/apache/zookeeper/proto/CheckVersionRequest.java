@@ -83,7 +83,7 @@ public class CheckVersionRequest implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof CheckVersionRequest)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     CheckVersionRequest peer = (CheckVersionRequest) peer_;
     int ret = 0;

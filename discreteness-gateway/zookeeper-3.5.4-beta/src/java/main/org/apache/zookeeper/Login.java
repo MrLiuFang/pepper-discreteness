@@ -292,7 +292,7 @@ public class Login {
 
     private synchronized LoginContext login(final String loginContextName) throws LoginException {
         if (loginContextName == null) {
-            throw new LoginException("loginContext name (JAAS file section header) was null. " +
+            new LoginException("loginContext name (JAAS file section header) was null. " +
                     "Please check your java.security.login.auth.config (=" +
                     System.getProperty("java.security.login.auth.config") +
                     ") and your " + getLoginContextMessage());
@@ -400,7 +400,7 @@ public class Login {
         }
         LoginContext login = getLogin();
         if (login  == null) {
-            throw new LoginException("login must be done first");
+            new LoginException("login must be done first");
         }
         if (!hasSufficientTimeElapsed()) {
             return;

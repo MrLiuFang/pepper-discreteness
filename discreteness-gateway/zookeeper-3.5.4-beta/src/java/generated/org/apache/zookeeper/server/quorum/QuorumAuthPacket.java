@@ -95,7 +95,7 @@ public class QuorumAuthPacket implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof QuorumAuthPacket)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     QuorumAuthPacket peer = (QuorumAuthPacket) peer_;
     int ret = 0;

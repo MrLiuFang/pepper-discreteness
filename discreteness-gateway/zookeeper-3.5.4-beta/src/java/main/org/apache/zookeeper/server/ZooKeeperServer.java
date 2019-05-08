@@ -409,7 +409,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
         long id = cnxn.getSessionId();
         int to = cnxn.getSessionTimeout();
         if (!sessionTracker.touchSession(id, to)) {
-            throw new MissingSessionException(
+            new MissingSessionException(
                     "No session with sessionid 0x" + Long.toHexString(id)
                     + " exists, probably expired and removed");
         }
@@ -800,7 +800,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
                     LOG.warn("Unexpected interruption", e);
                 }
                 if (firstProcessor == null || state != State.RUNNING) {
-                    throw new RuntimeException("Not started");
+                    new RuntimeException("Not started");
                 }
             }
         }
@@ -1008,7 +1008,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
             String msg = "Refusing session request for not-read-only client "
                 + cnxn.getRemoteSocketAddress();
             LOG.info(msg);
-            throw new CloseRequestException(msg);
+            new CloseRequestException(msg);
         }
         if (connReq.getLastZxidSeen() > zkDb.dataTree.lastProcessedZxid) {
             String msg = "Refusing session request for client "
@@ -1020,7 +1020,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
                 + " client must try another server";
 
             LOG.info(msg);
-            throw new CloseRequestException(msg);
+            new CloseRequestException(msg);
         }
         int sessionTimeout = connReq.getTimeOut();
         byte passwd[] = connReq.getPasswd();

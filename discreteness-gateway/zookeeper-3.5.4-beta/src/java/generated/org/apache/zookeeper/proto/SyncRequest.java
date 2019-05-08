@@ -71,7 +71,7 @@ public class SyncRequest implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof SyncRequest)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     SyncRequest peer = (SyncRequest) peer_;
     int ret = 0;

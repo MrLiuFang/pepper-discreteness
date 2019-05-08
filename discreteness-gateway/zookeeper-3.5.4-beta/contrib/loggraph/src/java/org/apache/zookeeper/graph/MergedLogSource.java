@@ -138,7 +138,7 @@ public class MergedLogSource implements LogSource {
 	}
 
 	public void remove() throws UnsupportedOperationException {
-	    throw new UnsupportedOperationException("remove not supported for Merged logs");
+	    new UnsupportedOperationException("remove not supported for Merged logs");
 	}
 	
 	public void close() throws IOException {
@@ -160,7 +160,7 @@ public class MergedLogSource implements LogSource {
     public LogIterator iterator(long starttime, long endtime, FilterOp filter) throws IllegalArgumentException, FilterException {
 	// sanitise start and end times
 	if (endtime < starttime) {
-	    throw new IllegalArgumentException("End time (" +  endtime + ") must be greater or equal to starttime (" + starttime + ")");
+	    new IllegalArgumentException("End time (" +  endtime + ") must be greater or equal to starttime (" + starttime + ")");
 	}
 
 	return new MergedLogSourceIterator(this, starttime, endtime, filter);

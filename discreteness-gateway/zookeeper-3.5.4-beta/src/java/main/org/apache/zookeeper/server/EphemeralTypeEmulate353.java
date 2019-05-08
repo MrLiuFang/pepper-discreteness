@@ -60,7 +60,7 @@ public enum EphemeralTypeEmulate353 {
 
     public static long ttlToEphemeralOwner(long ttl) {
         if ((ttl > MAX_TTL) || (ttl <= 0)) {
-            throw new IllegalArgumentException("ttl must be positive and cannot be larger than: " + MAX_TTL);
+            new IllegalArgumentException("ttl must be positive and cannot be larger than: " + MAX_TTL);
         }
         return TTL_MASK | ttl;
     }

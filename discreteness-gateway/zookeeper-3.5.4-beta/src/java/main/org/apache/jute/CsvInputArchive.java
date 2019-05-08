@@ -62,7 +62,7 @@ class CsvInputArchive implements InputArchive {
                 }
             }
         } catch (IOException ex) {
-            throw new IOException("Error reading "+tag);
+            new IOException("Error reading "+tag);
         }
     }
     
@@ -96,7 +96,7 @@ class CsvInputArchive implements InputArchive {
             long lval = Long.parseLong(sval);
             return lval;
         } catch (NumberFormatException ex) {
-            throw new IOException("Error deserializing "+tag);
+            new IOException("Error deserializing "+tag);
         }
     }
     
@@ -110,7 +110,7 @@ class CsvInputArchive implements InputArchive {
             double dval = Double.parseDouble(sval);
             return dval;
         } catch (NumberFormatException ex) {
-            throw new IOException("Error deserializing "+tag);
+            new IOException("Error deserializing "+tag);
         }
     }
     
@@ -134,7 +134,7 @@ class CsvInputArchive implements InputArchive {
             char c1 = (char) stream.read();
             char c2 = (char) stream.read();
             if (c1 != 's' || c2 != '{') {
-                throw new IOException("Error deserializing "+tag);
+                new IOException("Error deserializing "+tag);
             }
         }
     }
@@ -143,14 +143,14 @@ class CsvInputArchive implements InputArchive {
         char c = (char) stream.read();
         if (tag == null || "".equals(tag)) {
             if (c != '\n' && c != '\r') {
-                throw new IOException("Error deserializing record.");
+                new IOException("Error deserializing record.");
             } else {
                 return;
             }
         }
         
         if (c != '}') {
-            throw new IOException("Error deserializing "+tag);
+            new IOException("Error deserializing "+tag);
         }
         c = (char) stream.read();
         if (c != ',') {
@@ -164,7 +164,7 @@ class CsvInputArchive implements InputArchive {
         char c1 = (char) stream.read();
         char c2 = (char) stream.read();
         if (c1 != 'v' || c2 != '{') {
-            throw new IOException("Error deserializing "+tag);
+            new IOException("Error deserializing "+tag);
         }
         return new CsvIndex();
     }
@@ -172,7 +172,7 @@ class CsvInputArchive implements InputArchive {
     public void endVector(String tag) throws IOException {
         char c = (char) stream.read();
         if (c != '}') {
-            throw new IOException("Error deserializing "+tag);
+            new IOException("Error deserializing "+tag);
         }
         c = (char) stream.read();
         if (c != ',') {
@@ -185,7 +185,7 @@ class CsvInputArchive implements InputArchive {
         char c1 = (char) stream.read();
         char c2 = (char) stream.read();
         if (c1 != 'm' || c2 != '{') {
-            throw new IOException("Error deserializing "+tag);
+            new IOException("Error deserializing "+tag);
         }
         return new CsvIndex();
     }
@@ -193,7 +193,7 @@ class CsvInputArchive implements InputArchive {
     public void endMap(String tag) throws IOException {
         char c = (char) stream.read();
         if (c != '}') {
-            throw new IOException("Error deserializing "+tag);
+            new IOException("Error deserializing "+tag);
         }
         c = (char) stream.read();
         if (c != ',') {

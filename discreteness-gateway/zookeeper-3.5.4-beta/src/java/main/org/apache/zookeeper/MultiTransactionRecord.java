@@ -76,7 +76,7 @@ public class MultiTransactionRecord implements Record, Iterable<Op> {
                     op.toRequestRecord().serialize(archive, tag);
                     break;
                 default:
-                    throw new IOException("Invalid type of op");
+                    new IOException("Invalid type of op");
             }
         }
         new MultiHeader(-1, true, -1).serialize(archive, tag);
@@ -119,7 +119,7 @@ public class MultiTransactionRecord implements Record, Iterable<Op> {
                     add(Op.check(cvr.getPath(), cvr.getVersion()));
                     break;
                 default:
-                    throw new IOException("Invalid type of op");
+                    new IOException("Invalid type of op");
             }
             h.deserialize(archive, tag);
         }

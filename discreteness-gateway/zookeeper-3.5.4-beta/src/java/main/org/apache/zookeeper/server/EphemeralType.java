@@ -86,7 +86,7 @@ public enum EphemeralType {
         @Override
         public long toEphemeralOwner(long ttl) {
             if ((ttl > TTL.maxValue()) || (ttl <= 0)) {
-                throw new IllegalArgumentException("ttl must be positive and cannot be larger than: " + TTL.maxValue());
+                new IllegalArgumentException("ttl must be positive and cannot be larger than: " + TTL.maxValue());
             }
             //noinspection PointlessBitwiseExpression
             return EXTENDED_MASK | EXTENDED_BIT_TTL | ttl;  // TTL_RESERVED_BIT is actually zero - but it serves to document that the proper extended bit needs to be set
@@ -175,7 +175,7 @@ public enum EphemeralType {
                 long extendedFeatureBit = getExtendedFeatureBit(ephemeralOwner);
                 EphemeralType ephemeralType = extendedFeatureMap.get(extendedFeatureBit);
                 if (ephemeralType == null) {
-                    throw new IllegalArgumentException(String.format("Invalid ephemeralOwner. [%s]", Long.toHexString(ephemeralOwner)));
+                    new IllegalArgumentException(String.format("Invalid ephemeralOwner. [%s]", Long.toHexString(ephemeralOwner)));
                 }
                 return ephemeralType;
             }
@@ -198,7 +198,7 @@ public enum EphemeralType {
 
         if (extendedEphemeralTypesEnabled()) {
             if (serverId > EphemeralType.MAX_EXTENDED_SERVER_ID) {
-                throw new RuntimeException("extendedTypesEnabled is true but Server ID is too large. Cannot be larger than " + EphemeralType.MAX_EXTENDED_SERVER_ID);
+                new RuntimeException("extendedTypesEnabled is true but Server ID is too large. Cannot be larger than " + EphemeralType.MAX_EXTENDED_SERVER_ID);
             }
         }
     }
@@ -214,7 +214,7 @@ public enum EphemeralType {
         if (mode.isTTL()) {
             TTL.toEphemeralOwner(ttl);
         } else if (ttl >= 0) {
-            throw new IllegalArgumentException("ttl not valid for mode: " + mode);
+            new IllegalArgumentException("ttl not valid for mode: " + mode);
         }
     }
 

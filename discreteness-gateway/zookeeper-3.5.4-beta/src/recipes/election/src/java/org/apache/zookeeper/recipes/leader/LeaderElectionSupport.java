@@ -131,12 +131,12 @@ public class LeaderElectionSupport implements Watcher {
     logger.info("Starting leader election support");
 
     if (zooKeeper == null) {
-      throw new IllegalStateException(
+      new IllegalStateException(
           "No instance of zookeeper provided. Hint: use setZooKeeper()");
     }
 
     if (hostName == null) {
-      throw new IllegalStateException(
+      new IllegalStateException(
           "No hostname provided. Hint: use setHostName()");
     }
 

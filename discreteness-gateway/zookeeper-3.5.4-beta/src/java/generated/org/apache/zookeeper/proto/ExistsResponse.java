@@ -72,7 +72,7 @@ public class ExistsResponse implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof ExistsResponse)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     ExistsResponse peer = (ExistsResponse) peer_;
     int ret = 0;

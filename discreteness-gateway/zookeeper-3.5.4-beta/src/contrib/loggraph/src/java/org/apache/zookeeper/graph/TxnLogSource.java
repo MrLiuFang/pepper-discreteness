@@ -109,7 +109,7 @@ public class TxnLogSource implements LogSource {
 		FileHeader fhdr = new FileHeader();
 		fhdr.deserialize(logStream, "fileheader");
 	    } catch (Exception e) {
-		throw new IllegalArgumentException("Cannot open transaction log ("+src.file+") :" + e);
+		new IllegalArgumentException("Cannot open transaction log ("+src.file+") :" + e);
 	    }
 	    
 	    LogSkipList.Mark start = src.getSkipList().findMarkBefore(starttime);
@@ -177,7 +177,7 @@ public class TxnLogSource implements LogSource {
 		Checksum crc = new Adler32();
 		crc.update(bytes, 0, bytes.length);
 		if (crcValue != crc.getValue()) {
-		    throw new IOException("CRC doesn't match " + crcValue +
+		    new IOException("CRC doesn't match " + crcValue +
 					  " vs " + crc.getValue());
 		}
 		TxnHeader hdr = new TxnHeader();
@@ -226,7 +226,7 @@ public class TxnLogSource implements LogSource {
 		}
 		
 		if (logStream.readByte("EOR") != 'B') {
-		    throw new EOFException("Last transaction was partial.");
+		    new EOFException("Last transaction was partial.");
 		}
 	    } catch (Exception ex) {
 		LOG.error("Error reading transaction from (" + src.file + ") :" + e);
@@ -249,7 +249,7 @@ public class TxnLogSource implements LogSource {
 			e = readNextEntry();
 		    }
 		} catch (FilterException fe) {
-		    throw new NoSuchElementException(fe.toString());
+		    new NoSuchElementException(fe.toString());
 		}
 	    }
 	    if (e != null && e.getTimestamp() < endtime) {
@@ -261,7 +261,7 @@ public class TxnLogSource implements LogSource {
 	}
 
 	public void remove() throws UnsupportedOperationException {
-	    throw new UnsupportedOperationException("remove not supported for Txn logs");
+	    new UnsupportedOperationException("remove not supported for Txn logs");
 	}
 	
 	public void close() throws IOException {
@@ -281,7 +281,7 @@ public class TxnLogSource implements LogSource {
     public LogIterator iterator(long starttime, long endtime, FilterOp filter) throws IllegalArgumentException, FilterException {
 	// sanitise start and end times
 	if (endtime < starttime) {
-	    throw new IllegalArgumentException("End time (" +  endtime + ") must be greater or equal to starttime (" + starttime + ")");
+	    new IllegalArgumentException("End time (" +  endtime + ") must be greater or equal to starttime (" + starttime + ")");
 	}
 
 	return new TxnLogSourceIterator(this, starttime, endtime, filter);
@@ -321,11 +321,11 @@ public class TxnLogSource implements LogSource {
 		Checksum crc = new Adler32();
 		crc.update(bytes, 0, bytes.length);
 		if (crcValue != crc.getValue()) {
-		    throw new IOException("CRC doesn't match " + crcValue +
+		    new IOException("CRC doesn't match " + crcValue +
 					  " vs " + crc.getValue());
 		}
 		if (logStream.readByte("EOR") != 'B') {
-		    throw new EOFException("Last transaction was partial.");
+		    new EOFException("Last transaction was partial.");
 		}
 		TxnHeader hdr = new TxnHeader();
 		Record r = SerializeUtils.deserializeTxn(bytes, hdr);
@@ -341,7 +341,7 @@ public class TxnLogSource implements LogSource {
 		size++;
 	    }
 	    if (bytes == null) {
-		throw new IOException("Nothing read from ("+file+")");
+		new IOException("Nothing read from ("+file+")");
 	    }
 	} finally {
 	    reader.close();

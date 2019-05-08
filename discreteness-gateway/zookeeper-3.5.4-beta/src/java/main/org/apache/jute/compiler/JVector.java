@@ -47,7 +47,7 @@ public class JVector extends JCompType {
     }
     
     public String genJavaCompareTo(String fname) {
-        return "    throw new UnsupportedOperationException(\"comparing "
+        return "    new UnsupportedOperationException(\"comparing "
             + fname + " is unimplemented\");\n";
     }
     

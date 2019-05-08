@@ -147,7 +147,7 @@ public abstract class ClientBase extends ZKTestCase {
                 left = expire - Time.currentElapsedTime();
             }
             if (!connected) {
-                throw new TimeoutException("Failed to connect to ZooKeeper server.");
+                new TimeoutException("Failed to connect to ZooKeeper server.");
 
             }
         }
@@ -161,7 +161,7 @@ public abstract class ClientBase extends ZKTestCase {
                 left = expire - Time.currentElapsedTime();
             }
             if (!syncConnected) {
-                throw new TimeoutException("Failed to connect to read-write ZooKeeper server.");
+                new TimeoutException("Failed to connect to read-write ZooKeeper server.");
             }
         }
         synchronized public void waitForReadOnlyConnected(long timeout)
@@ -174,7 +174,7 @@ public abstract class ClientBase extends ZKTestCase {
                 left = expire - System.currentTimeMillis();
             }
             if (!readOnlyConnected) {
-                throw new TimeoutException("Failed to connect in read-only mode to ZooKeeper server.");
+                new TimeoutException("Failed to connect in read-only mode to ZooKeeper server.");
             }
         }
         synchronized public void waitForDisconnected(long timeout)
@@ -187,7 +187,7 @@ public abstract class ClientBase extends ZKTestCase {
                 left = expire - Time.currentElapsedTime();
             }
             if (connected) {
-                throw new TimeoutException("Did not disconnect");
+                new TimeoutException("Did not disconnect");
 
             }
         }
@@ -265,7 +265,7 @@ public abstract class ClientBase extends ZKTestCase {
             try {
                 port = Integer.parseInt(hp.substring(idx + 1));
             } catch(RuntimeException e) {
-                throw new RuntimeException("Problem parsing " + hp + e.toString());
+                new RuntimeException("Problem parsing " + hp + e.toString());
             }
             alist.add(new HostPort(host,port));
         }

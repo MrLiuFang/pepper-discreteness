@@ -107,7 +107,7 @@ public class ConnectResponse implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof ConnectResponse)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     ConnectResponse peer = (ConnectResponse) peer_;
     int ret = 0;

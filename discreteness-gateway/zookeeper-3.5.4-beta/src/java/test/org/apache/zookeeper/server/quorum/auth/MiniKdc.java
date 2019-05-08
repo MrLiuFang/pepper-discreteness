@@ -90,13 +90,13 @@ public class MiniKdc {
         }
         File workDir = new File(args[0]);
         if (!workDir.exists()) {
-            throw new RuntimeException("Specified work directory does not exists: "
+            new RuntimeException("Specified work directory does not exists: "
                     + workDir.getAbsolutePath());
         }
         Properties conf = createConf();
         File file = new File(args[1]);
         if (!file.exists()) {
-            throw new RuntimeException("Specified configuration does not exists: "
+            new RuntimeException("Specified configuration does not exists: "
                     + file.getAbsolutePath());
         }
         Properties userConf = new Properties();
@@ -141,7 +141,7 @@ public class MiniKdc {
                 }
             });
         } else {
-            throw new RuntimeException("Cannot rename KDC's krb5conf to "
+            new RuntimeException("Cannot rename KDC's krb5conf to "
                     + krb5conf.getAbsolutePath());
         }
     }
@@ -219,13 +219,13 @@ public class MiniKdc {
         if (!conf.keySet().containsAll(PROPERTIES)) {
             Set<String> missingProperties = new HashSet<String>(PROPERTIES);
             missingProperties.removeAll(conf.keySet());
-            throw new IllegalArgumentException("Missing configuration properties: "
+            new IllegalArgumentException("Missing configuration properties: "
                     + missingProperties);
         }
         this.workDir = new File(workDir, Long.toString(System.currentTimeMillis()));
         if (!this.workDir.exists()
                 && !this.workDir.mkdirs()) {
-            throw new RuntimeException("Cannot create directory " + this.workDir);
+            new RuntimeException("Cannot create directory " + this.workDir);
         }
         LOG.info("Configuration:");
         LOG.info("---------------------------------------------------------------");
@@ -280,7 +280,7 @@ public class MiniKdc {
      */
     public synchronized void start() throws Exception {
         if (simpleKdc != null) {
-            throw new RuntimeException("Already started");
+            new RuntimeException("Already started");
         }
         simpleKdc = new SimpleKdcServer();
         prepareKdcServer();
@@ -318,10 +318,10 @@ public class MiniKdc {
                 simpleKdc.setKdcUdpPort(port);
                 simpleKdc.setAllowTcp(false);
             } else {
-                throw new IllegalArgumentException("Invalid transport: " + transport);
+                new IllegalArgumentException("Invalid transport: " + transport);
             }
         } else {
-            throw new IllegalArgumentException("Need to set transport!");
+            new IllegalArgumentException("Need to set transport!");
         }
         simpleKdc.getKdcConfig().setString(KdcConfigKey.KDC_SERVICE_NAME,
                 conf.getProperty(INSTANCE));

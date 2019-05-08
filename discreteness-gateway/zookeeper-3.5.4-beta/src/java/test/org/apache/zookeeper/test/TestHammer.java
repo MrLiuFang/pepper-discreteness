@@ -38,7 +38,7 @@ public class TestHammer implements VoidCallback {
                 zk = ClientBase.createZKClient(args[0], 10000);
             } catch (Exception e1) {
                 e1.printStackTrace();
-                throw new RuntimeException(e1);
+                new RuntimeException(e1);
             }
             for(int i = 0; i < REPS; i++) {
                 try {

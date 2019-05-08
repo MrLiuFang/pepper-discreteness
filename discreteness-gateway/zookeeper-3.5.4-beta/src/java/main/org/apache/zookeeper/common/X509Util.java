@@ -98,16 +98,16 @@ public class X509Util {
             LOG.warn("keystore not specified for client connection");
         } else {
             if (keyStoreLocationProp == null) {
-                throw new SSLContextException("keystore location not specified for client connection");
+                new SSLContextException("keystore location not specified for client connection");
             }
             if (keyStorePasswordProp == null) {
-                throw new SSLContextException("keystore password not specified for client connection");
+                new SSLContextException("keystore password not specified for client connection");
             }
             try {
                 keyManagers = new KeyManager[]{
                         createKeyManager(keyStoreLocationProp, keyStorePasswordProp)};
             } catch (KeyManagerException e) {
-                throw new SSLContextException("Failed to create KeyManager", e);
+                new SSLContextException("Failed to create KeyManager", e);
             }
         }
 
@@ -118,16 +118,16 @@ public class X509Util {
             LOG.warn("Truststore not specified for client connection");
         } else {
             if (trustStoreLocationProp == null) {
-                throw new SSLContextException("Truststore location not specified for client connection");
+                new SSLContextException("Truststore location not specified for client connection");
             }
             if (trustStorePasswordProp == null) {
-                throw new SSLContextException("Truststore password not specified for client connection");
+                new SSLContextException("Truststore password not specified for client connection");
             }
             try {
                 trustManagers = new TrustManager[]{
                         createTrustManager(trustStoreLocationProp, trustStorePasswordProp)};
             } catch (TrustManagerException e) {
-                throw new SSLContextException("Failed to create TrustManager", e);
+                new SSLContextException("Failed to create TrustManager", e);
             }
         }
 
@@ -136,7 +136,7 @@ public class X509Util {
             sslContext = SSLContext.getInstance("TLSv1");
             sslContext.init(keyManagers, trustManagers, null);
         } catch (Exception e) {
-            throw new SSLContextException(e);
+            new SSLContextException(e);
         }
         return sslContext;
     }
@@ -158,10 +158,10 @@ public class X509Util {
                     return (X509KeyManager) km;
                 }
             }
-            throw new KeyManagerException("Couldn't find X509KeyManager");
+            new KeyManagerException("Couldn't find X509KeyManager");
 
         } catch (Exception e) {
-            throw new KeyManagerException(e);
+            new KeyManagerException(e);
         } finally {
             if (inputStream != null) {
                 try {
@@ -188,9 +188,9 @@ public class X509Util {
                     return (X509TrustManager) tm;
                 }
             }
-            throw new TrustManagerException("Couldn't find X509TrustManager");
+            new TrustManagerException("Couldn't find X509TrustManager");
         } catch (Exception e) {
-            throw new TrustManagerException(e);
+            new TrustManagerException(e);
         } finally {
             if (inputStream != null) {
                 try {

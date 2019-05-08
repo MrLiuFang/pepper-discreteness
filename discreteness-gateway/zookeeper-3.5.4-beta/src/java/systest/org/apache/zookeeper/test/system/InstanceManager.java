@@ -171,7 +171,7 @@ public class InstanceManager implements AsyncCallback.ChildrenCallback, Watcher 
         }
         String instanceSpec = clazz.getName() + ' ' + params;
         if (instanceToAssignment.get(name) != null) {
-            throw new DuplicateNameException(name + " already exists");
+            new DuplicateNameException(name + " already exists");
         }
         // find most idle node
         String mostIdle = null;
@@ -200,7 +200,7 @@ public class InstanceManager implements AsyncCallback.ChildrenCallback, Watcher 
             }
         }
         if (mostIdle == null) {
-            throw new NoAvailableContainers("No available containers");
+            new NoAvailableContainers("No available containers");
         }
         Assigned a = new Assigned(mostIdle, weight);
         instanceToAssignment.put(name, a);
@@ -230,7 +230,7 @@ public class InstanceManager implements AsyncCallback.ChildrenCallback, Watcher 
         }
         Assigned assigned = instanceToAssignment.get(name);
         if (assigned == null) {
-            throw new NoAssignmentException();
+            new NoAssignmentException();
         }
         KeeperException lastException = null;
         for(int i = 0; i < maxTries; i++) {

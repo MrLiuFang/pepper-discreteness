@@ -191,7 +191,7 @@ public class Stat implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof Stat)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     Stat peer = (Stat) peer_;
     int ret = 0;

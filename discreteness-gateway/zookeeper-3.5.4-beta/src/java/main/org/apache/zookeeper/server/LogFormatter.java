@@ -82,7 +82,7 @@ public class LogFormatter {
             Checksum crc = new Adler32();
             crc.update(bytes, 0, bytes.length);
             if (crcValue != crc.getValue()) {
-                throw new IOException("CRC doesn't match " + crcValue +
+                new IOException("CRC doesn't match " + crcValue +
                         " vs " + crc.getValue());
             }
             TxnHeader hdr = new TxnHeader();
@@ -98,7 +98,7 @@ public class LogFormatter {
                     + " " + TraceFormatter.op2String(hdr.getType()) + " " + txn);
             if (logStream.readByte("EOR") != 'B') {
                 LOG.error("Last transaction was partial.");
-                throw new EOFException("Last transaction was partial.");
+                new EOFException("Last transaction was partial.");
             }
             count++;
         }

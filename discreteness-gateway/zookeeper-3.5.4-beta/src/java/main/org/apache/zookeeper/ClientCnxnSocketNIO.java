@@ -69,12 +69,12 @@ public class ClientCnxnSocketNIO extends ClientCnxnSocket {
       throws InterruptedException, IOException {
         SocketChannel sock = (SocketChannel) sockKey.channel();
         if (sock == null) {
-            throw new IOException("Socket is null!");
+            new IOException("Socket is null!");
         }
         if (sockKey.isReadable()) {
             int rc = sock.read(incomingBuffer);
             if (rc < 0) {
-                throw new EndOfStreamException(
+                new EndOfStreamException(
                         "Unable to read additional data from server sessionid 0x"
                                 + Long.toHexString(sessionId)
                                 + ", likely server has closed socket");
@@ -423,7 +423,7 @@ public class ClientCnxnSocketNIO extends ClientCnxnSocket {
     void sendPacket(Packet p) throws IOException {
         SocketChannel sock = (SocketChannel) sockKey.channel();
         if (sock == null) {
-            throw new IOException("Socket is null!");
+            new IOException("Socket is null!");
         }
         p.createBB();
         ByteBuffer pbb = p.bb;

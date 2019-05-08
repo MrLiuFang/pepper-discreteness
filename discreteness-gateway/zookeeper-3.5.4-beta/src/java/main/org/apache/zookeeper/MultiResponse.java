@@ -82,7 +82,7 @@ public class MultiResponse implements Record, Iterable<OpResult> {
                     new ErrorResponse(((OpResult.ErrorResult) result).getErr()).serialize(archive, tag);
                     break;
                 default:
-                    throw new IOException("Invalid type " + result.getType() + " in MultiResponse");
+                    new IOException("Invalid type " + result.getType() + " in MultiResponse");
             }
         }
         new MultiHeader(-1, true, -1).serialize(archive, tag);
@@ -132,7 +132,7 @@ public class MultiResponse implements Record, Iterable<OpResult> {
                     break;
 
                 default:
-                    throw new IOException("Invalid type " + h.getType() + " in MultiResponse");
+                    new IOException("Invalid type " + h.getType() + " in MultiResponse");
             }
             h.deserialize(archive, tag);
         }

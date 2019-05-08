@@ -124,7 +124,7 @@ public class GenerateLoad {
                     if (timePercentCount.length != 5) {
                         System.err.println("Got " + result + " from " + s
                                 + " exitng.");
-                        throw new IOException(result);
+                        new IOException(result);
                     }
                     long time = Long.parseLong(timePercentCount[0]);
                     // int percent = Integer.parseInt(timePercentCount[1]);
@@ -657,7 +657,7 @@ public class GenerateLoad {
                                 && cmdNumber.length > 1) {
                             int number = Integer.parseInt(cmdNumber[1]);
                             if (number < 0 || number > 100) {
-                                throw new NumberFormatException(
+                                new NumberFormatException(
                                         "must be between 0 and 100");
                             }
                             sendChange(number);

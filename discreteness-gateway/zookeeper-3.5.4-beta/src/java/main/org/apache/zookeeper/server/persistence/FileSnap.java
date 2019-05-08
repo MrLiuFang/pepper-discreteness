@@ -88,7 +88,7 @@ public class FileSnap implements SnapShot {
                 long checkSum = crcIn.getChecksum().getValue();
                 long val = ia.readLong("val");
                 if (val != checkSum) {
-                    throw new IOException("CRC corruption in snapshot :  " + snap);
+                    new IOException("CRC corruption in snapshot :  " + snap);
                 }
                 foundValid = true;
                 break;
@@ -97,7 +97,7 @@ public class FileSnap implements SnapShot {
             }
         }
         if (!foundValid) {
-            throw new IOException("Not able to find valid snapshots in " + snapDir);
+            new IOException("Not able to find valid snapshots in " + snapDir);
         }
         dt.lastProcessedZxid = Util.getZxidFromName(snap.getName(), SNAPSHOT_FILE_PREFIX);
         return dt.lastProcessedZxid;
@@ -115,7 +115,7 @@ public class FileSnap implements SnapShot {
         FileHeader header = new FileHeader();
         header.deserialize(ia, "fileheader");
         if (header.getMagic() != SNAP_MAGIC) {
-            throw new IOException("mismatching magic headers "
+            new IOException("mismatching magic headers "
                     + header.getMagic() +
                     " !=  " + FileSnap.SNAP_MAGIC);
         }
@@ -204,7 +204,7 @@ public class FileSnap implements SnapShot {
         // this is really a programmatic error and not something that can
         // happen at runtime
         if(header==null)
-            throw new IllegalStateException(
+            new IllegalStateException(
                     "Snapshot's not open for writing: uninitialized header");
         header.serialize(oa, "fileheader");
         SerializeUtils.serializeSnapshot(dt,oa,sessions);

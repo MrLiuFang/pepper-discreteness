@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.pepper.service.file.FileService;
 import com.pepper.util.FileUtil;
@@ -34,7 +35,7 @@ public class UeditorController  {
 
 	@RequestMapping(value = "/upload")
 	@ResponseBody
-	public Object add(@RequestParam("upfile") MultipartFile file, String action) throws IOException {
+	public Object add(MultipartHttpServletRequest multipartHttpServletRequest) throws IOException {
 		/*
 		 * if ("config".equals(action)) { // 这里千万注意 "config.json" 文件前方的目录一定要正确
 		 * //render("/assets/admin/ueditor/jsp/config.json"); return
@@ -42,21 +43,24 @@ public class UeditorController  {
 		 * ClassPathResource("/META-INF/resources/assets/admin/ueditor/jsp/config.json")
 		 * .getInputStream(), Charset.forName("Utf-8")); }
 		 */
-		
-		// IE上传文件，得到的文件名是一串路径，要做兼容
-		String fileName = FileUtil.getRealFileName(file.getOriginalFilename());
-		String fileId = fileService.addFile(file.getBytes(),fileName);
-		String url = fileService.getUrl(fileId);
-		String[] typeArr = file.getContentType().split("/");
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("id", fileId);
-		map.put("url", url);
-		map.put("src", fileService.getUrl(fileId));
-		map.put("original", file.getOriginalFilename());
-		map.put("state", "SUCCESS");
-		map.put("title", fileName);
-		map.put("type", "." + typeArr[1]);
-		map.put("size", file.getSize());
+		Map<String, MultipartFile> files = multipartHttpServletRequest.getFileMap();
+		for (MultipartFile file : files.values()) {
+			// IE上传文件，得到的文件名是一串路径，要做兼容
+			String fileName = FileUtil.getRealFileName(file.getOriginalFilename());
+			String fileId = fileService.addFile(file.getBytes(),fileName);
+			String url = fileService.getUrl(fileId);
+			String[] typeArr = file.getContentType().split("/");
+			
+			map.put("id", fileId);
+			map.put("url", url);
+			map.put("src", fileService.getUrl(fileId));
+			map.put("original", file.getOriginalFilename());
+			map.put("state", "SUCCESS");
+			map.put("title", fileName);
+			map.put("type", "." + typeArr[1]);
+			map.put("size", file.getSize());
+		}
 		return map;
 	}
 }

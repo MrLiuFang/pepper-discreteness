@@ -476,7 +476,7 @@ public class ZooKeeperMain {
             }
             for (String child: children) {
                 if (Quotas.limitNode.equals(child)) {
-                    throw new IllegalArgumentException(path + " has a parent "
+                    new IllegalArgumentException(path + " has a parent "
                             + quotaPath + " which has a quota");
                 }
             }
@@ -500,7 +500,7 @@ public class ZooKeeperMain {
         // for now.
         Stat initStat = zk.exists(path, false);
         if (initStat == null) {
-            throw new IllegalArgumentException(path + " does not exist.");
+            new IllegalArgumentException(path + " does not exist.");
         }
         // now check if their is already existing
         // parent or child that has quota
@@ -516,7 +516,7 @@ public class ZooKeeperMain {
             List<String> children = zk.getChildren(realPath, false);
             for (String child: children) {
                 if (!child.startsWith("zookeeper_")) {
-                    throw new IllegalArgumentException(path + " has child " +
+                    new IllegalArgumentException(path + " has child " +
                             child + " which has a quota");
                 }
             }
@@ -599,12 +599,12 @@ public class ZooKeeperMain {
         String cmd = co.getCommand();
         if (args.length < 1) {
             usage();
-            throw new MalformedCommandException("No command entered");
+            new MalformedCommandException("No command entered");
         }
 
         if (!commandMap.containsKey(cmd)) {
             usage();
-            throw new CommandNotFoundException("Command not found " + cmd);
+            new CommandNotFoundException("Command not found " + cmd);
         }
         
         boolean watch = false;
@@ -617,11 +617,11 @@ public class ZooKeeperMain {
         } else if (cmd.equals("redo") && args.length >= 2) {
             Integer i = Integer.decode(args[1]);
             if (commandCount <= i || i < 0) { // don't allow redoing this redo
-                throw new MalformedCommandException("Command index out of range");
+                new MalformedCommandException("Command index out of range");
             }
             cl.parseCommand(history.get(i));
             if (cl.getCommand().equals("redo")) {
-                throw new MalformedCommandException("No redoing redos");
+                new MalformedCommandException("No redoing redos");
             }
             history.put(commandCount, history.get(i));
             processCmd(cl);

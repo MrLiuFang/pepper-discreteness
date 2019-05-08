@@ -3,20 +3,21 @@ package com.pepper.service.file.impl;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Properties;
+
+import javax.annotation.Resource;
 
 import org.csource.common.MyException;
-import org.csource.fastdfs.ClientGlobal;
 import org.csource.fastdfs.StorageClient;
 import org.csource.fastdfs.StorageServer;
 import org.csource.fastdfs.TrackerClient;
 import org.csource.fastdfs.TrackerServer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 /**
  * 
@@ -24,52 +25,41 @@ import org.springframework.util.StringUtils;
  *
  */
 @Component
+@ConditionalOnBean(value={TrackerClient.class,TrackerServer.class,FileBeanFactory.class})
+@ConditionalOnProperty(prefix = "file", name = "storage.type", havingValue = Fastdfs.STORAGE_TYPE_NAME, matchIfMissing = true)
 public class Fastdfs implements IFile, ApplicationListener<ContextRefreshedEvent> {
 
+	public static final String STORAGE_TYPE_NAME = "fastdfs";
+
+	
 	@Autowired
 	private Environment env;
 
-	private String domain = "";
+	private String fileDomain = "";
 	
+	@Resource
 	private TrackerClient trackerClient;
 	
+	@Resource
 	private TrackerServer trackerServer;
+	
+	@Resource
+	private FileBeanFactory fileBeanFactory;
 
-	private StorageServer storageServer;	
+	private StorageServer storageServer;
+	
+	
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		Properties properties = new Properties();
-		try {
-			if (StringUtils.hasLength(env.getProperty("fastdfs.tracker_servers"))) {
-				properties.setProperty("fastdfs.http_secret_key", env.getProperty("fastdfs.http_secret_key"));
-				properties.setProperty("fastdfs.tracker_servers", env.getProperty("fastdfs.tracker_servers"));
-				properties.setProperty("fastdfs.connect_timeout_in_seconds",
-						env.getProperty("fastdfs.connect_timeout_in_seconds"));
-				properties.setProperty("fastdfs.network_timeout_in_seconds",
-						env.getProperty("fastdfs.network_timeout_in_seconds"));
-				properties.setProperty("fastdfs.charset", env.getProperty("fastdfs.charset"));
-				properties.setProperty("fastdfs.http_anti_steal_token",
-						env.getProperty("fastdfs.http_anti_steal_token"));
-				properties.setProperty("fastdfs.http_tracker_http_port",
-						env.getProperty("fastdfs.http_tracker_http_port"));
-				ClientGlobal.initByProperties(properties);
-				if (env.getProperty("file.action","").equals("fastdfs")) {
-					trackerClient = new TrackerClient();
-					trackerServer = trackerClient.getConnection();
-				}
-				
-			}
-		} catch (IOException | MyException e) {
-			e.printStackTrace();
-		}
-		domain = env.getProperty("fastdfs.domain");
+		fileBeanFactory.setBean(getStorageTypeName(), this);
+		fileDomain = env.getProperty("fileDomain");
 
 	}
 
 	@Override
-	public String getLocationName() {
-		return "fastdfs";
+	public String getStorageTypeName() {
+		return STORAGE_TYPE_NAME;
 	}
 
 	/**
@@ -96,8 +86,6 @@ public class Fastdfs implements IFile, ApplicationListener<ContextRefreshedEvent
 				e.printStackTrace();
 			}
 		}
-			
-		
 		return null;
 	}
 
@@ -108,12 +96,12 @@ public class Fastdfs implements IFile, ApplicationListener<ContextRefreshedEvent
 
 	@Override
 	public String getUrl(com.pepper.model.file.File entity) {
-		return domain + entity.getUrl();
+		return fileDomain + entity.getUrl();
 	}
 
 	@Override
 	public String getUrl(com.pepper.model.file.File entity, String pix) {
-		return domain + entity.getUrl() + "?w=" + pix + "&h=" + pix;
+		return fileDomain + entity.getUrl() + "?w=" + pix + "&h=" + pix;
 	}
 
 	private StorageClient getStorageClient() throws IOException {

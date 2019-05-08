@@ -52,11 +52,11 @@ public class RemoveWatchesCommand extends CliCommand {
         try {
             cl = parser.parse(options, cmdArgs);
         } catch (ParseException ex) {
-            throw new CliParseException(ex);
+            new CliParseException(ex);
         }
         args = cl.getArgs();
         if (args.length < 2) {
-            throw new CliParseException(getUsageStr());
+            new CliParseException(getUsageStr());
         }
         return this;
     }
@@ -80,9 +80,9 @@ public class RemoveWatchesCommand extends CliCommand {
         try {
             zk.removeAllWatches(path, wtype, local);
         } catch (IllegalArgumentException ex) {
-            throw new MalformedPathException(ex.getMessage());
+            new MalformedPathException(ex.getMessage());
         } catch (KeeperException|InterruptedException ex) {
-            throw new CliWrapperException(ex);
+            new CliWrapperException(ex);
         }
         return true;
     }

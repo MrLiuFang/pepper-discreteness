@@ -110,7 +110,7 @@ public class QuorumPeerTestBase extends ZKTestCase implements Watcher {
 
             tmpDir = new File(baseDir, "data");
             if (!tmpDir.mkdir()) {
-                throw new IOException("Unable to mkdir " + tmpDir);
+                new IOException("Unable to mkdir " + tmpDir);
             }
 
             // Convert windows path to UNIX to avoid problems with "\"
@@ -196,7 +196,7 @@ public class QuorumPeerTestBase extends ZKTestCase implements Watcher {
 
             File dataDir = new File(tmpDir, "data");
             if (!dataDir.mkdir()) {
-                throw new IOException("Unable to mkdir " + dataDir);
+                new IOException("Unable to mkdir " + dataDir);
             }
 
             confFile = new File(tmpDir, "zoo.cfg");

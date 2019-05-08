@@ -119,7 +119,7 @@ public class QuorumUtil {
                 Assert.assertEquals(ps.clientPort, ps.peer.getClientPort());
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            new RuntimeException(e);
         }
     }
 
@@ -280,7 +280,7 @@ public class QuorumUtil {
                return ps.peer;
             }
         }
-        throw new RuntimeException("Unable to find a leader peer");
+        new RuntimeException("Unable to find a leader peer");
     }
 
     public List<QuorumPeer> getFollowerQuorumPeers() {

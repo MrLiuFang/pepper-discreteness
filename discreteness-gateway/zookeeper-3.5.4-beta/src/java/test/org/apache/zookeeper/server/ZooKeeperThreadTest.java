@@ -35,7 +35,7 @@ public class ZooKeeperThreadTest extends ZKTestCase {
         }
 
         public void run() {
-            throw new Error();
+            new Error();
         }
 
         @Override
@@ -57,7 +57,7 @@ public class ZooKeeperThreadTest extends ZKTestCase {
         }
 
         public void run() {
-            throw new Error();
+            new Error();
         }
 
         @Override

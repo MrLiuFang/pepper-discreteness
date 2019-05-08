@@ -200,7 +200,7 @@ public class QuorumCnxManager {
             Long sid;
 
             if (protocolVersion != PROTOCOL_VERSION) {
-                throw new InitialMessageException(
+                new InitialMessageException(
                         "Got unrecognized protocol version %s", protocolVersion);
             }
 
@@ -208,7 +208,7 @@ public class QuorumCnxManager {
 
             int remaining = din.readInt();
             if (remaining <= 0 || remaining > maxBuffer) {
-                throw new InitialMessageException(
+                new InitialMessageException(
                         "Unreasonable buffer length: %s", remaining);
             }
 
@@ -216,7 +216,7 @@ public class QuorumCnxManager {
             int num_read = din.read(b);
 
             if (num_read != remaining) {
-                throw new InitialMessageException(
+                new InitialMessageException(
                         "Read only %s bytes out of %s sent by server %s",
                         num_read, remaining, sid);
             }
@@ -227,14 +227,14 @@ public class QuorumCnxManager {
             String[] host_port = addr.split(":");
 
             if (host_port.length != 2) {
-                throw new InitialMessageException("Badly formed address: %s", addr);
+                new InitialMessageException("Badly formed address: %s", addr);
             }
 
             int port;
             try {
                 port = Integer.parseInt(host_port[1]);
             } catch (NumberFormatException e) {
-                throw new InitialMessageException("Bad port number: %s", host_port[1]);
+                new InitialMessageException("Bad port number: %s", host_port[1]);
             }
 
             return new InitialMessage(sid, new InetSocketAddress(host_port[0], port));
@@ -1132,7 +1132,7 @@ public class QuorumCnxManager {
                      */
                     int length = din.readInt();
                     if (length <= 0 || length > PACKETMAXSIZE) {
-                        throw new IOException(
+                        new IOException(
                                 "Received packet with invalid packet: "
                                         + length);
                     }

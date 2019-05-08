@@ -77,14 +77,14 @@ public class Follower extends Learner{
                 connectToLeader(leaderServer.addr, leaderServer.hostname);
                 long newEpochZxid = registerWithLeader(Leader.FOLLOWERINFO);
                 if (self.isReconfigStateChange())
-                   throw new Exception("learned about role change");
+                   new Exception("learned about role change");
                 //check to see if the leader zxid is lower than ours
                 //this should never happen but is just a safety check
                 long newEpoch = ZxidUtils.getEpochFromZxid(newEpochZxid);
                 if (newEpoch < self.getAcceptedEpoch()) {
                     LOG.error("Proposed leader epoch " + ZxidUtils.zxidToString(newEpochZxid)
                             + " is less than our accepted epoch " + ZxidUtils.zxidToString(self.getAcceptedEpoch()));
-                    throw new IOException("Error: Epoch of leader is lower");
+                    new IOException("Error: Epoch of leader is lower");
                 }
                 syncWithLeader(newEpochZxid);                
                 QuorumPacket qp = new QuorumPacket();
@@ -155,7 +155,7 @@ public class Follower extends Learner{
            // commit (writes the new config to ZK tree (/zookeeper/config)                     
            fzk.commit(qp.getZxid());
             if (majorChange) {
-               throw new Exception("changes proposed in reconfig");
+               new Exception("changes proposed in reconfig");
            }
            break;
         case Leader.UPTODATE:

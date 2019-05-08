@@ -186,7 +186,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
            } else if (s.toLowerCase().equals("participant")) {
                type = LearnerType.PARTICIPANT;
             } else {
-               throw new ConfigException("Unrecognised peertype: " + s);
+               new ConfigException("Unrecognised peertype: " + s);
             }
         }
 
@@ -197,7 +197,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
             if (s.startsWith("[")) {
                 int i = s.indexOf("]:");
                 if (i < 0) {
-                    throw new ConfigException(s + " starts with '[' but has no matching ']:'");
+                    new ConfigException(s + " starts with '[' but has no matching ']:'");
                 }
 
                 String[] sa = s.substring(i + 2).split(":");
@@ -221,14 +221,14 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
             String serverParts[] = splitWithLeadingHostname(serverClientParts[0]);
             if ((serverClientParts.length > 2) || (serverParts.length < 3)
                     || (serverParts.length > 4)) {
-                throw new ConfigException(addressStr + wrongFormat);
+                new ConfigException(addressStr + wrongFormat);
             }
 
             if (serverClientParts.length == 2) {
                 //LOG.warn("ClientParts: " + serverClientParts[1]);
                 String clientParts[] = splitWithLeadingHostname(serverClientParts[1]);
                 if (clientParts.length > 2) {
-                    throw new ConfigException(addressStr + wrongFormat);
+                    new ConfigException(addressStr + wrongFormat);
                 }
 
                 // is client_config a host:port or just a port
@@ -238,7 +238,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                             Integer.parseInt(clientParts[clientParts.length - 1]));
                     //LOG.warn("Set clientAddr to " + clientAddr);
                 } catch (NumberFormatException e) {
-                    throw new ConfigException("Address unresolved: " + hostname + ":" + clientParts[clientParts.length - 1]);
+                    new ConfigException("Address unresolved: " + hostname + ":" + clientParts[clientParts.length - 1]);
                 }
             }
 
@@ -247,13 +247,13 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                 addr = new InetSocketAddress(serverParts[0],
                         Integer.parseInt(serverParts[1]));
             } catch (NumberFormatException e) {
-                throw new ConfigException("Address unresolved: " + serverParts[0] + ":" + serverParts[1]);
+                new ConfigException("Address unresolved: " + serverParts[0] + ":" + serverParts[1]);
             }
             try {
                 electionAddr = new InetSocketAddress(serverParts[0], 
                         Integer.parseInt(serverParts[2]));
             } catch (NumberFormatException e) {
-                throw new ConfigException("Address unresolved: " + serverParts[0] + ":" + serverParts[2]);
+                new ConfigException("Address unresolved: " + serverParts[0] + ":" + serverParts[2]);
             }
 
             if (serverParts.length == 4) {
@@ -356,7 +356,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                 for (InetSocketAddress other: otherAddrs) {
                     if (my.equals(other)) {
                         String error = String.format("%s of server.%d conflicts %s of server.%d", my, this.id, other, s.id);
-                        throw new BadArgumentsException(error);
+                        new BadArgumentsException(error);
                     }
                 }
             }
@@ -848,7 +848,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
     @Override
     public synchronized void start() {
         if (!getView().containsKey(myid)) {
-            throw new RuntimeException("My id " + myid + " not in the peer list");
+            new RuntimeException("My id " + myid + " not in the peer list");
          }
         loadDataBase();
         startServerCnxnFactory();
@@ -882,7 +882,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
             	writeLongToFile(CURRENT_EPOCH_FILENAME, currentEpoch);
             }
             if (epochOfZxid > currentEpoch) {
-                throw new IOException("The current epoch, " + ZxidUtils.zxidToString(currentEpoch) + ", is older than the last zxid, " + lastProcessedZxid);
+                new IOException("The current epoch, " + ZxidUtils.zxidToString(currentEpoch) + ", is older than the last zxid, " + lastProcessedZxid);
             }
             try {
                 acceptedEpoch = readLongFromFile(ACCEPTED_EPOCH_FILENAME);
@@ -897,11 +897,11 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
             	writeLongToFile(ACCEPTED_EPOCH_FILENAME, acceptedEpoch);
             }
             if (acceptedEpoch < currentEpoch) {
-                throw new IOException("The accepted epoch, " + ZxidUtils.zxidToString(acceptedEpoch) + " is less than the current epoch, " + ZxidUtils.zxidToString(currentEpoch));
+                new IOException("The accepted epoch, " + ZxidUtils.zxidToString(acceptedEpoch) + " is less than the current epoch, " + ZxidUtils.zxidToString(currentEpoch));
             }
         } catch(IOException ie) {
             LOG.error("Unable to load database on disk", ie);
-            throw new RuntimeException("Unable to run quorum server ", ie);
+            new RuntimeException("Unable to run quorum server ", ie);
         }
     }
 
@@ -923,7 +923,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
        }
 
        // if (!getView().containsKey(myid)) {
-      //      throw new RuntimeException("My id " + myid + " not in the peer list");
+      //      new RuntimeException("My id " + myid + " not in the peer list");
         //}
         if (electionType == 0) {
             try {
@@ -931,7 +931,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                 responder = new ResponderThread();
                 responder.start();
             } catch (SocketException e) {
-                throw new RuntimeException(e);
+                new RuntimeException(e);
             }
         }
         this.electionAlg = createElectionAlgorithm(electionType);
@@ -987,13 +987,13 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
             throws IOException {
         QuorumServer quorumServer = quorumPeers.get(myid);
         if (null == quorumServer) {
-            throw new IOException("No QuorumServer correspoding to myid " + myid);
+            new IOException("No QuorumServer correspoding to myid " + myid);
         }
         if (null == quorumServer.clientAddr) {
             return new InetSocketAddress(clientPort);
         }
         if (quorumServer.clientAddr.getPort() != clientPort) {
-            throw new IOException("QuorumServer port " + quorumServer.clientAddr.getPort()
+            new IOException("QuorumServer port " + quorumServer.clientAddr.getPort()
                     + " does not match with given port " + clientPort);
         }
         return quorumServer.clientAddr;
@@ -1788,7 +1788,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
             line = br.readLine();
             return Long.parseLong(line);
         } catch(NumberFormatException e) {
-            throw new IOException("Found " + line + " in " + file);
+            new IOException("Found " + line + " in " + file);
         } finally {
             br.close();
         }

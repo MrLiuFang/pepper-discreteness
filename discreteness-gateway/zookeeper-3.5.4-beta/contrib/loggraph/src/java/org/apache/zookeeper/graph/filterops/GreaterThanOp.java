@@ -35,7 +35,7 @@ public class GreaterThanOp extends FilterOp {
 		} else if (v instanceof Double || v instanceof Long || v instanceof Integer || v instanceof Short) {
 		    type = FilterOp.ArgType.NUMBER;
 		} else {
-		    throw new FilterException("LessThanOp: Invalid argument, first argument resolves to neither a String nor a Number");
+		    new FilterException("LessThanOp: Invalid argument, first argument resolves to neither a String nor a Number");
 		}
 	    }
 	    

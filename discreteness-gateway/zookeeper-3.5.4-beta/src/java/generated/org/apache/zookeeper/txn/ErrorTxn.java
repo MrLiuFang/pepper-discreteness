@@ -71,7 +71,7 @@ public class ErrorTxn implements Record {
   }
   public int compareTo (Object peer_) throws ClassCastException {
     if (!(peer_ instanceof ErrorTxn)) {
-      throw new ClassCastException("Comparing different types of records.");
+      new ClassCastException("Comparing different types of records.");
     }
     ErrorTxn peer = (ErrorTxn) peer_;
     int ret = 0;

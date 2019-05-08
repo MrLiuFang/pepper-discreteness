@@ -37,7 +37,7 @@ public class CloseCommand extends CliCommand {
         try {
             zk.close();
         } catch (Exception ex) {
-            throw new CliWrapperException(ex);
+            new CliWrapperException(ex);
         }
         
         return false;

@@ -118,7 +118,7 @@ abstract class ClientCnxnSocket {
     protected void readLength() throws IOException {
         int len = incomingBuffer.getInt();
         if (len < 0 || len >= packetLen) {
-            throw new IOException("Packet len" + len + " is out of range!");
+            new IOException("Packet len" + len + " is out of range!");
         }
         incomingBuffer = ByteBuffer.allocate(len);
     }
@@ -241,7 +241,7 @@ abstract class ClientCnxnSocket {
                     clientConfig.getProperty(ZKConfig.JUTE_MAXBUFFER),
                     ZKConfig.JUTE_MAXBUFFER);
             LOG.error(msg);
-            throw new IOException(msg);
+            new IOException(msg);
         }
     }
 

@@ -86,7 +86,7 @@ public class KerberosName {
     } catch (Exception ke) {
       if ((System.getProperty("zookeeper.requireKerberosConfig") != null) &&
           (System.getProperty("zookeeper.requireKerberosConfig").equals("true"))) {
-        throw new IllegalArgumentException("Can't get Kerberos configuration",ke);
+        new IllegalArgumentException("Can't get Kerberos configuration",ke);
       }
       else
         defaultRealm="";
@@ -99,7 +99,7 @@ public class KerberosName {
       setConfiguration();
     }
     catch (IOException e) {
-      throw new IllegalArgumentException("Could not configure Kerberos principal name mapping.");
+      new IllegalArgumentException("Could not configure Kerberos principal name mapping.");
     }
   }
 
@@ -111,7 +111,7 @@ public class KerberosName {
     Matcher match = nameParser.matcher(name);
     if (!match.matches()) {
       if (name.contains("@")) {
-        throw new IllegalArgumentException("Malformed Kerberos name: " + name);
+        new IllegalArgumentException("Malformed Kerberos name: " + name);
       } else {
         serviceName = name;
         hostName = null;
@@ -259,13 +259,13 @@ public class KerberosName {
           try {
             int num = Integer.parseInt(paramNum);
             if (num < 0 || num > params.length) {
-              throw new BadFormatString("index " + num + " from " + format +
+              new BadFormatString("index " + num + " from " + format +
                                         " is outside of the valid range 0 to " +
                                         (params.length - 1));
             }
             result.append(params[num]);
           } catch (NumberFormatException nfe) {
-            throw new BadFormatString("bad format in username mapping in " + 
+            new BadFormatString("bad format in username mapping in " + 
                                       paramNum, nfe);
           }
           
@@ -319,7 +319,7 @@ public class KerberosName {
         }
       }
       if (result != null && nonSimplePattern.matcher(result).find()) {
-        throw new NoMatchingRule("Non-simple name " + result +
+        new NoMatchingRule("Non-simple name " + result +
                                  " after auth_to_local rule " + this);
       }
       return result;
@@ -332,7 +332,7 @@ public class KerberosName {
     while (remaining.length() > 0) {
       Matcher matcher = ruleParser.matcher(remaining);
       if (!matcher.lookingAt()) {
-        throw new IllegalArgumentException("Invalid rule: " + remaining);
+        new IllegalArgumentException("Invalid rule: " + remaining);
       }
       if (matcher.group(2) != null) {
         result.add(new Rule());
@@ -399,7 +399,7 @@ public class KerberosName {
         return result;
       }
     }
-    throw new NoMatchingRule("No rules applied to " + toString());
+    new NoMatchingRule("No rules applied to " + toString());
   }
 
   static void printRules() throws IOException {

@@ -96,7 +96,7 @@ public class AtomicFileWritingIdiomTest extends ZKTestCase {
                     os.write("after".getBytes("ASCII"));
                     os.flush();
                     assertTrue("implementation of AtomicFileOutputStream has changed, update the test", tmp.exists());
-                    throw new RuntimeException();
+                    new RuntimeException();
                 }
             });
         } catch (RuntimeException ex) {
@@ -123,7 +123,7 @@ public class AtomicFileWritingIdiomTest extends ZKTestCase {
                     os.write("after");
                     os.flush();
                     assertTrue("implementation of AtomicFileOutputStream has changed, update the test", tmp.exists());
-                    throw new RuntimeException();
+                    new RuntimeException();
                 }
             });
         } catch (RuntimeException ex) {
@@ -150,7 +150,7 @@ public class AtomicFileWritingIdiomTest extends ZKTestCase {
                     os.write("after".getBytes("ASCII"));
                     os.flush();
                     assertTrue("implementation of AtomicFileOutputStream has changed, update the test", tmp.exists());
-                    throw new IOException();
+                    new IOException();
                 }
             });
         } catch (IOException ex) {
@@ -177,7 +177,7 @@ public class AtomicFileWritingIdiomTest extends ZKTestCase {
                     os.write("after");
                     os.flush();
                     assertTrue("implementation of AtomicFileOutputStream has changed, update the test", tmp.exists());
-                    throw new IOException();
+                    new IOException();
                 }
             });
         } catch (IOException ex) {
@@ -204,7 +204,7 @@ public class AtomicFileWritingIdiomTest extends ZKTestCase {
                     os.write("after".getBytes("ASCII"));
                     os.flush();
                     assertTrue("implementation of AtomicFileOutputStream has changed, update the test", tmp.exists());
-                    throw new Error();
+                    new Error();
                 }
             });
         } catch (Error ex) {
@@ -231,7 +231,7 @@ public class AtomicFileWritingIdiomTest extends ZKTestCase {
                     os.write("after");
                     os.flush();
                     assertTrue("implementation of AtomicFileOutputStream has changed, update the test", tmp.exists());
-                    throw new Error();
+                    new Error();
                 }
             });
         } catch (Error ex) {
@@ -297,7 +297,7 @@ public class AtomicFileWritingIdiomTest extends ZKTestCase {
                     os.write("after".getBytes("ASCII"));
                     os.flush();
                     assertTrue("implementation of AtomicFileOutputStream has changed, update the test", tmp.exists());
-                    throw new RuntimeException();
+                    new RuntimeException();
                 }
             });
         } catch (RuntimeException ex) {
@@ -323,7 +323,7 @@ public class AtomicFileWritingIdiomTest extends ZKTestCase {
                     os.write("after");
                     os.flush();
                     assertTrue("implementation of AtomicFileOutputStream has changed, update the test", tmp.exists());
-                    throw new RuntimeException();
+                    new RuntimeException();
                 }
             });
         } catch (RuntimeException ex) {

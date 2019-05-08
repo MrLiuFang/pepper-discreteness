@@ -229,7 +229,7 @@ public abstract class ServerCnxnFactory {
                     errorMessage += " But " + ZooKeeperSaslServer.LOGIN_CONTEXT_NAME_KEY + " was set.";
                 }
                 LOG.error(errorMessage);
-                throw new IOException(errorMessage);
+                new IOException(errorMessage);
             }
             return;
         }
@@ -240,7 +240,7 @@ public abstract class ServerCnxnFactory {
             login = new Login(serverSection, saslServerCallbackHandler, new ZKConfig() );
             login.startThreadIfNeeded();
         } catch (LoginException e) {
-            throw new IOException("Could not configure server because SASL configuration did not allow the "
+            new IOException("Could not configure server because SASL configuration did not allow the "
               + " ZooKeeper server to authenticate itself properly: " + e);
         }
     }
