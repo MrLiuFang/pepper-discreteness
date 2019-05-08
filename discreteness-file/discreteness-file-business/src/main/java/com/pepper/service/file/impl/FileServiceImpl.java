@@ -17,15 +17,15 @@ import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
 
 import com.pepper.dao.file.FileDao;
-import com.pepper.service.file.FileUploadService;
+import com.pepper.service.file.FileService;
 
 /**
  * 
  * @author mrliu
  *
  */
-@Service(interfaceClass=FileUploadService.class)
-public class FileUploadServiceImpl implements FileUploadService {
+@Service(interfaceClass=FileService.class)
+public class FileServiceImpl implements FileService {
 
 	@Resource
 	private FileBeanFactory fileBeanFactory;
@@ -54,7 +54,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 			IFile iFile = fileBeanFactory.getBean(env.getProperty("file.storage.type"));
 			if(iFile != null){
 				fileStorageId = iFile.add(file);
-				recordFileInfo(fileByte.length,fileStorageId,fileName,iFile.getStorageTypeName());
+				fileStorageId = recordFileInfo(fileByte.length,fileStorageId,fileName,iFile.getStorageTypeName());
 			}
 			
 		} catch (IOException e) {
@@ -67,18 +67,20 @@ public class FileUploadServiceImpl implements FileUploadService {
 		return fileStorageId;
 	}
 	
-	private void recordFileInfo(Integer fileLength, String fileStorageId,String fileName,String storageTypeName){
+	private String recordFileInfo(Integer fileLength, String fileStorageId,String fileName,String storageTypeName){
 		String fileStorageType = env.getProperty("file.storage.type");
-		fileStorageId = (Fastdfs.STORAGE_TYPE_NAME.equals(fileStorageType) || LocalStorage.STORAGE_TYPE_NAME.equals(fileStorageType) ) ? UUID.randomUUID().toString().replaceAll("-", ""): fileStorageId;
 		if (StringUtils.hasText(fileStorageId)) {
 			com.pepper.model.file.File entity = new com.pepper.model.file.File();
-			entity.setFileId(fileStorageId);
+			String fileId = (Fastdfs.STORAGE_TYPE_NAME.equals(fileStorageType) || LocalStorage.STORAGE_TYPE_NAME.equals(fileStorageType) ) ? UUID.randomUUID().toString().replaceAll("-", ""): fileStorageId;
+			entity.setFileId(fileId);
 			entity.setName(fileName);
 			entity.setSize(fileLength / 1024);
 			entity.setStorageTypeName(storageTypeName);
 			entity.setUrl(fileStorageId);
 			fileDao.save(entity);
+			return fileId;
 		}
+		return fileStorageId;
 	}
 
 	@Override
@@ -86,7 +88,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 		if(!org.springframework.util.StringUtils.hasText(fileId)) {
 			return "";
 		}
-		com.pepper.model.file.File entity = fileDao.queryByFileId(fileId);
+		com.pepper.model.file.File entity = fileDao.findByFileId(fileId);
 		if (entity != null) {
 			IFile ifile = fileBeanFactory.getBean(entity.getStorageTypeName());
 			if (ifile != null) {
@@ -112,4 +114,6 @@ public class FileUploadServiceImpl implements FileUploadService {
 		}
 		return res;
 	}
+
+
 }

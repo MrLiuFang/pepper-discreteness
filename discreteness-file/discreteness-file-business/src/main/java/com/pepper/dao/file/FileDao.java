@@ -10,5 +10,5 @@ import com.pepper.model.file.File;
  */
 public interface FileDao extends BaseDao<File> {
 
-	File queryByFileId(String fileId);
+	File findByFileId(String fileId);
 }

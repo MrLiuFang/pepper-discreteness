@@ -20,13 +20,6 @@ public interface FileService {
 	public String addFile(byte[] fileByte, String fileName);
 
 	/**
-	 * 外部连接，转到我们库，统一维护
-	 * @param url
-	 * @return
-	 */
-	public String addUrl(String url);
-
-	/**
 	 * 获取文件下载URL
 	 *
 	 * @param fileId
