@@ -38,11 +38,19 @@ public class FileController  {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		Map<String, MultipartFile> files = multipartHttpServletRequest.getFileMap();
 		for (String fileName : files.keySet()) {
-			MultipartFile file = files.get(fileName);
+			MultipartFile file = files.get(fileName); 
 			// 判断文件是否有后缀
 			if (fileName.indexOf(".") <= 0) {
-				fileName = fileName + ".file";
+				if(file.getOriginalFilename().lastIndexOf(".")>0) {
+					fileName=file.getOriginalFilename();
+					fileName=fileName.substring(fileName.lastIndexOf("\\")+1);
+				}else {
+					fileName = fileName + ".file";
+				}
+				
 			}
+			
+			
 			String fileId = fileService.addFile(file.getBytes(),fileName);
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("id", fileId);
