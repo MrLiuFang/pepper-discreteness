@@ -6,7 +6,6 @@
 		<artifactId>pepper-discreteness</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<version>${project.parent.version}</version>
 	<artifactId>discreteness-pay</artifactId>
 	<packaging>pom</packaging>
 	<modules>

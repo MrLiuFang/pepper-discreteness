@@ -115,5 +115,10 @@ public class FileServiceImpl implements FileService {
 		return res;
 	}
 
+	@Override
+	public com.pepper.model.file.File getFile(String fileId) {
+		return this.fileDao.findByFileId(fileId);
+	}
+
 
 }

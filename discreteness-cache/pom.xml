@@ -8,7 +8,6 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>discreteness-cache</artifactId>
-	<version>${project.parent.version}</version>
 	<packaging>pom</packaging>
 
 	<modules>

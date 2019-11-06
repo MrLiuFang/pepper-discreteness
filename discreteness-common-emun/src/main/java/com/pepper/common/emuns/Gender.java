@@ -1,5 +1,8 @@
 package com.pepper.common.emuns;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.pepper.core.IEnum;
 
@@ -10,7 +13,7 @@ import com.pepper.core.IEnum;
  *
  */
 public enum Gender implements IEnum {
-	FEMALE(0, "女性"), MALE(1, "男性");
+	FEMALE(0, "女"), MALE(1, "男");
 
 	private final int key;
 
@@ -32,9 +35,17 @@ public enum Gender implements IEnum {
 	}
 	
 	@Override
-	@JsonValue
 	public String getDesc(){
 		return desc;
+	}
+	
+	@JsonValue
+	public Map<String, Object> jsonValue() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("key", key);
+		map.put("desc", desc);
+		map.put("name", getName());
+		return map;
 	}
 
 }

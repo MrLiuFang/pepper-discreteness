@@ -73,11 +73,17 @@ public abstract class AuthorizeImpl implements IAuthorize {
 
 	@Override
 	public void setAuthorizeInfo(@NonNull final String userId,@NonNull final String token) {
+		//删除之前的登录会话
+//		String oldToken = valueOperationsService.get(userId + GlobalConstant.AUTHORIZE_TOKEN);
+//		deleteAuthorizeInfo(oldToken);
 		// 将用户登录token放到redis中，对应用户id，用于记录用户的登录状态。默认30分钟有效。
 		valueOperationsService.set(token + getTokenKey(), userId, getSessionTimeOut(), TimeUnit.SECONDS);
+		valueOperationsService.set(userId + GlobalConstant.AUTHORIZE_TOKEN, token, getSessionTimeOut(), TimeUnit.SECONDS);
 		//设置登录会话token作用域
 		valueOperationsService.set(token+GlobalConstant.AUTHORIZE_TOKEN_SCOPE,getScope().toString(), getSessionTimeOut(), TimeUnit.SECONDS);
 	}
+	
+	
 
 	@Override
 	public String getUserId(@NonNull final String token) {

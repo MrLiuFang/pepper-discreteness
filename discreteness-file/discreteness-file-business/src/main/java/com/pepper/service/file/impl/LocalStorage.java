@@ -39,7 +39,7 @@ public class LocalStorage implements IFile {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return path;
+		return path.substring(path.indexOf(":")>=0?path.indexOf(":")+1:0);
 	}
 
 	@Override
